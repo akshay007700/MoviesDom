@@ -1,56 +1,80 @@
+// 🗝️ Apna TMDB API key yahan daalo
+const API_KEY = e78e0bb8fb42db4fa0b56b4246151f08; 
+const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${e78e0bb8fb42db4fa0b56b4246151f08}&language=en-US&page=1`;
+
 document.addEventListener("DOMContentLoaded", () => {
-  // 🔍 Search functionality
+  const moviesGrid = document.querySelector(".movies-grid");
   const searchInput = document.getElementById("searchInput");
-  const movieCards = document.querySelectorAll(".movie-card");
-
-  function filterMovies() {
-    const term = searchInput ? searchInput.value.toLowerCase() : "";
-    const selectedGenre = document.getElementById("filterGenre")?.value || "all";
-    const selectedYear = document.getElementById("filterYear")?.value || "all";
-    const selectedRating = document.getElementById("filterRating")?.value || "all";
-
-    movieCards.forEach(card => {
-      const title = card.querySelector("h3").textContent.toLowerCase();
-      const genre = card.getAttribute("data-genre");
-      const year = card.getAttribute("data-year");
-      const rating = card.getAttribute("data-rating");
-
-      const matchesSearch = title.includes(term);
-      const matchesGenre = selectedGenre === "all" || genre === selectedGenre;
-      const matchesYear = selectedYear === "all" || year === selectedYear;
-      const matchesRating = selectedRating === "all" || rating === selectedRating;
-
-      if (matchesSearch && matchesGenre && matchesYear && matchesRating) {
-        card.style.display = "block";
-      } else {
-        card.style.display = "none";
-      }
-    });
-  }
-
-  if (searchInput) {
-    searchInput.addEventListener("input", filterMovies);
-  }
-
-  // 🎛 Filters
   const genreFilter = document.getElementById("filterGenre");
   const yearFilter = document.getElementById("filterYear");
   const ratingFilter = document.getElementById("filterRating");
 
-  [genreFilter, yearFilter, ratingFilter].forEach(filter => {
-    if (filter) {
-      filter.addEventListener("change", filterMovies);
-    }
-  });
+  let allMovies = [];
 
-  // 🎬 Poster Click → Movie Detail Page
-  const posters = document.querySelectorAll(".movie-card a img");
-  posters.forEach(poster => {
-    poster.addEventListener("click", (e) => {
-      e.preventDefault();
-      const movieTitle = poster.closest(".movie-card").querySelector("h3").textContent;
-      // Example: Pass title in URL for dynamic detail page
-      window.location.href = `movie-detail.html?title=${encodeURIComponent(movieTitle)}`;
+  // 🎬 Movies Load from API
+  fetch(API_URL)
+    .then(res => res.json())
+    .then(data => {
+      allMovies = data.results;
+      renderMovies(allMovies);
+    })
+    .catch(err => console.error("Error fetching movies:", err));
+
+  // 📌 Render Movies Function
+  function renderMovies(movies) {
+    moviesGrid.innerHTML = "";
+    if (movies.length === 0) {
+      moviesGrid.innerHTML = "<p style='grid-column:1/-1;text-align:center;'>No movies found.</p>";
+      return;
+    }
+
+    movies.forEach(movie => {
+      const year = movie.release_date ? movie.release_date.split("-")[0] : "N/A";
+      const rating = movie.vote_average ? movie.vote_average.toFixed(1) : "N/A";
+
+      const card = document.createElement("div");
+      card.classList.add("movie-card");
+      card.setAttribute("data-genre", movie.genre_ids[0] || "unknown");
+      card.setAttribute("data-year", year);
+      card.setAttribute("data-rating", rating);
+
+      card.innerHTML = `
+        <a href="movie-detail.html?title=${encodeURIComponent(movie.title)}">
+          <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
+        </a>
+        <h3>${movie.title}</h3>
+        <p>${year} • Rating: ${rating}</p>
+      `;
+
+      moviesGrid.appendChild(card);
     });
+  }
+
+  // 🔍 Search & Filters
+  function applyFilters() {
+    const term = searchInput ? searchInput.value.toLowerCase() : "";
+    const selectedGenre = genreFilter?.value || "all";
+    const selectedYear = yearFilter?.value || "all";
+    const selectedRating = ratingFilter?.value || "all";
+
+    const filteredMovies = allMovies.filter(movie => {
+      const title = movie.title.toLowerCase();
+      const year = movie.release_date ? movie.release_date.split("-")[0] : "";
+      const rating = movie.vote_average;
+
+      const matchesSearch = title.includes(term);
+      const matchesGenre = selectedGenre === "all" || movie.genre_ids.includes(parseInt(selectedGenre));
+      const matchesYear = selectedYear === "all" || year === selectedYear;
+      const matchesRating = selectedRating === "all" || rating >= parseInt(selectedRating);
+
+      return matchesSearch && matchesGenre && matchesYear && matchesRating;
+    });
+
+    renderMovies(filteredMovies);
+  }
+
+  if (searchInput) searchInput.addEventListener("input", applyFilters);
+  [genreFilter, yearFilter, ratingFilter].forEach(filter => {
+    if (filter) filter.addEventListener("change", applyFilters);
   });
 });

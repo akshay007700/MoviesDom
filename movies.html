@@ -5,56 +5,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Movies - MoviesDom</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    body { background:#0a0a0a; color:#fff; font-family:sans-serif; margin:0; }
+    header { display:flex; justify-content:space-between; align-items:center; padding:15px 5%; background:#111; position:sticky; top:0; z-index:100; }
+    header h1 { color:#ff6b00; font-size:28px; margin:0; }
+    .search-box input { padding:8px 12px; border-radius:4px; border:none; }
+    .filters { padding:20px 5%; display:flex; gap:15px; flex-wrap:wrap; background:#1a1a1a; }
+    .filters label { margin-right:5px; }
+    .movies-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; padding:20px 5%; }
+    .movie-card { background:#1a1a1a; padding:10px; border-radius:8px; text-align:center; transition:transform .3s; }
+    .movie-card:hover { transform:scale(1.05); }
+    .movie-card img { width:100%; border-radius:6px; }
+    .movie-card h3 { margin:10px 0 5px; font-size:16px; }
+    .movie-card p { font-size:14px; color:#aaa; }
+  </style>
 </head>
 <body>
+
   <!-- Header -->
   <header>
-    <div class="logo">
-      <h1>MOVIESDOM</h1>
-    </div>
+    <h1>MOVIESDOM</h1>
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Search for movies...">
+      <input type="text" id="searchInput" placeholder="Search movies...">
     </div>
   </header>
 
   <!-- Filters -->
   <section class="filters">
-    <label for="filterGenre">Genre:</label>
-    <select id="filterGenre">
-      <option value="all">All</option>
-      <option value="action">Action</option>
-      <option value="comedy">Comedy</option>
-      <option value="drama">Drama</option>
-      <option value="sci-fi">Sci-Fi</option>
-    </select>
+    <div>
+      <label for="filterGenre">Genre:</label>
+      <select id="filterGenre">
+        <option value="all">All</option>
+        <option value="28">Action</option>
+        <option value="35">Comedy</option>
+        <option value="18">Drama</option>
+        <option value="27">Horror</option>
+        <option value="878">Sci-Fi</option>
+      </select>
+    </div>
 
-    <label for="filterYear">Year:</label>
-    <select id="filterYear">
-      <option value="all">All</option>
-      <option value="2023">2023</option>
-      <option value="2022">2022</option>
-      <option value="2021">2021</option>
-    </select>
+    <div>
+      <label for="filterYear">Year:</label>
+      <select id="filterYear">
+        <option value="all">All</option>
+        <option value="2024">2024</option>
+        <option value="2023">2023</option>
+        <option value="2022">2022</option>
+        <option value="2021">2021</option>
+      </select>
+    </div>
 
-    <label for="filterRating">Rating:</label>
-    <select id="filterRating">
-      <option value="all">All</option>
-      <option value="9">9+</option>
-      <option value="8">8+</option>
-      <option value="7">7+</option>
-    </select>
+    <div>
+      <label for="filterRating">Rating:</label>
+      <select id="filterRating">
+        <option value="all">All</option>
+        <option value="9">9+</option>
+        <option value="8">8+</option>
+        <option value="7">7+</option>
+      </select>
+    </div>
   </section>
 
   <!-- Movies Grid -->
   <section class="movies-grid">
-    <!-- Movie 1 -->
-    <div class="movie-card" data-genre="action" data-year="2023" data-rating="8.5">
-      <a href="movie-detail.html">
-        <img src="https://image.tmdb.org/t/p/w500/9gk7adHYeBc4ldheCJOhtAPp124.jpg" alt="Inception">
-      </a>
-      <h3>Inception</h3>
-      <p>2010 • Sci-Fi • Rating: 8.5</p>
-    </div>
+    <!-- Movies will load here from API -->
+  </section>
 
-    <!-- Movie 2 -->
-    <div class="movie-card" data-genre="drama
+  <script src="script.js"></script>
+</body>
+</html>

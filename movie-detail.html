@@ -3,70 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MoviesDom - Movie Detail</title>
+  <title>Movie Details - MoviesDom</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { background:#0a0a0a; color:#fff; font-family:sans-serif; margin:0; }
+    header { background:#111; padding:15px 5%; position:sticky; top:0; }
+    header h1 { color:#ff6b00; margin:0; }
+    .container { max-width:1000px; margin:40px auto; padding:20px; }
+    .movie-detail { display:flex; flex-wrap:wrap; gap:30px; align-items:flex-start; }
+    .movie-detail img { width:300px; border-radius:8px; }
+    .movie-info { flex:1; }
+    .movie-info h2 { font-size:28px; margin-bottom:15px; color:#ff6b00; }
+    .movie-info p { margin:8px 0; color:#ccc; }
+    .tagline { font-style:italic; color:#aaa; margin-bottom:15px; }
+  </style>
 </head>
 <body>
-  <!-- Header -->
-  <header class="site-header">
-    <div class="logo"><i class="fas fa-film"></i> MoviesDom</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="movies.html" class="active">Movies</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </nav>
+  <header>
+    <h1>MOVIESDOM</h1>
   </header>
 
-  <!-- Movie Hero -->
-  <section class="movie-hero" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
-              url('https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=1400&q=80') no-repeat center/cover;">
-    <div class="overlay"></div>
-    <div class="movie-hero-content">
-      <h2>Spider-Man: No Way Home</h2>
-      <p>2021 • Action / Adventure • <span class="rating"><i class="fas fa-star"></i> 8.5</span></p>
-    </div>
-  </section>
-
-  <!-- Movie Detail Content -->
-  <div class="container movie-detail-content">
-    <img src="https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=400&q=80" alt="Spider-Man Poster" class="detail-poster">
-
-    <div class="detail-info">
-      <h2>Overview</h2>
-      <p class="plot">
-        With Spider-Man's identity now revealed, Peter Parker asks Doctor Strange for help. 
-        When a spell goes wrong, dangerous foes from other worlds appear, forcing Peter to discover 
-        what it truly means to be Spider-Man.
-      </p>
-
-      <h2>Cast</h2>
-      <ul>
-        <li>Tom Holland as Peter Parker</li>
-        <li>Zendaya as MJ</li>
-        <li>Benedict Cumberbatch as Doctor Strange</li>
-        <li>Jacob Batalon as Ned Leeds</li>
-      </ul>
-
-      <div class="download-buttons">
-        <a href="#" class="btn">Download 720p</a>
-        <a href="#" class="btn">Download 1080p</a>
-        <a href="#" class="btn">Download 4K</a>
+  <div class="container">
+    <div class="movie-detail">
+      <img id="moviePoster" src="" alt="Movie Poster">
+      <div class="movie-info">
+        <h2 id="movieTitle">Loading...</h2>
+        <p id="movieTagline" class="tagline"></p>
+        <p><strong>Release Date:</strong> <span id="movieRelease"></span></p>
+        <p><strong>Rating:</strong> ⭐ <span id="movieRating"></span></p>
+        <p><strong>Genres:</strong> <span id="movieGenres"></span></p>
+        <p><strong>Overview:</strong></p>
+        <p id="movieOverview"></p>
       </div>
     </div>
   </div>
 
-  <!-- Trailer -->
-  <div class="container trailer">
-    <h3>Watch Trailer</h3>
-    <iframe width="100%" height="400" src="https://www.youtube.com/embed/JfVOs4VSpmA" 
-      title="YouTube video player" frameborder="0" allowfullscreen></iframe>
-  </div>
+  <script>
+    const API_KEY = e78e0bb8fb42db4fa0b56b4246151f08; 
+    const urlParams = new URLSearchParams(window.location.search);
+    const title = urlParams.get("title");
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2023 MoviesDom. All rights reserved.</p>
-  </footer>
+    if (title) {
+      fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(title)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.results.length > 0) {
+            const movie = data.results[0];
+
+            document.getElementById("moviePoster").src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+            document.getElementById("movieTitle").textContent = movie.title;
+            document.getElementById("movieRelease").textContent = movie.release_date;
+            document.getElementById("movieRating").textContent = movie.vote_average.toFixed(1);
+            document.getElementById("movieOverview").textContent = movie.overview;
+
+            // extra fetch for full details (tagline, genres)
+            fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}&language=en-US`)
+              .then(res => res.json())
+              .then(details => {
+                document.getElementById("movieTagline").textContent = details.tagline || "";
+                document.getElementById("movieGenres").textContent = details.genres.map(g => g.name).join(", ");
+              });
+          } else {
+            document.querySelector(".container").innerHTML = "<p style='color:#ff6b00;'>Movie not found.</p>";
+          }
+        })
+        .catch(err => console.error("Error fetching details:", err));
+    }
+  </script>
 </body>
 </html>

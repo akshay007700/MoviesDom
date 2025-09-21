@@ -32,7 +32,7 @@ nav a {
   color: #140202;
   transition: 0.3s;
 }
-nav a:hover, nav a.active { color: #3eff95; }
+nav a:hover, nav a.active { color: #ff3e3e; }
 
 /* ========== Hero Section ========== */
 /* Movies Page Hero (same as Home hero) */

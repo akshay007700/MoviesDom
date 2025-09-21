@@ -3,93 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MoviesDom - Movies</title>
+  <title>Movies - MoviesDom</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <!-- Header -->
-  <header class="site-header">
-    <div class="logo"><i class="fas fa-film"></i> MoviesDom</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="movies.html" class="active">Movies</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </nav>
+  <header>
+    <div class="logo">
+      <h1>MOVIESDOM</h1>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search for movies...">
+    </div>
   </header>
 
-  <!-- Movies Hero Section (same as Home hero) -->
-  <section class="movies-hero">
-    <div class="hero-content">
-      <h2>Explore Movies</h2>
-      <p>Find your favorite movies by genre, year, and rating</p>
-    </div>
+  <!-- Filters -->
+  <section class="filters">
+    <label for="filterGenre">Genre:</label>
+    <select id="filterGenre">
+      <option value="all">All</option>
+      <option value="action">Action</option>
+      <option value="comedy">Comedy</option>
+      <option value="drama">Drama</option>
+      <option value="sci-fi">Sci-Fi</option>
+    </select>
+
+    <label for="filterYear">Year:</label>
+    <select id="filterYear">
+      <option value="all">All</option>
+      <option value="2023">2023</option>
+      <option value="2022">2022</option>
+      <option value="2021">2021</option>
+    </select>
+
+    <label for="filterRating">Rating:</label>
+    <select id="filterRating">
+      <option value="all">All</option>
+      <option value="9">9+</option>
+      <option value="8">8+</option>
+      <option value="7">7+</option>
+    </select>
   </section>
 
-  <!-- Filters -->
-  <div class="container">
-    <div class="filter-bar">
-      <select>
-        <option value="">All Genres</option>
-        <option value="action">Action</option>
-        <option value="comedy">Comedy</option>
-        <option value="drama">Drama</option>
-        <option value="sci-fi">Sci-Fi</option>
-      </select>
-      <select>
-        <option value="">All Years</option>
-        <option>2023</option>
-        <option>2022</option>
-        <option>2021</option>
-      </select>
-      <select>
-        <option value="">Rating</option>
-        <option>9+</option>
-        <option>8+</option>
-        <option>7+</option>
-      </select>
+  <!-- Movies Grid -->
+  <section class="movies-grid">
+    <!-- Movie 1 -->
+    <div class="movie-card" data-genre="action" data-year="2023" data-rating="8.5">
+      <a href="movie-detail.html">
+        <img src="https://image.tmdb.org/t/p/w500/9gk7adHYeBc4ldheCJOhtAPp124.jpg" alt="Inception">
+      </a>
+      <h3>Inception</h3>
+      <p>2010 • Sci-Fi • Rating: 8.5</p>
     </div>
-<div class="movies-grid">
-  <div class="movie-card">
-    <img src="poster.jpg" alt="Movie Poster">
-    <h3>Spider-Man: No Way Home</h3>
-    <p>2021 • Action</p>
-  </div>
-  <!-- aur movies yahan -->
-</div>
 
-    <!-- Movies Grid -->
-    <div class="movies-grid">
-      <div class="movie-card">
-        <a href="movie-detail.html">
-          <img src="https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=600&q=80" alt="Spider-Man Poster">
-        </a>
-        <h3>Spider-Man: No Way Home</h3>
-        <p>2021 • <span class="rating"><i class="fas fa-star"></i> 8.5</span></p>
-      </div>
-
-      <div class="movie-card">
-        <a href="movie-detail.html">
-          <img src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?auto=format&fit=crop&w=600&q=80" alt="The Batman Poster">
-        </a>
-        <h3>The Batman</h3>
-        <p>2022 • <span class="rating"><i class="fas fa-star"></i> 8.3</span></p>
-      </div>
-
-      <div class="movie-card">
-        <a href="movie-detail.html">
-          <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=600&q=80" alt="John Wick Poster">
-        </a>
-        <h3>John Wick: Chapter 4</h3>
-        <p>2023 • <span class="rating"><i class="fas fa-star"></i> 8.7</span></p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2023 MoviesDom. All rights reserved.</p>
-  </footer>
-</body>
-</html>
+    <!-- Movie 2 -->
+    <div class="movie-card" data-genre="drama

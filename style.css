@@ -15,12 +15,12 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 3px solid #3effb5;
+  border-bottom: 3px solid #3ed8ff;
 }
 .logo {
   font-size: 24px;
   font-weight: 700;
-  color: #3effe5;
+  color: #ffa53e;
   display: flex;
   align-items: center;
 }
@@ -29,7 +29,7 @@ nav a {
   margin: 0 10px;
   font-weight: 500;movies-hero {
   height: 250px;
-  color: #fff;
+  color: #ffffff;
   transition: 0.3s;
 }
 nav a:hover, nav a.active { color: #3eff95; }

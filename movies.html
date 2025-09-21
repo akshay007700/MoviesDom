@@ -9,58 +9,62 @@
 </head>
 <body>
   <!-- Header -->
-  <header>
-    <div class="container">
-      <div class="header-content">
-        <div class="logo">
-          <div class="logo-icon"><i class="fas fa-film"></i></div>
-          <div class="logo-text">MoviesDom</div>
-        </div>
-        <nav id="nav">
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="movies.html" class="active">Movies</a></li>
-            <li><a href="tvshows.html">TV Shows</a></li>
-            <li><a href="celebs.html">Celebs</a></li>
-            <li><a href="news.html">News</a></li>
-          </ul>
-          <div class="search-box">
-            <input type="text" placeholder="Search movies...">
-            <button><i class="fas fa-search"></i></button>
-          </div>
-        </nav>
-        <button class="mobile-menu-btn" id="menuBtn">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
-    </div>
+  <header class="site-header">
+    <div class="logo"><i class="fas fa-film"></i><span>MoviesDom</span></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="movies.html" class="active">Movies</a>
+      <a href="search.html">Search</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
   </header>
 
-  <!-- Movies Section -->
-  <section class="container">
-    <h2 class="section-title">All Movies</h2>
-    <div class="movies-grid">
-      <!-- Movie 1 -->
-      <div class="movie-card">
-        <img src="https://image.tmdb.org/t/p/w500/9gk7adHYeBc4ldheCJOhtAPp124.jpg" alt="Inception">
-        <div class="movie-info">
-          <h3 class="movie-title">Inception</h3>
-          <div class="movie-meta">
-            <span>2010</span>
-            <span class="rating"><i class="fas fa-star"></i> 8.8</span>
-          </div>
-          <p class="movie-description">A thief who enters dreams to steal secrets is given a task of inception...</p>
-          <a href="movie-detail.html" class="read-more">Read More</a>
-        </div>
-      </div>
+  <!-- Filters -->
+  <section class="filters container">
+    <h2 class="section-title">Browse Movies</h2>
+    <div class="filter-bar">
+      <select>
+        <option>All Genres</option>
+        <option>Action</option>
+        <option>Comedy</option>
+        <option>Drama</option>
+        <option>Horror</option>
+      </select>
+      <select>
+        <option>All Years</option>
+        <option>2024</option>
+        <option>2023</option>
+        <option>2022</option>
+      </select>
+      <select>
+        <option>All Ratings</option>
+        <option>9+</option>
+        <option>8+</option>
+        <option>7+</option>
+      </select>
+    </div>
+  </section>
 
-      <!-- Movie 2 -->
-      <div class="movie-card">
-        <img src="https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg" alt="The Dark Knight">
-        <div class="movie-info">
-          <h3 class="movie-title">The Dark Knight</h3>
-          <div class="movie-meta">
-            <span>2008</span>
-            <span class="rating"><i class="fas fa-star"></i> 9.0</span>
-          </div>
-          <p class="movie-description">Batman faces the Joker who wreaks
+  <!-- Movie Grid -->
+  <section class="container movies-grid">
+    <div class="movie-card">
+      <img src="https://picsum.photos/300/400?1">
+      <h3>Inception</h3>
+      <p>⭐ 8.8 | Sci-Fi</p>
+      <a href="movie-detail.html" class="read-more">Read More</a>
+    </div>
+    <div class="movie-card">
+      <img src="https://picsum.photos/300/400?2">
+      <h3>The Batman</h3>
+      <p>⭐ 8.2 | Action</p>
+      <a href="movie-detail.html" class="read-more">Read More</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2024 MoviesDom. All rights reserved.</p>
+  </footer>
+</body>
+</html>

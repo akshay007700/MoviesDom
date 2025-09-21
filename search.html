@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search - MoviesDom</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="logo"><i class="fas fa-film"></i><span>MoviesDom</span></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="movies.html">Movies</a>
+      <a href="search.html" class="active">Search</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Search -->
+  <section class="container">
+    <h2 class="section-title">Search Movies</h2>
+    <div class="search-box">
+      <input type="text" placeholder="Enter movie name..." id="searchInput">
+      <button class="btn"><i class="fas fa-search"></i> Search</button>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="container movies-grid" id="results">
+    <div class="movie-card">
+      <img src="https://picsum.photos/300/400?3">
+      <h3>Sample Movie</h3>
+      <p>⭐ 7.5 | Drama</p>
+      <a href="movie-detail.html" class="read-more">Read More</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2024 MoviesDom. All rights reserved.</p>
+  </footer>
+</body>
+</html>

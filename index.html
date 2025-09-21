@@ -1,60 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MoviesDom - Home</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoviesDom - Your Ultimate Movie Destination</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <div class="logo"><i class="fas fa-film"></i><span>MoviesDom</span></div>
-    <nav>
-      <a href="index.html" class="active">Home</a>
-      <a href="movies.html">Movies</a>
-      <a href="tvshows.html">TV Shows</a>
-      <a href="celebs.html">Celebs</a>
-      <a href="news.html">News</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-film"></i></div>
+                    <div class="logo-text">MoviesDom</div>
+                </div>
+                
+                <nav id="nav">
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Movies</a></li>
+                        <li><a href="#">TV Shows</a></li>
+                        <li><a href="#">Celebs</a></li>
+                        <li><a href="#">News</a></li>
+                    </ul>
+                    <div class="search-box">
+                        <input type="text" placeholder="Search movies...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                </nav>
+                
+                <button class="mobile-menu-btn" id="menuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Welcome to MoviesDom</h1>
-      <p>Your ultimate destination for Movies, TV Shows and Celebs.</p>
-      <a href="movies.html" class="btn">Browse Movies</a>
-    </div>
-  </section>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Discover Your Next Favorite Movie</h1>
+                <p>Browse thousands of movies, TV shows, and celebrities. Find ratings, reviews, and recommendations tailored just for you.</p>
+                <a href="#" class="btn">Explore Now</a>
+            </div>
+        </div>
+    </section>
 
-  <!-- Featured Section -->
-  <section class="container">
-    <h2 class="section-title">Featured Movies</h2>
-    <div class="movies-grid">
-      <div class="movie-card">
-        <img src="https://picsum.photos/300/400?1" alt="Movie 1">
-        <h3>Inception</h3>
-        <p>⭐ 8.8 | Sci-Fi</p>
-        <a href="movie-detail.html" class="read-more">Read More</a>
-      </div>
-      <div class="movie-card">
-        <img src="https://picsum.photos/300/400?2" alt="Movie 2">
-        <h3>The Dark Knight</h3>
-        <p>⭐ 9.0 | Action</p>
-        <a href="movie-detail.html" class="read-more">Read More</a>
-      </div>
-    </div>
-  </section>
+    <!-- Featured Movies -->
+    <section class="container">
+        <h2 class="section-title">Featured Movies</h2>
+        
+        <div class="movies-grid">
+            <!-- Movie 1 -->
+            <div class="movie-card">
+                <img src="https://images.unsplash.com/photo-1682687221363-72518513620e?auto=format&fit=crop&w=600&q=80" alt="Movie Poster" class="movie-poster">
+                <div class="movie-info">
+                    <h3 class="movie-title">Desert Odyssey</h3>
+                    <div class="movie-meta">
+                        <span>2023</span>
+                        <span class="rating"><i class="fas fa-star"></i> 8.5</span>
+                    </div>
+                    <p class="movie-description">A thrilling adventure through the vast deserts, exploring human resilience and the beauty of nature.</p>
+                    <a href="#" class="read-more">Read More</a>
+                </div>
+            </div>
+            
+            <!-- Movie 2 -->
+            <div class="movie-card">
+                <img src="https://images.unsplash.com/photo-1682687982183-c2937a74257c?auto=format&fit=crop&w=600&q=80" alt="Movie Poster" class="movie-poster">
+                <div class="movie-info">
+                    <h3 class="movie-title">Ocean Mystery</h3>
+                    <div class="movie-meta">
+                        <span>2022</span>
+                        <span class="rating"><i class="fas fa-star"></i> 7.9</span>
+                    </div>
+                    <p class="movie-description">Dive into the depths of the ocean to uncover secrets that have been hidden for centuries.</p>
+                    <a href="#" class="read-more">Read More</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <!-- Footer -->
-  <footer>
-    <p>© 2024 MoviesDom. All rights reserved.</p>
-  </footer>
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Browse Categories</h2>
+            
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="category-title">Romance</h3>
+                    <p class="movie-count">342 movies</p>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-explosion"></i>
+                    </div>
+                    <h3 class="category-title">Action</h3>
+                    <p class="movie-count">567 movies</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <script src="script.js"></script>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About MoviesDom</h3>
+                    <p>MoviesDom is your ultimate destination for discovering, exploring, and enjoying movies and TV shows from around the world.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Movies</a></li>
+                        <li><a href="#">TV Shows</a></li>
+                        <li><a href="#">Celebrities</a></li>
+                        <li><a href="#">News</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 MoviesDom. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>

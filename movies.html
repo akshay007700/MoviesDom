@@ -3,68 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movies - MoviesDom</title>
+  <title>MoviesDom - Movies</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <!-- Header -->
   <header class="site-header">
-    <div class="logo"><i class="fas fa-film"></i><span>MoviesDom</span></div>
+    <div class="logo"><i class="fas fa-film"></i> MoviesDom</div>
     <nav>
       <a href="index.html">Home</a>
       <a href="movies.html" class="active">Movies</a>
-      <a href="search.html">Search</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </nav>
   </header>
 
+  <!-- Movies Hero Section -->
+  <section class="movies-hero">
+    <h2>Explore Movies</h2>
+    <p>Find your favorite movies by genre, year, and rating</p>
+  </section>
+
   <!-- Filters -->
-  <section class="filters container">
-    <h2 class="section-title">Browse Movies</h2>
+  <div class="container">
     <div class="filter-bar">
       <select>
-        <option>All Genres</option>
-        <option>Action</option>
-        <option>Comedy</option>
-        <option>Drama</option>
-        <option>Horror</option>
+        <option value="">All Genres</option>
+        <option value="action">Action</option>
+        <option value="comedy">Comedy</option>
+        <option value="drama">Drama</option>
+        <option value="sci-fi">Sci-Fi</option>
       </select>
       <select>
-        <option>All Years</option>
-        <option>2024</option>
+        <option value="">All Years</option>
         <option>2023</option>
         <option>2022</option>
+        <option>2021</option>
       </select>
       <select>
-        <option>All Ratings</option>
+        <option value="">Rating</option>
         <option>9+</option>
         <option>8+</option>
         <option>7+</option>
       </select>
     </div>
-  </section>
 
-  <!-- Movie Grid -->
-  <section class="container movies-grid">
-    <div class="movie-card">
-      <img src="https://picsum.photos/300/400?1">
-      <h3>Inception</h3>
-      <p>⭐ 8.8 | Sci-Fi</p>
-      <a href="movie-detail.html" class="read-more">Read More</a>
+    <!-- Movies Grid -->
+    <div class="movies-grid">
+      <div class="movie-card">
+        <img src="https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=600&q=80" alt="Spider-Man">
+        <h3>Spider-Man: No Way Home</h3>
+        <p>2021 • <span class="rating"><i class="fas fa-star"></i> 8.5</span></p>
+        <a href="movie-detail.html" class="read-more">View Details</a>
+      </div>
+
+      <div class="movie-card">
+        <img src="https://images.unsplash.com/photo-1594909122845-11baa439b7bf?auto=format&fit=crop&w=600&q=80" alt="The Batman">
+        <h3>The Batman</h3>
+        <p>2022 • <span class="rating"><i class="fas fa-star"></i> 8.3</span></p>
+        <a href="movie-detail.html" class="read-more">View Details</a>
+      </div>
+
+      <div class="movie-card">
+        <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=600&q=80" alt="John Wick 4">
+        <h3>John Wick: Chapter 4</h3>
+        <p>2023 • <span class="rating"><i class="fas fa-star"></i> 8.7</span></p>
+        <a href="movie-detail.html" class="read-more">View Details</a>
+      </div>
     </div>
-    <div class="movie-card">
-      <img src="https://picsum.photos/300/400?2">
-      <h3>The Batman</h3>
-      <p>⭐ 8.2 | Action</p>
-      <a href="movie-detail.html" class="read-more">Read More</a>
-    </div>
-  </section>
+  </div>
 
   <!-- Footer -->
   <footer>
-    <p>© 2024 MoviesDom. All rights reserved.</p>
+    <p>&copy; 2023 MoviesDom. All rights reserved.</p>
   </footer>
 </body>
 </html>

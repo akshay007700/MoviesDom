@@ -34,6 +34,26 @@ nav a {
 nav a:hover, nav a.active { color: #ff3e66; }
 
 /* ========== Hero Section ========== */
+/* Movies Hero Section */
+.movies-hero {
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+              url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1400&q=80')
+              no-repeat center/cover;
+  color: #fff;
+}
+.movies-hero h2 {
+  font-size: 36px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.movies-hero p { color: #ddd; }
+
 .hero {
   position: relative;
   height: 70vh;

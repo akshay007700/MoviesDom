@@ -27,68 +27,38 @@ a { text-decoration: none; color: inherit; }
 .logo i { margin-right: 8px; }
 nav a {
   margin: 0 10px;
-  font-weight: 500;
+  font-weight: 500;movies-hero {
+  height: 250px;
   color: #fff;
   transition: 0.3s;
 }
 nav a:hover, nav a.active { color: #ff3e66; }
 
 /* ========== Hero Section ========== */
-/* Movies Hero Section */
+/* Movies Page Hero (same as Home hero) */
 .movies-hero {
-  height: 250px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-              url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1400&q=80')
-              no-repeat center/cover;
-  color: #fff;
-}
-.movies-hero h2 {
-  font-size: 36px;
-  color: #fff;
-  margin-bottom: 10px;
-}
-.movies-hero p { color: #ddd; }
-
-.hero {
   position: relative;
   height: 70vh;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  background: url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1400&q=80')
+  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+              url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1400&q=80')
               no-repeat center/cover;
 }
-.hero::after {
+.movies-hero::after {
   content: '';
-  position: absolute; inset: 0;
+  position: absolute;
+  inset: 0;
   background: rgba(0,0,0,0.6);
 }
-.hero-content {
+.movies-hero h2, .movies-hero p {
   position: relative;
   z-index: 2;
-}
-.hero-content h1 {
-  font-size: 48px;
   color: #fff;
-  margin-bottom: 10px;
 }
-.hero-content p { font-size: 18px; color: #ddd; margin-bottom: 20px; }
-.btn {
-  display: inline-block;
-  padding: 10px 20px;
-  border-radius: 30px;
-  background: linear-gradient(90deg, #ff3e66, #7e6af7);
-  color: #fff;
-  font-weight: 600;
-  transition: 0.3s;
-}
-.btn:hover { transform: translateY(-3px); }
+
 
 /* ========== Sections ========== */
 .container { padding: 40px 5%; }

@@ -3,32 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact - MoviesDom</title>
+  <title>Movies - MoviesDom</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+  <!-- Header -->
   <header>
     <div class="logo"><i class="fas fa-film"></i><span>MoviesDom</span></div>
     <nav>
       <a href="index.html">Home</a>
-      <a href="movies.html">Movies</a>
+      <a href="movies.html" class="active">Movies</a>
       <a href="tvshows.html">TV Shows</a>
       <a href="celebs.html">Celebs</a>
       <a href="news.html">News</a>
       <a href="about.html">About</a>
-      <a href="contact.html" class="active">Contact</a>
+      <a href="contact.html">Contact</a>
     </nav>
   </header>
 
   <section class="container">
-    <h2 class="section-title">Contact Us</h2>
-    <form>
-      <input type="text" placeholder="Your Name" required>
-      <input type="email" placeholder="Your Email" required>
-      <textarea placeholder="Your Message" required></textarea>
-      <button type="submit" class="btn">Send</button>
-    </form>
+    <h2 class="section-title">All Movies</h2>
+    <div class="movies-grid">
+      <div class="movie-card">
+        <img src="https://picsum.photos/300/400?1">
+        <h3>Inception</h3>
+        <p>⭐ 8.8 | Sci-Fi</p>
+      </div>
+      <div class="movie-card">
+        <img src="https://picsum.photos/300/400?2">
+        <h3>The Dark Knight</h3>
+        <p>⭐ 9.0 | Action</p>
+      </div>
+    </div>
   </section>
 
   <footer><p>© 2024 MoviesDom. All rights reserved.</p></footer>

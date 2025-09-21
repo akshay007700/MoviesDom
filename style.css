@@ -20,7 +20,7 @@ a { text-decoration: none; color: inherit; }
 .logo {
   font-size: 24px;
   font-weight: 700;
-  color: #ffa53e;
+  color: #180f05;
   display: flex;
   align-items: center;
 }
@@ -29,7 +29,7 @@ nav a {
   margin: 0 10px;
   font-weight: 500;movies-hero {
   height: 250px;
-  color: #ffffff;
+  color: #140202;
   transition: 0.3s;
 }
 nav a:hover, nav a.active { color: #3eff95; }

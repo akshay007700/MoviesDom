@@ -13,12 +13,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🎬 Movies Load from API
   fetch(API_URL)
-    .then(res => res.json())
-    .then(data => {
-      allMovies = data.results;
-      renderMovies(allMovies);
-    })
-    .catch(err => console.error("Error fetching movies:", err));
+  .then(res => res.json())
+  .then(data => {
+    const moviesGrid = document.querySelector(".movies-grid");
+    moviesGrid.innerHTML = ""; // Purana clear karo
+
+    data.results.forEach(movie => {
+      const year = movie.release_date ? movie.release_date.split("-")[0] : "N/A";
+      const rating = movie.vote_average ? movie.vote_average.toFixed(1) : "N/A";
+
+      const card = document.createElement("div");
+      card.classList.add("movie-card");
+      card.innerHTML = `
+        <a href="movie-detail.html?id=${movie.id}">
+          <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
+        </a>
+        <h3>${movie.title}</h3>
+        <p>${year} • ⭐ ${rating}</p>
+      `;
+      moviesGrid.appendChild(card);
+    });
+  })
+  .catch(err => console.error("Error fetching movies:", err));
 
   // 📌 Render Movies Function
   function renderMovies(movies) {

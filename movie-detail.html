@@ -39,33 +39,21 @@
   </div>
 
   <script>
-    const API_KEY = e78e0bb8fb42db4fa0b56b4246151f08; 
+    const API_KEY = "e78e0bb8fb42db4fa0b56b4246151f08"; 
     const urlParams = new URLSearchParams(window.location.search);
-    const title = urlParams.get("title");
+    const movieId = urlParams.get("id");
 
-    if (title) {
-      fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(title)}`)
+    if (movieId) {
+      fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&language=en-US`)
         .then(res => res.json())
-        .then(data => {
-          if (data.results.length > 0) {
-            const movie = data.results[0];
-
-            document.getElementById("moviePoster").src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-            document.getElementById("movieTitle").textContent = movie.title;
-            document.getElementById("movieRelease").textContent = movie.release_date;
-            document.getElementById("movieRating").textContent = movie.vote_average.toFixed(1);
-            document.getElementById("movieOverview").textContent = movie.overview;
-
-            // extra fetch for full details (tagline, genres)
-            fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${API_KEY}&language=en-US`)
-              .then(res => res.json())
-              .then(details => {
-                document.getElementById("movieTagline").textContent = details.tagline || "";
-                document.getElementById("movieGenres").textContent = details.genres.map(g => g.name).join(", ");
-              });
-          } else {
-            document.querySelector(".container").innerHTML = "<p style='color:#ff6b00;'>Movie not found.</p>";
-          }
+        .then(movie => {
+          document.getElementById("moviePoster").src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+          document.getElementById("movieTitle").textContent = movie.title;
+          document.getElementById("movieRelease").textContent = movie.release_date;
+          document.getElementById("movieRating").textContent = movie.vote_average.toFixed(1);
+          document.getElementById("movieOverview").textContent = movie.overview;
+          document.getElementById("movieTagline").textContent = movie.tagline || "";
+          document.getElementById("movieGenres").textContent = movie.genres.map(g => g.name).join(", ");
         })
         .catch(err => console.error("Error fetching details:", err));
     }

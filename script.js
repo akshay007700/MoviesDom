@@ -1,5 +1,6 @@
+
 // Placeholder for future features (search, filter, detail page)
-console.log("MovieMania JS loaded!");
+console.log("MoviesDom JS loaded!");
 
 // Example: alert on form submit
 document.addEventListener("DOMContentLoaded", () => {

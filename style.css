@@ -1,0 +1,172 @@
+/* ========== Global Reset ========== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #0a0a0a;
+  color: #fff;
+  line-height: 1.6;
+}
+a { text-decoration: none; color: inherit; }
+
+/* ========== Header ========== */
+.site-header {
+  background: #111;
+  padding: 15px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid #ff3e66;
+}
+.logo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ff3e66;
+  display: flex;
+  align-items: center;
+}
+.logo i { margin-right: 8px; }
+nav a {
+  margin: 0 10px;
+  font-weight: 500;
+  color: #fff;
+  transition: 0.3s;
+}
+nav a:hover, nav a.active { color: #ff3e66; }
+
+/* ========== Hero Section ========== */
+.hero {
+  position: relative;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1400&q=80')
+              no-repeat center/cover;
+}
+.hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.6);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+.hero-content h1 {
+  font-size: 48px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+.hero-content p { font-size: 18px; color: #ddd; margin-bottom: 20px; }
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 30px;
+  background: linear-gradient(90deg, #ff3e66, #7e6af7);
+  color: #fff;
+  font-weight: 600;
+  transition: 0.3s;
+}
+.btn:hover { transform: translateY(-3px); }
+
+/* ========== Sections ========== */
+.container { padding: 40px 5%; }
+.section-title {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ff3e66;
+}
+
+/* ========== Movies Grid ========== */
+.movies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+.movie-card {
+  background: #1a1a1a;
+  padding: 15px;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+.movie-card img {
+  width: 100%; border-radius: 10px; margin-bottom: 10px;
+}
+.movie-card h3 { font-size: 18px; margin-bottom: 5px; }
+.movie-card p { font-size: 14px; color: #bbb; }
+.movie-card:hover { transform: translateY(-5px); }
+.read-more {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #ff3e66;
+}
+
+/* ========== Filters ========== */
+.filter-bar {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+.filter-bar select {
+  padding: 8px 15px;
+  border-radius: 5px;
+  border: 1px solid #333;
+  background: #1a1a1a;
+  color: #fff;
+}
+
+/* ========== Movie Detail ========== */
+.movie-hero {
+  position: relative;
+  height: 400px;
+  color: #fff;
+  display: flex;
+  align-items: flex-end;
+  padding: 40px;
+}
+.movie-hero .overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.6);
+}
+.movie-hero-content { position: relative; z-index: 2; }
+.movie-hero-content h2 { font-size: 36px; margin-bottom: 10px; }
+.movie-hero-content p { color: #ddd; font-size: 18px; }
+
+.movie-detail-content {
+  display: flex; gap: 30px; flex-wrap: wrap; margin-top: 30px;
+}
+.detail-poster { width: 280px; border-radius: 10px; }
+.detail-info h2 { margin-bottom: 15px; color: #ff3e66; }
+.plot { margin: 15px 0; color: #bbb; }
+.download-buttons { margin-top: 20px; }
+.download-buttons .btn { margin-right: 10px; margin-bottom: 10px; }
+
+.trailer { margin-top: 40px; }
+.trailer h3 { color: #ff3e66; margin-bottom: 15px; }
+
+/* ========== Search Page ========== */
+.search-box {
+  display: flex; gap: 10px; justify-content: center;
+  margin: 20px auto; max-width: 600px;
+}
+.search-box input {
+  flex: 1; padding: 10px 15px;
+  border-radius: 30px;
+  border: 1px solid #333;
+  background: #1a1a1a;
+  color: #fff;
+}
+.search-box button { border: none; cursor: pointer; }
+
+/* ========== Footer ========== */
+footer {
+  background: #111;
+  padding: 20px;
+  text-align: center;
+  color: #aaa;
+  margin-top: 40px;
+}

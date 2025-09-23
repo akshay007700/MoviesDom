@@ -1,4 +1,4 @@
-// 🗝️ Final API key
+// 🗝️ Tumhari TMDB API key
 const API_KEY = "e78e0bb8fb42db4fa0b56b4246151f08"; 
 const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
 
@@ -13,28 +13,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🎬 Movies Load from API
   fetch(API_URL)
-  .then(res => res.json())
-  .then(data => {
-    const moviesGrid = document.querySelector(".movies-grid");
-    moviesGrid.innerHTML = ""; // Purana clear karo
-
-    data.results.forEach(movie => {
-      const year = movie.release_date ? movie.release_date.split("-")[0] : "N/A";
-      const rating = movie.vote_average ? movie.vote_average.toFixed(1) : "N/A";
-
-      const card = document.createElement("div");
-      card.classList.add("movie-card");
-      card.innerHTML = `
-        <a href="movie-detail.html?id=${movie.id}">
-          <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
-        </a>
-        <h3>${movie.title}</h3>
-        <p>${year} • ⭐ ${rating}</p>
-      `;
-      moviesGrid.appendChild(card);
+    .then(res => res.json())
+    .then(data => {
+      allMovies = data.results;
+      renderMovies(allMovies);
+    })
+    .catch(err => {
+      moviesGrid.innerHTML = "<p style='color:red;grid-column:1/-1;text-align:center;'>Error loading movies</p>";
+      console.error("Error fetching movies:", err);
     });
-  })
-  .catch(err => console.error("Error fetching movies:", err));
 
   // 📌 Render Movies Function
   function renderMovies(movies) {
@@ -59,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
         </a>
         <h3>${movie.title}</h3>
-        <p>${year} • Rating: ${rating}</p>
+        <p>${year} • ⭐ ${rating}</p>
       `;
 
       moviesGrid.appendChild(card);

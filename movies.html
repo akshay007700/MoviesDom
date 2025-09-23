@@ -12,7 +12,7 @@
     .search-box input { padding:8px 12px; border-radius:4px; border:none; }
     .filters { padding:20px 5%; display:flex; gap:15px; flex-wrap:wrap; background:#1a1a1a; }
     .filters label { margin-right:5px; }
-    .movies-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; padding:20px 5%; }
+    .movies-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:15px; padding:20px 5%; }
     .movie-card { background:#1a1a1a; padding:10px; border-radius:8px; text-align:center; transition:transform .3s; }
     .movie-card:hover { transform:scale(1.05); }
     .movie-card img { width:100%; border-radius:6px; }
@@ -68,7 +68,7 @@
 
   <!-- Movies Grid -->
   <section class="movies-grid">
-    <!-- Movies will load here from API -->
+    <p style="grid-column:1/-1;text-align:center;">Loading movies...</p>
   </section>
 
   <script src="script.js"></script>

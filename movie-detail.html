@@ -11,11 +11,15 @@
     header h1 { color:#ff6b00; margin:0; }
     .container { max-width:1000px; margin:40px auto; padding:20px; }
     .movie-detail { display:flex; flex-wrap:wrap; gap:30px; align-items:flex-start; }
-    .movie-detail img { width:300px; border-radius:8px; }
-    .movie-info { flex:1; }
+    .movie-detail img { width:100%; max-width:300px; border-radius:8px; }
+    .movie-info { flex:1; min-width:250px; }
     .movie-info h2 { font-size:28px; margin-bottom:15px; color:#ff6b00; }
-    .movie-info p { margin:8px 0; color:#ccc; }
+    .movie-info p { margin:8px 0; color:#ccc; line-height:1.6; }
     .tagline { font-style:italic; color:#aaa; margin-bottom:15px; }
+    @media (max-width:768px) {
+      .movie-detail { flex-direction:column; align-items:center; }
+      .movie-info { text-align:center; }
+    }
   </style>
 </head>
 <body>
@@ -55,7 +59,12 @@
           document.getElementById("movieTagline").textContent = movie.tagline || "";
           document.getElementById("movieGenres").textContent = movie.genres.map(g => g.name).join(", ");
         })
-        .catch(err => console.error("Error fetching details:", err));
+        .catch(err => {
+          document.querySelector(".container").innerHTML = "<p style='color:red;'>Error loading movie details.</p>";
+          console.error("Error fetching details:", err);
+        });
+    } else {
+      document.querySelector(".container").innerHTML = "<p style='color:red;'>Invalid movie ID.</p>";
     }
   </script>
 </body>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About MoviesDom - Your Ultimate Movie Database</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-section">
+                <h1 class="logo"><i class="fas fa-film"></i> MoviesDom</h1>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="movies.html"><i class="fas fa-list"></i> Movies</a>
+                <a href="movie-trailers.html"><i class="fas fa-play-circle"></i> Trailers</a>
+                <a href="movie-clips.html"><i class="fas fa-video"></i> Clips</a>
+                <a href="movie-review.html"><i class="fas fa-star"></i> Reviews</a>
+                <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
+                <a href="about.html" class="active"><i class="fas fa-info-circle"></i> About</a>
+                <div class="nav-dropdown">
+                    <a href="#"><i class="fas fa-user"></i> My Account <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="#" id="watchlistBtn"><i class="fas fa-bookmark"></i> Watchlist</a>
+                        <a href="#" id="favoritesBtn"><i class="fas fa-heart"></i> Favorites</a>
+                        <a href="#" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="hero-background">
+            <div class="hero-particles" id="heroParticles"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content" data-aos="fade-up">
+                <h1>About MoviesDom</h1>
+                <p class="hero-subtitle">Your Ultimate Movie Database Experience</p>
+                <p class="hero-description">
+                    MoviesDom is a comprehensive movie database platform that brings together movie enthusiasts, 
+                    critics, and filmmakers in one vibrant community. We're passionate about cinema and dedicated 
+                    to providing the most accurate, up-to-date movie information.
+                </p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="stat-number" data-target="50000">0</div>
+                        <div class="stat-label">Movies</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="stat-number" data-target="100000">0</div>
+                        <div class="stat-label">Reviews</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="stat-number" data-target="5000">0</div>
+                        <div class="stat-label">Daily Users</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="stat-number" data-target="100">0</div>
+                        <div class="stat-label">Team Members</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="mission-section">
+        <div class="container">
+            <div class="mission-grid">
+                <div class="mission-card" data-aos="fade-right">
+                    <div class="mission-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Our Mission</h3>
+                    <p>
+                        To create the world's most comprehensive and accessible movie database, 
+                        empowering film enthusiasts with accurate information, insightful reviews, 
+                        and a vibrant community experience.
+                    </p>
+                </div>
+                <div class="mission-card" data-aos="fade-up">
+                    <div class="mission-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Our Vision</h3>
+                    <p>
+                        To become the go-to platform for movie lovers worldwide, fostering a global 
+                        community that celebrates cinema in all its diversity and artistic expression.
+                    </p>
+                </div>
+                <div class="mission-card" data-aos="fade-left">
+                    <div class="mission-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Our Values</h3>
+                    <p>
+                        Accuracy, inclusivity, passion for cinema, user-centric design, and continuous 
+                        innovation drive everything we do at MoviesDom.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Our Journey</h2>
+                <p>From humble beginnings to becoming a leading movie database</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-date">2018</div>
+                    <div class="timeline-content">
+                        <h4>Foundation</h4>
+                        <p>MoviesDom was founded by a group of movie enthusiasts who saw the need for a better movie database platform.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-date">2019</div>
+                    <div class="timeline-content">
+                        <h4>First Launch</h4>
+                        <p>Launched our beta platform with 10,000 movies and basic review functionality.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-date">2020</div>
+                    <div class="timeline-content">
+                        <h4>TMDB Partnership</h4>
+                        <p>Integrated with The Movie Database API, expanding our movie collection to 50,000+ titles.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-date">2021</div>
+                    <div class="timeline-content">
+                        <h4>Community Growth</h4>
+                        <p>Reached 100,000 registered users and introduced advanced social features.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-date">2022</div>
+                    <div class="timeline-content">
+                        <h4>Mobile App Launch</h4>
+                        <p>Released our iOS and Android apps, making MoviesDom accessible anywhere.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-date">2023</div>
+                    <div class="timeline-content">
+                        <h4>AI Integration</h4>
+                        <p>Implemented AI-powered recommendations and advanced search capabilities.</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-date">2024</div>
+                    <div class="timeline-content">
+                        <h4>Global Expansion</h4>
+                        <p>Expanded to support 10 languages and launched in new international markets.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Meet Our Team</h2>
+                <p>The passionate people behind MoviesDom</p>
+            </div>
+            <div class="team-filters">
+                <button class="filter-btn active" data-filter="all">All Teams</button>
+                <button class="filter-btn" data-filter="leadership">Leadership</button>
+                <button class="filter-btn" data-filter="development">Development</button>
+                <button class="filter-btn" data-filter="design">Design</button>
+                <button class="filter-btn" data-filter="content">Content</button>
+            </div>
+            <div class="team-grid">
+                <!-- Team members will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section class="tech-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Our Technology</h2>
+                <p>Built with modern technologies for the best user experience</p>
+            </div>
+            <div class="tech-stack">
+                <div class="tech-category" data-aos="zoom-in">
+                    <h4>Frontend</h4>
+                    <div class="tech-items">
+                        <div class="tech-item" data-tooltip="HTML5">
+                            <i class="fab fa-html5"></i>
+                            <span>HTML5</span>
+                        </div>
+                        <div class="tech-item" data-tooltip="CSS3">
+                            <i class="fab fa-css3-alt"></i>
+                            <span>CSS3</span>
+                        </div>
+                        <div class="tech-item" data-tooltip="JavaScript">
+                            <i class="fab fa-js-square"></i>
+                            <span>JavaScript</span>
+                        </div>
+                        <div class="tech-item" data-tooltip="React">
+                            <i class="fab fa-react"></i>
+                            <span>React</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tech-category" data-aos="zoom-in" data-aos-delay="100">
+                    <h4>Backend</h4>
+                    <div class="tech-items">
+                        <div class="tech-item" data-tooltip="Node.js">
+                            <i class="fab fa-node-js"></i>
+                            <span>Node.js</span>
+                        </div>
+                        <div class="tech-item" data-tooltip="Python">
+                            <i class="fab fa-python"></i>
+                            <span>Python</span>
+                        </div>
+                        <div class="tech-item" data-tooltip="Database">
+                            <i class="fas fa-database"></i>
+                            <span>MongoDB</span>
+                        </div>
+                        <div class="tech-item" data-tooltip="API">
+                            <i class="fas fa-cloud"></i>
+                            <span>REST API</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tech-category" data-aos="zoom-in" data-aos-delay="200">
+                    <h4>Infrastructure</h4>
+                    <div class="tech-items">
+                        <div class="tech-item" data-tooltip="AWS">
+                            <i class="fab fa-aws"></i>
+                            <span>AWS</span>
+                        </div>
+                        <div class="tech-item" data-tooltip="Docker">
+                            <i class="fab fa-docker"></i>
+                            <span>Docker</span>
+                        </div>
+                        <div class="tech-item" data-tooltip="Git">
+                            <i class="fab fa-git-alt"></i>
+                            <span>Git</span>
+                        </div>
+                        <div class="tech-item" data-tooltip="CI/CD">
+                            <i class="fas fa-rocket"></i>
+                            <span>CI/CD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements -->
+    <section class="achievements-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Our Achievements</h2>
+                <p>Milestones we're proud of</p>
+            </div>
+            <div class="achievements-grid">
+                <div class="achievement-card" data-aos="flip-left">
+                    <div class="achievement-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Best Movie App 2023</h3>
+                    <p>Winner of the prestigious Tech Innovation Award</p>
+                </div>
+                <div class="achievement-card" data-aos="flip-left" data-aos-delay="100">
+                    <div class="achievement-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>1M+ Users</h3>
+                    <p>Trusted by over a million movie enthusiasts worldwide</p>
+                </div>
+                <div class="achievement-card" data-aos="flip-left" data-aos-delay="200">
+                    <div class="achievement-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>4.9/5 Rating</h3>
+                    <p>Consistently high ratings across app stores</p>
+                </div>
+                <div class="achievement-card" data-aos="flip-left" data-aos-delay="300">
+                    <div class="achievement-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>10 Languages</h3>
+                    <p>Available in multiple languages for global accessibility</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Frequently Asked Questions</h2>
+                <p>Get answers to common questions about MoviesDom</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-column">
+                    <div class="faq-item" data-aos="fade-right">
+                        <div class="faq-question">
+                            <h4>How often is movie data updated?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our movie data is updated in real-time through our integration with The Movie Database (TMDB) API. New releases and updates are typically available within hours of official announcements.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-aos="fade-right" data-aos-delay="100">
+                        <div class="faq-question">
+                            <h4>Is MoviesDom free to use?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! MoviesDom is completely free to use. We believe movie information should be accessible to everyone. We may introduce premium features in the future, but core functionality will always remain free.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-aos="fade-right" data-aos-delay="200">
+                        <div class="faq-question">
+                            <h4>How can I contribute to MoviesDom?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>You can contribute by writing reviews, rating movies, participating in discussions, and reporting inaccurate information. We also welcome feedback and suggestions for improvement.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="faq-column">
+                    <div class="faq-item" data-aos="fade-left">
+                        <div class="faq-question">
+                            <h4>Do you have a mobile app?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes! MoviesDom is available as a mobile app for both iOS and Android devices. You can download it from the App Store or Google Play Store.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-aos="fade-left" data-aos-delay="100">
+                        <div class="faq-question">
+                            <h4>How accurate is the movie information?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We strive for 100% accuracy by using official sources and community verification. Our data comes from TMDB, which is maintained by a global community of contributors and industry professionals.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item" data-aos="fade-left" data-aos-delay="200">
+                        <div class="faq-question">
+                            <h4>Can I request features or report bugs?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Absolutely! We welcome feature requests and bug reports. Please use our contact form or visit our GitHub repository to submit your feedback.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content" data-aos="zoom-in">
+                <h2>Join the MoviesDom Community</h2>
+                <p>Become part of our growing community of movie lovers</p>
+                <div class="cta-buttons">
+                    <a href="contact.html" class="btn btn-primary">
+                        <i class="fas fa-envelope"></i> Get In Touch
+                    </a>
+                    <a href="movies.html" class="btn btn-secondary">
+                        <i class="fas fa-film"></i> Explore Movies
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>MoviesDom</h4>
+                    <p>Your ultimate movie database with advanced features and real-time data.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="movies.html">Browse Movies</a>
+                    <a href="movie-trailers.html">Latest Trailers</a>
+                    <a href="movie-review.html">Movie Reviews</a>
+                    <a href="news.html">Movie News</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <a href="about.html" class="active">About Us</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Press Kit</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                    <a href="#">DMCA</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MoviesDom. All rights reserved. Made with <i class="fas fa-heart" style="color: #e50914;"></i> for movie lovers.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/about.js"></script>
+</body>
+</html>

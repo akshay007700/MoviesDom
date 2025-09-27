@@ -16,7 +16,6 @@
     <!-- Loading Spinner -->
     <div class="loading-spinner" id="loadingSpinner">
         <div class="spinner"></div>
-        <p>Loading awesome movie clips...</p>
     </div>
 
     <!-- Video Controls Overlay -->
@@ -27,128 +26,6 @@
         <button class="control-btn sound-btn" id="soundBtn">
             <i class="fas fa-volume-up"></i>
         </button>
-        <button class="control-btn upload-btn" id="uploadBtn">
-            <i class="fas fa-plus"></i>
-        </button>
-    </div>
-
-    <!-- Upload Modal -->
-    <div class="modal" id="uploadModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Upload Movie Clip</h3>
-                <button class="close-btn" id="closeModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="uploadForm">
-                    <div class="upload-area" id="uploadArea">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        <p>Drag & drop video or click to browse</p>
-                        <input type="file" id="videoInput" accept="video/*" hidden>
-                        <video id="videoPreview" controls style="display: none; max-width: 100%;"></video>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="clipTitle" placeholder="Clip title" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="clipDescription" placeholder="Description (optional)"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="clipHashtags" placeholder="#hashtags (space separated)">
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" id="cancelUpload">Cancel</button>
-                        <button type="submit" id="submitUpload">Upload</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Comments Modal -->
-    <div class="modal" id="commentsModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Comments</h3>
-                <button class="close-btn" id="closeComments">&times;</button>
-            </div>
-            <div class="comments-list" id="commentsList">
-                <!-- Comments will be loaded here -->
-            </div>
-            <div class="add-comment">
-                <input type="text" id="commentInput" placeholder="Add a comment...">
-                <button id="postComment">Post</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- User Profile Modal -->
-    <div class="modal" id="profileModal">
-        <div class="modal-content profile-content">
-            <div class="profile-header">
-                <img src="images/avatar-placeholder.jpg" alt="Profile" class="profile-avatar">
-                <h3 id="profileUsername">MovieLover</h3>
-                <p id="profileBio">Movie enthusiast sharing awesome clips!</p>
-            </div>
-            <div class="profile-stats">
-                <div class="stat">
-                    <span id="clipsCount">0</span>
-                    <span>Clips</span>
-                </div>
-                <div class="stat">
-                    <span id="followersCount">0</span>
-                    <span>Followers</span>
-                </div>
-                <div class="stat">
-                    <span id="followingCount">0</span>
-                    <span>Following</span>
-                </div>
-            </div>
-            <div class="profile-clips" id="profileClips">
-                <!-- User's clips will be displayed here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Video Editor Modal -->
-    <div class="modal" id="editorModal">
-        <div class="modal-content editor-content">
-            <div class="modal-header">
-                <h3>Edit Video</h3>
-                <button class="close-btn" id="closeEditor">&times;</button>
-            </div>
-            <div class="editor-body">
-                <div class="video-preview">
-                    <video id="editPreview" controls></video>
-                </div>
-                <div class="editor-tools">
-                    <div class="tool-section">
-                        <h4>Trim Video</h4>
-                        <div class="trim-controls">
-                            <input type="range" id="trimStart" min="0" max="100" value="0">
-                            <input type="range" id="trimEnd" min="0" max="100" value="100">
-                        </div>
-                    </div>
-                    <div class="tool-section">
-                        <h4>Filters</h4>
-                        <div class="filters-grid">
-                            <button class="filter-btn" data-filter="none">Normal</button>
-                            <button class="filter-btn" data-filter="grayscale">B&W</button>
-                            <button class="filter-btn" data-filter="sepia">Sepia</button>
-                            <button class="filter-btn" data-filter="vintage">Vintage</button>
-                        </div>
-                    </div>
-                    <div class="tool-section">
-                        <h4>Add Text</h4>
-                        <input type="text" id="videoText" placeholder="Enter text to overlay">
-                    </div>
-                </div>
-                <div class="editor-actions">
-                    <button id="saveEdit">Save Changes</button>
-                    <button id="cancelEdit">Cancel</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Bottom Navigation -->
@@ -156,34 +33,16 @@
         <button class="nav-btn" onclick="window.location.href='movies.html'">
             <i class="fas fa-home"></i>
         </button>
+        <button class="nav-btn" onclick="window.location.href='movie-clips.html'">
+            <i class="fas fa-play-circle"></i>
+        </button>
         <button class="nav-btn" onclick="window.location.href='search.html'">
             <i class="fas fa-search"></i>
         </button>
-        <button class="nav-btn upload-trigger" id="mainUploadBtn">
-            <i class="fas fa-plus"></i>
-        </button>
-        <button class="nav-btn" id="notificationsBtn">
-            <i class="fas fa-bell"></i>
-        </button>
-        <button class="nav-btn profile-trigger" id="profileBtn">
-            <i class="fas fa-user"></i>
-        </button>
     </nav>
-
-    <!-- Notifications Panel -->
-    <div class="notifications-panel" id="notificationsPanel">
-        <div class="notifications-header">
-            <h3>Notifications</h3>
-            <button class="close-btn" id="closeNotifications">&times;</button>
-        </div>
-        <div class="notifications-list" id="notificationsList">
-            <!-- Notifications will appear here -->
-        </div>
-    </div>
 
     <script src="js/config.js"></script>
     <script src="js/api.js"></script>
-    <script src="js/utils.js"></script>
     <script src="js/movie-clips.js"></script>
 </body>
 </html>

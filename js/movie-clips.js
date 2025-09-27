@@ -4,14 +4,11 @@ class MovieReels {
         this.loadingSpinner = document.getElementById('loadingSpinner');
         this.pauseBtn = document.getElementById('pauseBtn');
         this.soundBtn = document.getElementById('soundBtn');
-        this.uploadBtn = document.getElementById('uploadBtn');
         
         this.currentReelIndex = 0;
         this.reels = [];
         this.isPlaying = true;
         this.isMuted = false;
-        this.userProfile = this.getUserProfile();
-        this.categories = ['All', 'Trending', 'Comedy', 'Action', 'Horror', 'Drama', 'Sci-Fi'];
         
         this.init();
     }
@@ -19,463 +16,333 @@ class MovieReels {
     async init() {
         await this.loadMovieClips();
         this.setupEventListeners();
-        this.setupModals();
         this.setupIntersectionObserver();
-        this.renderCategoryFilter();
         this.hideLoading();
-        this.loadUserClips();
     }
     
-    setupModals() {
-        // Upload Modal
-        this.uploadModal = document.getElementById('uploadModal');
-        this.uploadForm = document.getElementById('uploadForm');
-        this.uploadArea = document.getElementById('uploadArea');
-        this.videoInput = document.getElementById('videoInput');
-        this.videoPreview = document.getElementById('videoPreview');
+    async loadMovieClips() {
+        try {
+            // Get movie videos from TMDB API
+            const popularMovies = await api.fetchPopularMovies();
+            this.reels = [];
+            
+            for (const movie of popularMovies.slice(0, 20)) {
+                const videos = await api.fetchMovieVideos(movie.id);
+                const trailer = videos.find(video => 
+                    video.type === 'Trailer' || video.type === 'Teaser'
+                );
+                
+                if (trailer) {
+                    this.reels.push({
+                        movie,
+                        video: trailer,
+                        likes: Math.floor(Math.random() * 1000) + 500,
+                        comments: Math.floor(Math.random() * 100) + 50,
+                        shares: Math.floor(Math.random() * 200) + 100,
+                        isLiked: false
+                    });
+                }
+            }
+            
+            this.renderReels();
+        } catch (error) {
+            console.error('Error loading movie clips:', error);
+        }
+    }
+    
+    renderReels() {
+        this.reelsContainer.innerHTML = '';
         
-        // Comments Modal
-        this.commentsModal = document.getElementById('commentsModal');
-        this.commentsList = document.getElementById('commentsList');
-        this.commentInput = document.getElementById('commentInput');
+        this.reels.forEach((reel, index) => {
+            const reelElement = this.createReelElement(reel, index);
+            this.reelsContainer.appendChild(reelElement);
+        });
+    }
+    
+    createReelElement(reel, index) {
+        const reelDiv = document.createElement('div');
+        reelDiv.className = 'video-reel';
+        reelDiv.innerHTML = `
+            <div class="progress-bar">
+                <div class="progress" id="progress-${index}"></div>
+            </div>
+            <video 
+                class="video-player" 
+                id="video-${index}"
+                playsinline 
+                webkit-playsinline
+                preload="metadata"
+            >
+                <source src="https://www.youtube.com/embed/${reel.video.key}" type="video/mp4">
+            </video>
+            
+            <div class="video-info">
+                <h3 class="movie-title">${reel.movie.title}</h3>
+                <p class="movie-description">${reel.movie.overview}</p>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="action-btn like-btn" data-index="${index}">
+                    <i class="fas ${reel.isLiked ? 'fa-heart' : 'fa-heart'}"></i>
+                    <div class="action-count">${this.formatCount(reel.likes)}</div>
+                </button>
+                
+                <button class="action-btn comment-btn" data-index="${index}">
+                    <i class="fas fa-comment"></i>
+                    <div class="action-count">${this.formatCount(reel.comments)}</div>
+                </button>
+                
+                <button class="action-btn share-btn" data-index="${index}">
+                    <i class="fas fa-share"></i>
+                    <div class="action-count">${this.formatCount(reel.shares)}</div>
+                </button>
+            </div>
+        `;
         
-        // Profile Modal
-        this.profileModal = document.getElementById('profileModal');
-        
-        // Editor Modal
-        this.editorModal = document.getElementById('editorModal');
-        
-        // Notifications Panel
-        this.notificationsPanel = document.getElementById('notificationsPanel');
+        return reelDiv;
     }
     
     setupEventListeners() {
-        // Existing event listeners...
+        // Scroll detection for video play/pause
         this.reelsContainer.addEventListener('scroll', this.handleScroll.bind(this));
+        
+        // Video controls
         this.pauseBtn.addEventListener('click', this.togglePlayback.bind(this));
         this.soundBtn.addEventListener('click', this.toggleSound.bind(this));
         
-        // New modal event listeners
-        this.setupUploadModal();
-        this.setupCommentsModal();
-        this.setupProfileModal();
-        this.setupEditorModal();
-        this.setupNotifications();
+        // Action buttons delegation
+        this.reelsContainer.addEventListener('click', (e) => {
+            if (e.target.closest('.like-btn')) {
+                this.handleLike(e.target.closest('.like-btn'));
+            }
+            if (e.target.closest('.comment-btn')) {
+                this.handleComment(e.target.closest('.comment-btn'));
+            }
+            if (e.target.closest('.share-btn')) {
+                this.handleShare(e.target.closest('.share-btn'));
+            }
+        });
         
-        // Category filter
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('category-btn')) {
-                this.filterByCategory(e.target.dataset.category);
+        // Double tap to like
+        this.reelsContainer.addEventListener('dblclick', (e) => {
+            const likeBtn = e.target.closest('.video-reel')?.querySelector('.like-btn');
+            if (likeBtn) this.handleLike(likeBtn);
+        });
+        
+        // Keyboard controls
+        document.addEventListener('keydown', (e) => {
+            switch(e.code) {
+                case 'Space':
+                    e.preventDefault();
+                    this.togglePlayback();
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    this.scrollToReel(this.currentReelIndex - 1);
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    this.scrollToReel(this.currentReelIndex + 1);
+                    break;
             }
         });
     }
     
-    setupUploadModal() {
-        // Open upload modal
-        this.uploadBtn.addEventListener('click', () => this.showModal(this.uploadModal));
-        document.getElementById('mainUploadBtn').addEventListener('click', () => this.showModal(this.uploadModal));
-        
-        // Close modals
-        document.getElementById('closeModal').addEventListener('click', () => this.hideModal(this.uploadModal));
-        document.getElementById('cancelUpload').addEventListener('click', () => this.hideModal(this.uploadModal));
-        
-        // File upload handling
-        this.uploadArea.addEventListener('click', () => this.videoInput.click());
-        this.uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            this.uploadArea.style.borderColor = '#e50914';
-        });
-        this.uploadArea.addEventListener('dragleave', () => {
-            this.uploadArea.style.borderColor = '#555';
-        });
-        this.uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            this.uploadArea.style.borderColor = '#555';
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                this.handleFileSelect(files[0]);
-            }
-        });
-        
-        this.videoInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                this.handleFileSelect(e.target.files[0]);
-            }
-        });
-        
-        // Form submission
-        this.uploadForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.handleUpload();
-        });
-    }
-    
-    setupCommentsModal() {
-        document.getElementById('closeComments').addEventListener('click', () => this.hideModal(this.commentsModal));
-        document.getElementById('postComment').addEventListener('click', () => this.postComment());
-        this.commentInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.postComment();
-        });
-    }
-    
-    setupProfileModal() {
-        document.getElementById('profileBtn').addEventListener('click', () => this.showUserProfile());
-        document.querySelector('.close-btn').addEventListener('click', () => this.hideModal(this.profileModal));
-    }
-    
-    setupEditorModal() {
-        document.getElementById('closeEditor').addEventListener('click', () => this.hideModal(this.editorModal));
-        document.getElementById('cancelEdit').addEventListener('click', () => this.hideModal(this.editorModal));
-        document.getElementById('saveEdit').addEventListener('click', () => this.saveEditedVideo());
-        
-        // Filter buttons
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                this.applyFilter(e.target.dataset.filter);
-            });
-        });
-    }
-    
-    setupNotifications() {
-        document.getElementById('notificationsBtn').addEventListener('click', () => this.toggleNotifications());
-        document.getElementById('closeNotifications').addEventListener('click', () => this.hideNotifications());
-    }
-    
-    handleFileSelect(file) {
-        if (!file.type.startsWith('video/')) {
-            alert('Please select a video file');
-            return;
-        }
-        
-        if (file.size > 100 * 1024 * 1024) { // 100MB limit
-            alert('File size must be less than 100MB');
-            return;
-        }
-        
-        const url = URL.createObjectURL(file);
-        this.videoPreview.src = url;
-        this.videoPreview.style.display = 'block';
-        this.uploadArea.querySelector('p').textContent = file.name;
-        
-        // Store file for upload
-        this.selectedFile = file;
-    }
-    
-    async handleUpload() {
-        const title = document.getElementById('clipTitle').value;
-        const description = document.getElementById('clipDescription').value;
-        const hashtags = document.getElementById('clipHashtags').value;
-        
-        if (!this.selectedFile || !title) {
-            alert('Please select a video and enter a title');
-            return;
-        }
-        
-        // Simulate upload process
-        this.showUploadProgress();
-        
-        // In a real app, you would upload to your server here
-        await this.simulateUpload(this.selectedFile);
-        
-        // Create new reel object
-        const newReel = {
-            id: Date.now(),
-            movie: {
-                title: title,
-                overview: description,
-                poster_path: null
-            },
-            video: {
-                key: URL.createObjectURL(this.selectedFile),
-                type: 'User Upload'
-            },
-            likes: 0,
-            comments: 0,
-            shares: 0,
-            isLiked: false,
-            isUserClip: true,
-            hashtags: this.extractHashtags(hashtags),
-            uploadDate: new Date().toISOString()
-        };
-        
-        // Add to beginning of reels
-        this.reels.unshift(newReel);
-        this.renderReels();
-        this.hideModal(this.uploadModal);
-        this.showNotification('Your clip has been uploaded successfully!');
-        
-        // Save to user profile
-        this.saveUserClip(newReel);
-    }
-    
-    async simulateUpload(file) {
-        return new Promise(resolve => {
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 10;
-                this.updateUploadProgress(progress);
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    resolve();
+    setupIntersectionObserver() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = Array.from(this.reelsContainer.children).indexOf(entry.target);
+                    this.playReel(index);
+                } else {
+                    const index = Array.from(this.reelsContainer.children).indexOf(entry.target);
+                    this.pauseReel(index);
                 }
-            }, 200);
+            });
+        }, {
+            threshold: 0.8,
+            root: this.reelsContainer
+        });
+        
+        // Observe all reel elements
+        this.reelsContainer.querySelectorAll('.video-reel').forEach(reel => {
+            observer.observe(reel);
         });
     }
     
-    showUploadProgress() {
-        // Add progress bar to modal
-        const progressHtml = `
-            <div class="upload-progress">
-                <div class="progress-fill" id="uploadProgress"></div>
-            </div>
-        `;
-        this.uploadForm.querySelector('.form-actions').insertAdjacentHTML('beforebegin', progressHtml);
+    handleScroll() {
+        const reels = this.reelsContainer.children;
+        const containerTop = this.reelsContainer.getBoundingClientRect().top;
+        
+        for (let i = 0; i < reels.length; i++) {
+            const reelTop = reels[i].getBoundingClientRect().top - containerTop;
+            if (Math.abs(reelTop) < window.innerHeight / 2) {
+                this.currentReelIndex = i;
+                break;
+            }
+        }
     }
     
-    updateUploadProgress(percent) {
-        const progressBar = document.getElementById('uploadProgress');
+    async playReel(index) {
+        const video = document.getElementById(`video-${index}`);
+        if (video) {
+            try {
+                await video.play();
+                this.startProgressBar(index, video);
+            } catch (error) {
+                console.log('Auto-play prevented:', error);
+            }
+        }
+    }
+    
+    pauseReel(index) {
+        const video = document.getElementById(`video-${index}`);
+        if (video) {
+            video.pause();
+            this.stopProgressBar(index);
+        }
+    }
+    
+    startProgressBar(index, video) {
+        const progressBar = document.getElementById(`progress-${index}`);
+        if (!progressBar) return;
+        
+        const updateProgress = () => {
+            if (video.duration) {
+                const progress = (video.currentTime / video.duration) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+        };
+        
+        video.addEventListener('timeupdate', updateProgress);
+    }
+    
+    stopProgressBar(index) {
+        const progressBar = document.getElementById(`progress-${index}`);
         if (progressBar) {
-            progressBar.style.width = percent + '%';
+            progressBar.style.width = '0%';
         }
     }
     
-    extractHashtags(text) {
-        return text.match(/#\w+/g) || [];
-    }
-    
-    async showComments(reelIndex) {
-        this.currentCommentsReel = reelIndex;
-        const reel = this.reels[reelIndex];
+    handleLike(likeBtn) {
+        const index = parseInt(likeBtn.dataset.index);
+        const reel = this.reels[index];
         
-        // Load comments
-        await this.loadComments(reel.id);
-        this.showModal(this.commentsModal);
-    }
-    
-    async loadComments(reelId) {
-        // Simulate loading comments from server
-        const comments = [
-            { id: 1, user: 'MovieFan123', text: 'This scene was amazing!', avatar: 'images/avatar-placeholder.jpg', time: '2h ago' },
-            { id: 2, user: 'CinemaLover', text: 'The cinematography is stunning!', avatar: 'images/avatar-placeholder.jpg', time: '1d ago' },
-            { id: 3, user: 'FilmCritic', text: 'Great acting performance!', avatar: 'images/avatar-placeholder.jpg', time: '3d ago' }
-        ];
+        reel.isLiked = !reel.isLiked;
+        reel.likes += reel.isLiked ? 1 : -1;
         
-        this.renderComments(comments);
-    }
-    
-    renderComments(comments) {
-        this.commentsList.innerHTML = comments.map(comment => `
-            <div class="comment-item">
-                <img src="${comment.avatar}" alt="${comment.user}" class="comment-avatar">
-                <div class="comment-content">
-                    <div class="comment-author">${comment.user}</div>
-                    <div class="comment-text">${comment.text}</div>
-                    <div class="comment-time">${comment.time}</div>
-                </div>
-            </div>
-        `).join('');
-    }
-    
-    postComment() {
-        const text = this.commentInput.value.trim();
-        if (!text) return;
+        // Update UI
+        const icon = likeBtn.querySelector('i');
+        const count = likeBtn.querySelector('.action-count');
         
-        // Add new comment
-        const newComment = {
-            id: Date.now(),
-            user: this.userProfile.username,
-            text: text,
-            avatar: this.userProfile.avatar,
-            time: 'Just now'
-        };
+        icon.style.color = reel.isLiked ? '#ff2e63' : 'white';
+        count.textContent = this.formatCount(reel.likes);
         
-        this.commentsList.insertAdjacentHTML('afterbegin', `
-            <div class="comment-item">
-                <img src="${newComment.avatar}" alt="${newComment.user}" class="comment-avatar">
-                <div class="comment-content">
-                    <div class="comment-author">${newComment.user}</div>
-                    <div class="comment-text">${newComment.text}</div>
-                    <div class="comment-time">${newComment.time}</div>
-                </div>
-            </div>
-        `);
-        
-        this.commentInput.value = '';
-        
-        // Update comment count
-        if (this.currentCommentsReel !== undefined) {
-            this.reels[this.currentCommentsReel].comments++;
-            this.updateActionCounts(this.currentCommentsReel);
+        // Like animation
+        if (reel.isLiked) {
+            this.createLikeAnimation(likeBtn);
         }
     }
     
-    showUserProfile() {
-        document.getElementById('profileUsername').textContent = this.userProfile.username;
-        document.getElementById('profileBio').textContent = this.userProfile.bio;
-        document.getElementById('clipsCount').textContent = this.userProfile.clips.length;
-        document.getElementById('followersCount').textContent = this.userProfile.followers;
-        document.getElementById('followingCount').textContent = this.userProfile.following;
+    createLikeAnimation(likeBtn) {
+        const animation = document.createElement('div');
+        animation.className = 'like-animation';
+        animation.innerHTML = '<i class="fas fa-heart"></i>';
         
-        this.renderUserClips();
-        this.showModal(this.profileModal);
-    }
-    
-    renderUserClips() {
-        const profileClips = document.getElementById('profileClips');
-        profileClips.innerHTML = this.userProfile.clips.map(clip => `
-            <div class="profile-clip" onclick="movieReels.playUserClip('${clip.id}')">
-                <video src="${clip.video.key}" style="width: 100%; height: 100%; object-fit: cover;"></video>
-            </div>
-        `).join('');
-    }
-    
-    playUserClip(clipId) {
-        const clipIndex = this.reels.findIndex(reel => reel.id == clipId);
-        if (clipIndex !== -1) {
-            this.scrollToReel(clipIndex);
-            this.hideModal(this.profileModal);
-        }
-    }
-    
-    saveUserClip(clip) {
-        this.userProfile.clips.push(clip);
-        localStorage.setItem('userProfile', JSON.stringify(this.userProfile));
-    }
-    
-    loadUserClips() {
-        const savedClips = this.userProfile.clips;
-        if (savedClips.length > 0) {
-            this.reels.unshift(...savedClips);
-            this.renderReels();
-        }
-    }
-    
-    getUserProfile() {
-        const saved = localStorage.getItem('userProfile');
-        if (saved) {
-            return JSON.parse(saved);
-        }
+        const rect = likeBtn.getBoundingClientRect();
+        animation.style.left = rect.left + 'px';
+        animation.style.top = rect.top + 'px';
         
-        return {
-            username: 'MovieLover',
-            bio: 'Movie enthusiast sharing awesome clips!',
-            avatar: 'images/avatar-placeholder.jpg',
-            clips: [],
-            followers: 42,
-            following: 156
-        };
-    }
-    
-    showEditor(videoElement) {
-        this.editingVideo = videoElement;
-        document.getElementById('editPreview').src = videoElement.src;
-        this.showModal(this.editorModal);
-    }
-    
-    applyFilter(filter) {
-        const preview = document.getElementById('editPreview');
-        preview.style.filter = filter === 'none' ? '' : `filter: ${filter}(100%)`;
-    }
-    
-    saveEditedVideo() {
-        // In a real app, you would apply the edits to the video
-        this.showNotification('Video edits saved successfully!');
-        this.hideModal(this.editorModal);
-    }
-    
-    toggleNotifications() {
-        this.notificationsPanel.classList.toggle('open');
-        if (this.notificationsPanel.classList.contains('open')) {
-            this.loadNotifications();
-        }
-    }
-    
-    hideNotifications() {
-        this.notificationsPanel.classList.remove('open');
-    }
-    
-    loadNotifications() {
-        const notifications = [
-            { id: 1, user: 'MovieFan123', action: 'liked your clip', time: '5m ago', avatar: 'images/avatar-placeholder.jpg' },
-            { id: 2, user: 'CinemaLover', action: 'commented on your clip', time: '1h ago', avatar: 'images/avatar-placeholder.jpg' },
-            { id: 3, user: 'FilmCritic', action: 'started following you', time: '2h ago', avatar: 'images/avatar-placeholder.jpg' }
-        ];
-        
-        document.getElementById('notificationsList').innerHTML = notifications.map(notif => `
-            <div class="notification-item">
-                <img src="${notif.avatar}" alt="${notif.user}" class="notification-avatar">
-                <div class="notification-content">
-                    <strong>${notif.user}</strong> ${notif.action}
-                    <div class="notification-time">${notif.time}</div>
-                </div>
-            </div>
-        `).join('');
-    }
-    
-    showNotification(message) {
-        // Create toast notification
-        const toast = document.createElement('div');
-        toast.className = 'notification-toast';
-        toast.textContent = message;
-        toast.style.cssText = `
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #e50914;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 25px;
-            z-index: 10000;
-            animation: slideInUp 0.3s ease-out;
-        `;
-        
-        document.body.appendChild(toast);
+        document.body.appendChild(animation);
         
         setTimeout(() => {
-            toast.remove();
-        }, 3000);
+            animation.remove();
+        }, 800);
     }
     
-    renderCategoryFilter() {
-        const filterHtml = `
-            <div class="category-filter">
-                ${this.categories.map(cat => 
-                    `<button class="category-btn ${cat === 'All' ? 'active' : ''}" data-category="${cat}">${cat}</button>`
-                ).join('')}
-            </div>
-        `;
-        document.body.insertAdjacentHTML('afterbegin', filterHtml);
+    handleComment(commentBtn) {
+        const index = parseInt(commentBtn.dataset.index);
+        const reel = this.reels[index];
+        alert(`Comments for: ${reel.movie.title}\n\nThis would open a comments modal in a real app.`);
     }
     
-    filterByCategory(category) {
-        // Update active button
-        document.querySelectorAll('.category-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.category === category);
-        });
+    handleShare(shareBtn) {
+        const index = parseInt(shareBtn.dataset.index);
+        const reel = this.reels[index];
         
-        // Filter logic would go here
-        this.showNotification(`Showing ${category} clips`);
+        if (navigator.share) {
+            navigator.share({
+                title: reel.movie.title,
+                text: `Check out this clip from ${reel.movie.title}`,
+                url: window.location.href
+            });
+        } else {
+            // Fallback: copy to clipboard
+            navigator.clipboard.writeText(`Check out "${reel.movie.title}" on MovieDom!`);
+            alert('Link copied to clipboard!');
+        }
     }
     
-    showModal(modal) {
-        modal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
+    togglePlayback() {
+        this.isPlaying = !this.isPlaying;
+        const video = document.getElementById(`video-${this.currentReelIndex}`);
+        
+        if (video) {
+            if (this.isPlaying) {
+                video.play();
+                this.pauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                video.pause();
+                this.pauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        }
     }
     
-    hideModal(modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
+    toggleSound() {
+        this.isMuted = !this.isMuted;
+        const video = document.getElementById(`video-${this.currentReelIndex}`);
+        
+        if (video) {
+            video.muted = this.isMuted;
+            this.soundBtn.innerHTML = this.isMuted ? 
+                '<i class="fas fa-volume-mute"></i>' : 
+                '<i class="fas fa-volume-up"></i>';
+        }
     }
     
-    // ... rest of your existing methods
+    scrollToReel(index) {
+        if (index >= 0 && index < this.reels.length) {
+            const reels = this.reelsContainer.children;
+            reels[index].scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+    
+    formatCount(count) {
+        if (count >= 1000000) {
+            return (count / 1000000).toFixed(1) + 'M';
+        } else if (count >= 1000) {
+            return (count / 1000).toFixed(1) + 'K';
+        }
+        return count.toString();
+    }
+    
+    hideLoading() {
+        this.loadingSpinner.style.display = 'none';
+    }
 }
 
-// Initialize the enhanced reels system
-let movieReels;
-
+// Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    movieReels = new MovieReels();
+    new MovieReels();
 });
+
+// Add to api.js for video fetching
+if (typeof api !== 'undefined') {
+    api.fetchMovieVideos = async (movieId) => {
+        const response = await fetch(
+            `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${api.apiKey}`
+        );
+        const data = await response.json();
+        return data.results || [];
+    };
+}

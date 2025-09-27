@@ -463,4 +463,38 @@
         margin-top: 0;
         padding-top: 1rem;
     }
+    /* ✅ Global mobile fixes */
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+.container, section {
+  max-width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* ✅ Mobile responsive layout */
+@media (max-width: 768px) {
+  .movies-grid, .trailers-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .movie-card, .trailer-card {
+    width: 100% !important;
+    margin: 0 auto;
+  }
+
+  header h1 {
+    font-size: 20px;
+  }
+
+  .search-box input {
+    width: 100% !important;
+    font-size: 14px;
+  }
+}
+
 }

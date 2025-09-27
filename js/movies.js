@@ -35,6 +35,8 @@ class MoviesPage {
         if (this.hasFiltersInURL()) {
             this.toggleAdvancedFilters();
         }
+        moviesGrid.innerHTML = "<p style='text-align:center;color:#ccc;'>Loading...</p>";
+
     }
 
     async loadGenres() {

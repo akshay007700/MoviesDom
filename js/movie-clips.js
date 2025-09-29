@@ -1,4 +1,4 @@
-const YT_API_KEY = "AIzaSyAf3Ov8t11NoFhZL4_vOrJ2bk4IiJT-0hw"; // 👈 यहां अपनी restricted YouTube API key डालें
+const YT_API_KEY = AIzaSyAf3Ov8t11NoFhZL4_vOrJ2bk4IiJT-0hw; // 👈 यहां अपनी restricted YouTube API key डालें
 const QUERY = "movie shorts"; // Only shorts-related search
 const MAX_RESULTS = 8;
 

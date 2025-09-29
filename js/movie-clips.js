@@ -1,75 +1,66 @@
-class MovieReels {
-    constructor() {
-        // ... existing code ...
+const YT_API_KEY = "AIzaSyAf3Ov8t11NoFhZL4_vOrJ2bk4IiJT-0hw"; // 👈 यहां अपनी restricted YouTube API key डालें
+const QUERY = "movie shorts"; // Only shorts-related search
+const MAX_RESULTS = 8;
+
+// Fetch YouTube Shorts
+async function fetchShorts() {
+  const clipsList = document.getElementById("clipsList");
+  clipsList.innerHTML = `<p class="loader">Fetching Shorts...</p>`;
+
+  try {
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${encodeURIComponent(
+      QUERY
+    )}&maxResults=${MAX_RESULTS}&key=${YT_API_KEY}`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (data.error) {
+      clipsList.innerHTML = `<p style="color:red;text-align:center;">
+        YouTube API Error: ${data.error.message}
+      </p>`;
+      return;
     }
-    
-    async init() {
-        await this.loadMovieClips();
-        this.setupEventListeners();
-        this.setupModals();
-        this.setupIntersectionObserver();
-        this.renderCategoryFilter();
-        this.hideLoading();
-        this.loadUserClips();
+
+    // Filter: केवल उन्हीं videos को allow करें जिनके title/description में "short" है
+    const shorts = data.items.filter(
+      (item) =>
+        item.snippet.title.toLowerCase().includes("short") ||
+        item.snippet.description.toLowerCase().includes("short")
+    );
+
+    if (!shorts.length) {
+      clipsList.innerHTML = `<p style="text-align:center;color:#ccc;">No Shorts found.</p>`;
+      return;
     }
-    
-    // Use your existing utils for API calls
-    async loadMovieClips() {
-        try {
-            const popularMovies = await utils.fetchData(
-                `https://api.themoviedb.org/3/movie/popular?api_key=${api.apiKey}`
-            );
-            
-            if (popularMovies && popularMovies.results) {
-                // ... rest of function using your existing utils
-            }
-        } catch (error) {
-            console.error('Error loading movie clips:', error);
-            utils.showToast('Failed to load clips', 'error');
-        }
-    }
-    
-    // Use your existing storage utils
-    getUserProfile() {
-        return utils.getFromStorage('userProfile') || {
-            username: 'MovieLover',
-            bio: 'Movie enthusiast sharing awesome clips!',
-            avatar: 'images/avatar-placeholder.jpg',
-            clips: [],
-            followers: 42,
-            following: 156
-        };
-    }
-    
-    saveUserClip(clip) {
-        this.userProfile.clips.push(clip);
-        utils.saveToStorage('userProfile', this.userProfile);
-    }
-    
-    // Use new TikTok utilities
-    handleLike(likeBtn) {
-        const index = parseInt(likeBtn.dataset.index);
-        const reel = this.reels[index];
-        
-        reel.isLiked = !reel.isLiked;
-        reel.likes += reel.isLiked ? 1 : -1;
-        
-        const count = likeBtn.querySelector('.action-count');
-        count.textContent = utils.formatCount(reel.likes); // Using new utility
-        
-        if (reel.isLiked) {
-            this.createLikeAnimation(likeBtn);
-        }
-    }
-    
-    // Use modal utilities
-    showModal(modal) {
-        utils.showModal(modal); // Using new utility
-    }
-    
-    hideModal(modal) {
-        utils.hideModal(modal); // Using new utility
-    }
-    
-    // ... rest of your methods using the appropriate utilities
+
+    // Render Shorts
+    clipsList.innerHTML = shorts
+      .map(
+        (item) => `
+        <div class="short-card">
+          <iframe 
+            src="https://www.youtube.com/embed/${item.id.videoId}?playsinline=1"
+            allow="autoplay; encrypted-media"
+            allowfullscreen>
+          </iframe>
+          <div class="short-info">
+            <h4>${item.snippet.title}</h4>
+          </div>
+          <div class="short-actions">
+            <button>❤️</button>
+            <button>💬</button>
+            <button>🔗</button>
+          </div>
+        </div>
+      `
+      )
+      .join("");
+  } catch (err) {
+    console.error("Fetch error:", err);
+    clipsList.innerHTML = `<p style="color:red;text-align:center;">Failed to load Shorts</p>`;
+  }
 }
+
+// Auto-play/stop logic (future upgrade: use YouTube IFrame API)
+document.addEventListener("DOMContentLoaded", fetchShorts);

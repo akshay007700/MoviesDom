@@ -17,6 +17,10 @@ class TrailersPhotosPage {
         this.allVideos = [];
         this.allPhotos = [];
         
+        // Track generated IDs to prevent duplicates
+        this.generatedVideoIds = new Set();
+        this.generatedPhotoIds = new Set();
+        
         this.init();
     }
 
@@ -45,15 +49,17 @@ class TrailersPhotosPage {
         this.showLoading('trailers', true);
         
         try {
-            // In a real app, you'd fetch videos from TMDB
-            // For demo, we'll simulate with movie data
             const moviesData = await movieAPI.getPopularMovies(page);
             const trailers = this.generateMockTrailers(moviesData.results);
             
             if (page === 1) {
                 this.allVideos = trailers;
             } else {
-                this.allVideos = [...this.allVideos, ...trailers];
+                // Filter out duplicates before adding
+                const newTrailers = trailers.filter(trailer => 
+                    !this.allVideos.some(existing => existing.id === trailer.id)
+                );
+                this.allVideos = [...this.allVideos, ...newTrailers];
             }
             
             this.hasMoreTrailers = moviesData.total_pages > page;
@@ -76,7 +82,11 @@ class TrailersPhotosPage {
             if (page === 1) {
                 this.allPhotos = photos;
             } else {
-                this.allPhotos = [...this.allPhotos, ...photos];
+                // Filter out duplicates before adding
+                const newPhotos = photos.filter(photo => 
+                    !this.allPhotos.some(existing => existing.id === photo.id)
+                );
+                this.allPhotos = [...this.allPhotos, ...newPhotos];
             }
             
             this.hasMorePhotos = moviesData.total_pages > page;
@@ -92,35 +102,55 @@ class TrailersPhotosPage {
     generateMockTrailers(movies) {
         const videoTypes = ['Trailer', 'Teaser', 'Clip', 'Featurette', 'Behind the Scenes', 'Bloopers'];
         
-        return movies.flatMap(movie => {
-            return Array.from({ length: 3 }, (_, i) => ({
-                id: `${movie.id}-${i}`,
+        // Create only one trailer per movie instead of multiple
+        return movies.map((movie, index) => {
+            const videoType = videoTypes[index % videoTypes.length];
+            const videoId = `${movie.id}-${videoType.toLowerCase().replace(' ', '_')}`;
+            
+            // Skip if this ID was already generated
+            if (this.generatedVideoIds.has(videoId)) {
+                return null;
+            }
+            this.generatedVideoIds.add(videoId);
+            
+            return {
+                id: videoId,
                 movieId: movie.id,
                 movieTitle: movie.title,
-                title: `${videoTypes[i]} - ${movie.title}`,
-                type: videoTypes[i].toLowerCase().replace(' ', '_'),
+                title: `${videoType} - ${movie.title}`,
+                type: videoType.toLowerCase().replace(' ', '_'),
                 thumbnail: movie.backdrop_path ? 
                     `https://image.tmdb.org/t/p/w500${movie.backdrop_path}` : 
                     'images/placeholder.jpg',
                 youtubeKey: 'dQw4w9WgXcQ', // Example key
-                description: `Official ${videoTypes[i].toLowerCase()} for ${movie.title}`,
+                description: `Official ${videoType.toLowerCase()} for ${movie.title}`,
                 duration: '2:30',
                 publishedDate: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString(),
                 viewCount: Math.floor(Math.random() * 1000000)
-            }));
-        });
+            };
+        }).filter(trailer => trailer !== null); // Remove null entries
     }
 
     generateMockPhotos(movies) {
         const photoTypes = ['poster', 'backdrop', 'still', 'logo'];
         
-        return movies.flatMap(movie => {
-            return Array.from({ length: 5 }, (_, i) => ({
-                id: `${movie.id}-photo-${i}`,
+        // Create only one photo per movie instead of multiple
+        return movies.map((movie, index) => {
+            const photoType = photoTypes[index % photoTypes.length];
+            const photoId = `${movie.id}-${photoType}`;
+            
+            // Skip if this ID was already generated
+            if (this.generatedPhotoIds.has(photoId)) {
+                return null;
+            }
+            this.generatedPhotoIds.add(photoId);
+            
+            return {
+                id: photoId,
                 movieId: movie.id,
                 movieTitle: movie.title,
-                title: `${movie.title} - ${photoTypes[i % 4]} ${i + 1}`,
-                type: photoTypes[i % 4],
+                title: `${movie.title} - ${photoType}`,
+                type: photoType,
                 url: movie.backdrop_path ? 
                     `https://image.tmdb.org/t/p/w780${movie.backdrop_path}` : 
                     'images/placeholder.jpg',
@@ -129,13 +159,15 @@ class TrailersPhotosPage {
                 aspectRatio: '16:9',
                 size: '2.4 MB',
                 uploadedDate: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString()
-            }));
-        });
+            };
+        }).filter(photo => photo !== null); // Remove null entries
     }
 
     renderFeaturedTrailers() {
         const container = document.getElementById('trailersCarousel');
-        const trailers = this.generateMockTrailers(this.featuredMovies.slice(0, 4)).slice(0, 8);
+        // Use only unique movies for featured trailers
+        const uniqueMovies = this.featuredMovies.slice(0, 4);
+        const trailers = this.generateMockTrailers(uniqueMovies).slice(0, 8);
         
         container.innerHTML = trailers.map(trailer => `
             <div class="video-card" onclick="trailersPage.playVideo('${trailer.youtubeKey}', '${trailer.title}', '${trailer.movieTitle}', '${trailer.type}')">
@@ -159,7 +191,9 @@ class TrailersPhotosPage {
 
     renderFeaturedPhotos() {
         const container = document.getElementById('featuredPhotos');
-        const photos = this.generateMockPhotos(this.featuredMovies.slice(4, 8)).slice(0, 12);
+        // Use different movies for featured photos to avoid duplicates
+        const uniqueMovies = this.featuredMovies.slice(4, 8);
+        const photos = this.generateMockPhotos(uniqueMovies).slice(0, 12);
         
         container.innerHTML = photos.map(photo => `
             <div class="photo-card" onclick="trailersPage.viewPhoto('${photo.url}', '${photo.title}', '${photo.movieTitle}', '${photo.width}x${photo.height}', '${photo.aspectRatio}')">
@@ -235,7 +269,12 @@ class TrailersPhotosPage {
     }
 
     filterVideos(videos) {
-        return videos.filter(video => {
+        // Remove duplicates by ID before filtering
+        const uniqueVideos = videos.filter((video, index, self) => 
+            index === self.findIndex(v => v.id === video.id)
+        );
+        
+        return uniqueVideos.filter(video => {
             // Media type filter
             if (this.currentMediaType !== 'all' && video.type !== this.currentMediaType) {
                 return false;
@@ -263,7 +302,12 @@ class TrailersPhotosPage {
     }
 
     filterPhotos(photos) {
-        return photos.filter(photo => {
+        // Remove duplicates by ID before filtering
+        const uniquePhotos = photos.filter((photo, index, self) => 
+            index === self.findIndex(p => p.id === photo.id)
+        );
+        
+        return uniquePhotos.filter(photo => {
             if (this.currentPhotoType !== 'all' && photo.type !== this.currentPhotoType) {
                 return false;
             }
@@ -294,26 +338,39 @@ class TrailersPhotosPage {
         });
 
         // Load more buttons
-        document.getElementById('loadMoreTrailers').addEventListener('click', () => {
-            this.loadMoreTrailers();
-        });
-
-        document.getElementById('loadMorePhotos').addEventListener('click', () => {
-            this.loadMorePhotos();
-        });
+        const loadMoreTrailers = document.getElementById('loadMoreTrailers');
+        const loadMorePhotos = document.getElementById('loadMorePhotos');
+        
+        if (loadMoreTrailers) {
+            loadMoreTrailers.addEventListener('click', () => {
+                this.loadMoreTrailers();
+            });
+        }
+        
+        if (loadMorePhotos) {
+            loadMorePhotos.addEventListener('click', () => {
+                this.loadMorePhotos();
+            });
+        }
 
         // Search functionality
-        document.getElementById('mediaSearch').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                this.performMediaSearch();
-            }
-        });
+        const mediaSearch = document.getElementById('mediaSearch');
+        if (mediaSearch) {
+            mediaSearch.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    this.performMediaSearch();
+                }
+            });
+        }
 
         // Filter changes
         ['mediaTypeFilter', 'sortFilter', 'timeFilter'].forEach(id => {
-            document.getElementById(id).addEventListener('change', () => {
-                this.applyMediaFilters();
-            });
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('change', () => {
+                    this.applyMediaFilters();
+                });
+            }
         });
 
         // Modal close events
@@ -345,13 +402,19 @@ class TrailersPhotosPage {
         document.querySelectorAll('.tab-nav-btn').forEach(btn => {
             btn.classList.remove('active');
         });
-        document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+        const activeTabBtn = document.querySelector(`[data-tab="${tabName}"]`);
+        if (activeTabBtn) {
+            activeTabBtn.classList.add('active');
+        }
         
         // Show active tab content
         document.querySelectorAll('.tab-content').forEach(content => {
             content.classList.remove('active');
         });
-        document.getElementById(`${tabName}-tab`).classList.add('active');
+        const activeTabContent = document.getElementById(`${tabName}-tab`);
+        if (activeTabContent) {
+            activeTabContent.classList.add('active');
+        }
         
         // Load content for the tab
         this.loadTabContent(tabName);
@@ -362,11 +425,15 @@ class TrailersPhotosPage {
             case 'trailers':
                 if (this.allVideos.length === 0) {
                     this.loadTrailers(1);
+                } else {
+                    this.renderTrailers();
                 }
                 break;
             case 'photos':
                 if (this.allPhotos.length === 0) {
                     this.loadPhotos(1);
+                } else {
+                    this.renderPhotos();
                 }
                 break;
             case 'clips':
@@ -382,7 +449,10 @@ class TrailersPhotosPage {
         document.querySelectorAll('.photo-filter-btn').forEach(btn => {
             btn.classList.remove('active');
         });
-        document.querySelector(`[data-type="${type}"]`).classList.add('active');
+        const activeFilterBtn = document.querySelector(`[data-type="${type}"]`);
+        if (activeFilterBtn) {
+            activeFilterBtn.classList.add('active');
+        }
         
         this.renderPhotos();
     }
@@ -393,7 +463,10 @@ class TrailersPhotosPage {
         document.querySelectorAll('.view-btn').forEach(btn => {
             btn.classList.remove('active');
         });
-        document.querySelector(`[data-view="${view}"]`).classList.add('active');
+        const activeViewBtn = document.querySelector(`[data-view="${view}"]`);
+        if (activeViewBtn) {
+            activeViewBtn.classList.add('active');
+        }
         
         this.renderPhotos();
     }
@@ -402,34 +475,50 @@ class TrailersPhotosPage {
         const modal = document.getElementById('videoModal');
         const player = document.getElementById('videoPlayer');
         
-        player.innerHTML = `
-            <iframe width="100%" height="100%" 
-                    src="https://www.youtube.com/embed/${youtubeKey}?autoplay=1" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-            </iframe>
-        `;
-        
-        document.getElementById('videoTitle').textContent = title;
-        document.getElementById('videoMovie').textContent = movieTitle;
-        document.getElementById('videoType').textContent = type;
-        document.getElementById('videoDate').textContent = new Date().toLocaleDateString();
-        document.getElementById('videoDescription').textContent = `Watch the ${type} for ${movieTitle}`;
-        
-        modal.style.display = 'block';
+        if (player && modal) {
+            player.innerHTML = `
+                <iframe width="100%" height="100%" 
+                        src="https://www.youtube.com/embed/${youtubeKey}?autoplay=1" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+            `;
+            
+            const videoTitle = document.getElementById('videoTitle');
+            const videoMovie = document.getElementById('videoMovie');
+            const videoType = document.getElementById('videoType');
+            const videoDate = document.getElementById('videoDate');
+            const videoDescription = document.getElementById('videoDescription');
+            
+            if (videoTitle) videoTitle.textContent = title;
+            if (videoMovie) videoMovie.textContent = movieTitle;
+            if (videoType) videoType.textContent = type;
+            if (videoDate) videoDate.textContent = new Date().toLocaleDateString();
+            if (videoDescription) videoDescription.textContent = `Watch the ${type} for ${movieTitle}`;
+            
+            modal.style.display = 'block';
+        }
     }
 
     viewPhoto(url, title, movieTitle, resolution, aspectRatio) {
         const modal = document.getElementById('photoModal');
         
-        document.getElementById('photoViewerImage').src = url;
-        document.getElementById('photoTitle').textContent = title;
-        document.getElementById('photoMovie').textContent = movieTitle;
-        document.getElementById('photoResolution').textContent = resolution;
-        document.getElementById('photoAspect').textContent = aspectRatio;
-        
-        modal.style.display = 'block';
+        if (modal) {
+            const photoViewerImage = document.getElementById('photoViewerImage');
+            const photoTitle = document.getElementById('photoTitle');
+            const photoMovie = document.getElementById('photoMovie');
+            const photoResolution = document.getElementById('photoResolution');
+            const photoAspect = document.getElementById('photoAspect');
+            
+            if (photoViewerImage) photoViewerImage.src = url;
+            if (photoTitle) photoTitle.textContent = title;
+            if (photoMovie) photoMovie.textContent = movieTitle;
+            if (photoResolution) photoResolution.textContent = resolution;
+            if (photoAspect) photoAspect.textContent = aspectRatio;
+            
+            modal.style.display = 'block';
+        }
     }
 
     performMediaSearch() {
@@ -441,18 +530,27 @@ class TrailersPhotosPage {
     }
 
     applyMediaFilters() {
-        this.currentMediaType = document.getElementById('mediaTypeFilter').value;
-        this.currentSort = document.getElementById('sortFilter').value;
-        this.currentTimeRange = document.getElementById('timeFilter').value;
+        const mediaTypeFilter = document.getElementById('mediaTypeFilter');
+        const sortFilter = document.getElementById('sortFilter');
+        const timeFilter = document.getElementById('timeFilter');
+        
+        if (mediaTypeFilter) this.currentMediaType = mediaTypeFilter.value;
+        if (sortFilter) this.currentSort = sortFilter.value;
+        if (timeFilter) this.currentTimeRange = timeFilter.value;
         
         this.renderTrailers();
     }
 
     resetMediaFilters() {
-        document.getElementById('mediaTypeFilter').value = 'all';
-        document.getElementById('sortFilter').value = 'popularity';
-        document.getElementById('timeFilter').value = 'all';
-        document.getElementById('mediaSearch').value = '';
+        const mediaTypeFilter = document.getElementById('mediaTypeFilter');
+        const sortFilter = document.getElementById('sortFilter');
+        const timeFilter = document.getElementById('timeFilter');
+        const mediaSearch = document.getElementById('mediaSearch');
+        
+        if (mediaTypeFilter) mediaTypeFilter.value = 'all';
+        if (sortFilter) sortFilter.value = 'popularity';
+        if (timeFilter) timeFilter.value = 'all';
+        if (mediaSearch) mediaSearch.value = '';
         
         this.currentMediaType = 'all';
         this.currentSort = 'popularity';
@@ -479,9 +577,13 @@ class TrailersPhotosPage {
 
     updateStats() {
         // Update statistics (these would come from API in real app)
-        document.getElementById('totalVideos').textContent = '1,247';
-        document.getElementById('totalPhotos').textContent = '12,589';
-        document.getElementById('totalMovies').textContent = '543';
+        const totalVideos = document.getElementById('totalVideos');
+        const totalPhotos = document.getElementById('totalPhotos');
+        const totalMovies = document.getElementById('totalMovies');
+        
+        if (totalVideos) totalVideos.textContent = '1,247';
+        if (totalPhotos) totalPhotos.textContent = '12,589';
+        if (totalMovies) totalMovies.textContent = '543';
     }
 
     showLoading(type, show) {
@@ -497,6 +599,14 @@ class TrailersPhotosPage {
             } else {
                 loaders[type].innerHTML = '<i class="fas fa-plus"></i> Load More';
                 loaders[type].disabled = false;
+                
+                // Hide load more button if no more content
+                if (type === 'trailers' && !this.hasMoreTrailers) {
+                    loaders[type].style.display = 'none';
+                }
+                if (type === 'photos' && !this.hasMorePhotos) {
+                    loaders[type].style.display = 'none';
+                }
             }
         }
     }
@@ -505,17 +615,22 @@ class TrailersPhotosPage {
 // Global functions for carousel
 function moveCarousel(direction, type) {
     const carousel = document.getElementById(`${type}Carousel`);
-    const scrollAmount = 300;
-    carousel.scrollLeft += direction * scrollAmount;
+    if (carousel) {
+        const scrollAmount = 300;
+        carousel.scrollLeft += direction * scrollAmount;
+    }
 }
 
 // Global functions for photo actions
 function downloadPhoto() {
-    const imgUrl = document.getElementById('photoViewerImage').src;
-    const link = document.createElement('a');
-    link.href = imgUrl;
-    link.download = 'movie-photo.jpg';
-    link.click();
+    const photoViewerImage = document.getElementById('photoViewerImage');
+    if (photoViewerImage && photoViewerImage.src) {
+        const imgUrl = photoViewerImage.src;
+        const link = document.createElement('a');
+        link.href = imgUrl;
+        link.download = 'movie-photo.jpg';
+        link.click();
+    }
 }
 
 function sharePhoto() {
@@ -529,6 +644,25 @@ function sharePhoto() {
         // Fallback: copy to clipboard
         navigator.clipboard.writeText(window.location.href);
         showNotification('Link copied to clipboard!', 'success');
+    }
+}
+
+// Global functions for filters (called from HTML)
+function performMediaSearch() {
+    if (window.trailersPage) {
+        window.trailersPage.performMediaSearch();
+    }
+}
+
+function applyMediaFilters() {
+    if (window.trailersPage) {
+        window.trailersPage.applyMediaFilters();
+    }
+}
+
+function resetMediaFilters() {
+    if (window.trailersPage) {
+        window.trailersPage.resetMediaFilters();
     }
 }
 

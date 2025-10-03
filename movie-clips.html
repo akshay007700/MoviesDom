@@ -1,26 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movie Shorts - MoviesDom</title>
-  <link rel="stylesheet" href="css/movie-clips.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoviesDom - Home</title>
+  <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <!-- Header -->
   <header>
     <h1>MOVIESDOM</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">🏠 Home</a></li>
+        <li><a href="movies.html">🎬 Movies</a></li>
+        <li><a href="movie-trailers.html">🎞 Trailers</a></li>
+        <li><a href="movie-clips.html">🎥 Clips</a></li> <!-- ✅ New -->
+        <li><a href="about.html">ℹ About</a></li>
+        <li><a href="contact.html">✉ Contact</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <!-- Shorts Section -->
-  <main class="clips-container">
-    <h2>Latest Movie Shorts</h2>
-    <div id="clipsList" class="clips-feed">
-      <p class="loader">Loading Shorts...</p>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Experience Cinema Like Never Before</h2>
+      <p>Discover thousands of movies and TV shows. Stream in HD quality anytime, anywhere.</p>
+      <a href="movies.html" class="btn">Browse Movies</a>
+      <a href="movie-clips.html" class="btn btn-outline">Watch Clips</a> <!-- ✅ New -->
     </div>
-  </main>
+  </section>
 
-  <script src="js/movie-clips.js"></script>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2023 MoviesDom. All rights reserved.</p>
+  </footer>
 </body>
 </html>

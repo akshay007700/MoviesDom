@@ -1,3 +1,6 @@
+// ✅ MoviesDom - api.js
+// Handles all TMDB API requests and caching
+
 class MovieAPI {
     constructor() {
         this.cache = new Map();
@@ -9,36 +12,20 @@ class MovieAPI {
             return cached.data;
         }
 
-        try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            
-            const data = await response.json();
-            this.cache.set(url, { data, timestamp: Date.now() });
-            return data;
-        } catch (error) {
-            console.error('API Error:', error);
-            throw error;
-        }
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+
+        this.cache.set(url, { data, timestamp: Date.now() });
+        return data;
     }
 
-    // Movie endpoints
     async getPopularMovies(page = 1) {
         const url = `${TMDB_CONFIG.BASE_URL}/movie/popular?api_key=${TMDB_CONFIG.API_KEY}&language=${TMDB_CONFIG.LANGUAGE}&page=${page}`;
         return this.fetchWithCache(url);
     }
 
-    async getMovieDetails(movieId) {
-        const url = `${TMDB_CONFIG.BASE_URL}/movie/${movieId}?api_key=${TMDB_CONFIG.API_KEY}&language=${TMDB_CONFIG.LANGUAGE}&append_to_response=credits,videos,reviews,similar`;
-        return this.fetchWithCache(url);
-    }
-
-    async searchMovies(query, page = 1) {
-        const url = `${TMDB_CONFIG.BASE_URL}/search/movie?api_key=${TMDB_CONFIG.API_KEY}&language=${TMDB_CONFIG.LANGUAGE}&query=${encodeURIComponent(query)}&page=${page}`;
-        return this.fetchWithCache(url);
-    }
-
-    async getNowPlaying(page = 1) {
+    async getNowPlayingMovies(page = 1) {
         const url = `${TMDB_CONFIG.BASE_URL}/movie/now_playing?api_key=${TMDB_CONFIG.API_KEY}&language=${TMDB_CONFIG.LANGUAGE}&page=${page}`;
         return this.fetchWithCache(url);
     }
@@ -48,10 +35,16 @@ class MovieAPI {
         return this.fetchWithCache(url);
     }
 
-    async getMovieTrailers(movieId) {
-        const url = `${TMDB_CONFIG.BASE_URL}/movie/${movieId}/videos?api_key=${TMDB_CONFIG.API_KEY}`;
+    async getTrendingMovies(page = 1) {
+        const url = `${TMDB_CONFIG.BASE_URL}/trending/movie/day?api_key=${TMDB_CONFIG.API_KEY}&language=${TMDB_CONFIG.LANGUAGE}&page=${page}`;
+        return this.fetchWithCache(url);
+    }
+
+    async getMovieDetails(movieId) {
+        const url = `${TMDB_CONFIG.BASE_URL}/movie/${movieId}?api_key=${TMDB_CONFIG.API_KEY}&language=${TMDB_CONFIG.LANGUAGE}`;
         return this.fetchWithCache(url);
     }
 }
 
-const movieAPI = new MovieAPI();
+// ✅ Global Access
+window.movieAPI = new MovieAPI();

@@ -1,6 +1,6 @@
 // API Configuration
 const CONFIG = {
-    TMDB_API_KEY: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlNzhlMGJiOGZiNDJkYjRmYTBiNTZiNDI0NjE1MWYwOCIsIm5iZiI6MTc1ODQ5MDE2MC4zMzMsInN1YiI6IjY4ZDA2ZTMwODQ0YTFmMGUxZWZlOTcxOCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.4eCjy3pNJMWTLKicA_U_3Vg0umJH-Kht5SzyGk14azE',
+    TMDB_API_KEY: 'e78e0bb8fb42db4fa0b56b4246151f08',
     TMDB_BASE_URL: 'https://api.themoviedb.org/3',
     TMDB_IMAGE_BASE_URL: 'https://image.tmdb.org/t/p',
     YOUTUBE_BASE_URL: 'https://www.youtube.com/embed',

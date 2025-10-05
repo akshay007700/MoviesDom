@@ -1,0 +1,93 @@
+{
+  "clips": [
+    {
+      "id": 1,
+      "title": "Beautiful nature scenery with yellow flowers",
+      "description": "Amazing nature footage from my hike",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-tree-with-yellow-flowers-1173-large.mp4",
+      "music": "Original Sound - Nature Lover",
+      "hashtags": "#nature #flowers #hiking",
+      "user": {
+        "name": "nature_lover",
+        "avatar": ""
+      },
+      "likes": 12500,
+      "comments": [
+        {
+          "id": 1,
+          "username": "user123",
+          "text": "This is amazing! 😍",
+          "timestamp": "2 hours ago",
+          "likes": 24
+        },
+        {
+          "id": 2,
+          "username": "traveler_gal",
+          "text": "Where was this taken? Looks beautiful!",
+          "timestamp": "1 hour ago",
+          "likes": 12
+        }
+      ],
+      "views": 154000,
+      "shares": 1200,
+      "timestamp": "2024-01-15T10:30:00Z"
+    },
+    {
+      "id": 2,
+      "title": "Mountain road trip! 🏔️",
+      "description": "Epic mountain drive through the alps",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-going-down-a-curved-highway-through-a-mountain-34561-large.mp4",
+      "music": "On the Road - Travel Vibes",
+      "hashtags": "#travel #adventure #roadtrip",
+      "user": {
+        "name": "adventure_seeker",
+        "avatar": ""
+      },
+      "likes": 24700,
+      "comments": [
+        {
+          "id": 3,
+          "username": "road_tripper",
+          "text": "This road looks incredible! What car were you driving?",
+          "timestamp": "3 hours ago",
+          "likes": 8
+        }
+      ],
+      "views": 289000,
+      "shares": 3400,
+      "timestamp": "2024-01-14T15:45:00Z"
+    },
+    {
+      "id": 3,
+      "title": "Tropical sunset vibes 🌅",
+      "description": "Perfect sunset at the beach",
+      "videoUrl": "https://assets.mixkit.co/videos/preview/mixkit-palm-tree-and-sunset-1130-large.mp4",
+      "music": "Island Breeze - Tropical Sounds",
+      "hashtags": "#beach #sunset #vacation",
+      "user": {
+        "name": "beach_lover",
+        "avatar": ""
+      },
+      "likes": 18300,
+      "comments": [
+        {
+          "id": 4,
+          "username": "sunset_chaser",
+          "text": "Wow! This is absolutely breathtaking!",
+          "timestamp": "5 hours ago",
+          "likes": 15
+        },
+        {
+          "id": 5,
+          "username": "travel_blogger",
+          "text": "Which beach is this? Need to add it to my bucket list!",
+          "timestamp": "4 hours ago",
+          "likes": 9
+        }
+      ],
+      "views": 215000,
+      "shares": 2100,
+      "timestamp": "2024-01-13T18:20:00Z"
+    }
+  ]
+}

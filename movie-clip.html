@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reels - Video Platform</title>
+    <link rel="stylesheet" href="clip.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">Reels</div>
+            <div class="nav-item active" data-page="home">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-text">Home</div>
+            </div>
+            <div class="nav-item" data-page="explore">
+                <div class="nav-icon">🔍</div>
+                <div class="nav-text">Explore</div>
+            </div>
+            <div class="nav-item" data-page="reels">
+                <div class="nav-icon">📺</div>
+                <div class="nav-text">Reels</div>
+            </div>
+            <div class="nav-item" data-page="profile">
+                <div class="nav-icon">👤</div>
+                <div class="nav-text">Profile</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Navigation -->
+            <div class="top-nav">
+                <input type="text" class="search-bar" placeholder="Search clips...">
+                <div class="user-actions">
+                    <div class="action-icon" id="uploadBtn">➕</div>
+                    <div class="action-icon" id="themeToggle">🌙</div>
+                </div>
+            </div>
+
+            <!-- Reels Container -->
+            <div class="reels-container" id="reelsContainer">
+                <!-- Clips will be dynamically loaded here -->
+            </div>
+
+            <!-- Upload Modal -->
+            <div class="modal" id="uploadModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Upload New Clip</h3>
+                        <span class="close-modal">&times;</span>
+                    </div>
+                    <form id="uploadForm">
+                        <div class="form-group">
+                            <label for="clipTitle">Title</label>
+                            <input type="text" id="clipTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="clipDescription">Description</label>
+                            <textarea id="clipDescription" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="clipVideo">Video URL</label>
+                            <input type="url" id="clipVideo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="clipMusic">Music</label>
+                            <input type="text" id="clipMusic" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="clipHashtags">Hashtags</label>
+                            <input type="text" id="clipHashtags" placeholder="#fun #viral #trending">
+                        </div>
+                        <button type="submit" class="upload-btn">Upload Clip</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Comments Panel -->
+            <div class="comments-panel" id="commentsPanel">
+                <div class="comments-header">
+                    <div class="comments-title">Comments</div>
+                    <div class="close-comments" id="closeComments">✕</div>
+                </div>
+                <div class="comments-list" id="commentsList">
+                    <!-- Comments will be loaded here -->
+                </div>
+                <div class="comment-input-container">
+                    <input type="text" class="comment-input" id="commentInput" placeholder="Add a comment...">
+                    <button class="post-comment" id="postComment">Post</button>
+                </div>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div class="loading-spinner" id="loadingSpinner">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="clip.js"></script>
+</body>
+</html>

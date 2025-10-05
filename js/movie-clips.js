@@ -1,4 +1,4 @@
-/* movie-clip.js
+h/* movie-clips.js
    YouTube + Local JSON fallback
    Keep design same — only functional changes/additions
 */
@@ -14,7 +14,7 @@ class MovieClipApp {
     this.YT_MAX = 12;
 
     // local fallback JSON (must exist in repo root or adjust path)
-    this.localJSON = 'movie-clip.json';
+    this.localJSON = 'movie-clips.json';
 
     // DOM
     this.container = document.querySelector('.clip-container');

@@ -1,5 +1,5 @@
 // 👇 Replace with your restricted YouTube API Key
-const YT_API_KEY = "AIzaSyAf3Ov8t11NoFhZL4_vOrJ2bk4IiJT-0hw";
+const YT_API_KEY = "3d6fe20612e704cc7039a667879c2e2a3dcc88e1f60b33ac2b5196ea9b779231";
 const QUERY = "movie shorts";
 const MAX_RESULTS = 6;
 

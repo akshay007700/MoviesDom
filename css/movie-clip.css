@@ -1,0 +1,37 @@
+/* movie-clips.css — styling for clip page (matches original structure) */
+
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:#070707;color:#eee}
+.mc-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:rgba(10,10,10,0.8);border-bottom:1px solid rgba(255,107,0,0.06)}
+.mc-logo{font-weight:800;color:#ff6b00;letter-spacing:1px}
+.mc-actions input{padding:8px 12px;border-radius:8px;border:1px solid #222;background:#0f0f0f;color:#fff;min-width:220px}
+
+.mc-main{padding:20px 24px}
+.mc-controls{margin-bottom:14px}
+.filters{display:flex;gap:10px;flex-wrap:wrap}
+.filter-btn{background:#111;border:1px solid #222;color:#ddd;padding:8px 14px;border-radius:999px;cursor:pointer;font-weight:600}
+.filter-btn.active{background:linear-gradient(90deg,#ff6b00,#ff922b);color:#fff;border:1px solid rgba(255,107,0,0.15)}
+
+.mc-content{min-height:60vh}
+.loader{display:flex;align-items:center;justify-content:center;padding:18px;color:#bbb}
+.error-message{padding:12px;border-radius:8px;background:#2b0000;color:#ffc8c8;margin-bottom:12px;display:none}
+
+.clip-container{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+
+/* clip card */
+.clip-card{background:#0f0f0f;border-radius:10px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.6);transition:transform .18s}
+.clip-card:hover{transform:translateY(-8px)}
+.clip-thumb{background:#000;height:160px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.clip-thumb video,
+.clip-thumb iframe{width:100%;height:100%;object-fit:cover;border:0;display:block}
+.clip-info{padding:12px}
+.clip-info h3{margin:0 0 6px;font-size:16px}
+.clip-info p{margin:0;color:#bdbdbd;font-size:13px}
+.clip-meta{margin-top:8px;color:#aaa;font-size:13px;display:flex;gap:10px;justify-content:space-between;align-items:center}
+
+/* responsive */
+@media (max-width:720px){
+  .clip-thumb{height:220px}
+  .clip-container{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
+  .mc-actions input{min-width:120px}
+}

@@ -8,15 +8,8 @@ const TMDB_CONFIG = {
 };
 
 // 🔐 Your backend (Node/Express) URL
-// ⬇️ yaha apna backend URL daalna (example: Render / Railway / local)
 const BACKEND_CONFIG = {
-    // Local development:
-    // BASE_URL: "http://localhost:3000"
-
-    // Deployed backend example:
-    // BASE_URL: "https://moviesdom-backend.onrender.com"
-
-    BASE_URL: "moviesdom-backend-production.up.railway.app" // <- abhi ke liye local rakha hai
+    BASE_URL: "https://moviesdom-backend-production.up.railway.app"
 };
 
 const APP_CONFIG = {

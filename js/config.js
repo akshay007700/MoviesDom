@@ -16,7 +16,7 @@ const BACKEND_CONFIG = {
     // Deployed backend example:
     // BASE_URL: "https://moviesdom-backend.onrender.com"
 
-    BASE_URL: "http://localhost:3000" // <- abhi ke liye local rakha hai
+    BASE_URL: "moviesdom-backend-production.up.railway.app" // <- abhi ke liye local rakha hai
 };
 
 const APP_CONFIG = {

@@ -1,11 +1,22 @@
-// ✅ MoviesDom - config.js
-// Centralized app and TMDB configuration
+// ✅ MoviesDom - config.js (SAFE VERSION)
+// Centralized app and backend configuration
 
+// TMDB image config (no key needed here)
 const TMDB_CONFIG = {
-    API_KEY: "e78e0bb8fb42db4fa0b56b4246151f08", // 🔑 Replace with your actual TMDB key
-    BASE_URL: "https://api.themoviedb.org/3",
     IMAGE_BASE_URL: "https://image.tmdb.org/t/p/w500",
     LANGUAGE: "en-US"
+};
+
+// 🔐 Your backend (Node/Express) URL
+// ⬇️ yaha apna backend URL daalna (example: Render / Railway / local)
+const BACKEND_CONFIG = {
+    // Local development:
+    // BASE_URL: "http://localhost:3000"
+
+    // Deployed backend example:
+    // BASE_URL: "https://moviesdom-backend.onrender.com"
+
+    BASE_URL: "http://localhost:3000" // <- abhi ke liye local rakha hai
 };
 
 const APP_CONFIG = {
@@ -14,4 +25,5 @@ const APP_CONFIG = {
 };
 
 window.TMDB_CONFIG = TMDB_CONFIG;
+window.BACKEND_CONFIG = BACKEND_CONFIG;
 window.APP_CONFIG = APP_CONFIG;

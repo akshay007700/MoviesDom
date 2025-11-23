@@ -27,11 +27,6 @@
                 <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
                 <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
                 
-                <!-- Theme Toggle -->
-                <button class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-moon"></i>
-                </button>
-                
                 <div class="nav-dropdown">
                     <a href="#"><i class="fas fa-user"></i> My Account <i class="fas fa-chevron-down"></i></a>
                     <div class="dropdown-content">
@@ -52,159 +47,105 @@
                 <p>Search through thousands of movies, trailers, and reviews</p>
                 <div class="search-box">
                     <input type="text" id="globalSearch" placeholder="Search movies, actors, directors...">
-                    <button onclick="performGlobalSearch()"><i class="fas fa-search"></i></button>
-                    <div class="search-suggestions" id="searchSuggestions"></div>
+                    <button onclick="homePage.performSearch()"><i class="fas fa-search"></i></button>
                 </div>
-                <div class="search-filters">
-                    <label><input type="checkbox" id="filterMovies" checked> Movies</label>
-                    <label><input type="checkbox" id="filterPeople"> People</label>
-                    <label><input type="checkbox" id="filterCompanies"> Companies</label>
-                </div>
+                <div class="search-suggestions" id="searchSuggestions"></div>
             </div>
         </div>
     </section>
 
     <!-- Main Content -->
     <main class="container">
-        <!-- Enhanced Hero Carousel -->
+        <!-- Hero Carousel -->
         <section class="hero-carousel" id="heroCarousel">
-            <!-- Dynamic content from JavaScript -->
+            <!-- Dynamic content -->
         </section>
 
         <!-- Quick Stats -->
         <section class="quick-stats">
             <div class="stat-card">
                 <i class="fas fa-film"></i>
-                <h3 id="totalMovies">0</h3>
+                <h3 id="totalMovies">10,000+</h3>
                 <p>Movies</p>
             </div>
             <div class="stat-card">
                 <i class="fas fa-users"></i>
-                <h3 id="totalPeople">0</h3>
+                <h3 id="totalPeople">50,000+</h3>
                 <p>People</p>
             </div>
             <div class="stat-card">
                 <i class="fas fa-star"></i>
-                <h3 id="totalReviews">0</h3>
+                <h3 id="totalReviews">100,000+</h3>
                 <p>Reviews</p>
             </div>
             <div class="stat-card">
                 <i class="fas fa-play-circle"></i>
-                <h3 id="totalVideos">0</h3>
+                <h3 id="totalVideos">5,000+</h3>
                 <p>Videos</p>
             </div>
         </section>
 
-        <!-- Featured Sections with Enhanced IDs -->
+        <!-- Featured Sections -->
         <section class="featured-section">
             <div class="section-header">
-                <h3><i class="fas fa-fire"></i> Trending Now</h3>
+                <h2><i class="fas fa-fire"></i> Trending Now</h2>
                 <a href="movies.html?filter=trending" class="see-all">See All <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="movies-grid" id="trendingMovies">
-                <!-- Loading Skeleton -->
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
+                <!-- Content loaded by JavaScript -->
             </div>
         </section>
 
         <section class="featured-section">
             <div class="section-header">
-                <h3><i class="fas fa-ticket-alt"></i> Now Playing</h3>
+                <h2><i class="fas fa-ticket-alt"></i> Now Playing</h2>
                 <a href="movies.html?filter=now_playing" class="see-all">See All <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="movies-grid" id="nowPlayingMovies">
-                <!-- Loading Skeleton -->
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
+                <!-- Content loaded by JavaScript -->
             </div>
         </section>
 
         <section class="featured-section">
             <div class="section-header">
-                <h3><i class="fas fa-calendar-alt"></i> Coming Soon</h3>
+                <h2><i class="fas fa-calendar-alt"></i> Coming Soon</h2>
                 <a href="movies.html?filter=upcoming" class="see-all">See All <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="movies-grid" id="upcomingMovies">
-                <!-- Loading Skeleton -->
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
+                <!-- Content loaded by JavaScript -->
             </div>
         </section>
 
-        <!-- New: Top Rated Movies Section -->
-        <section class="featured-section">
-            <div class="section-header">
-                <h3><i class="fas fa-crown"></i> Top Rated</h3>
-                <a href="movies.html?filter=top_rated" class="see-all">See All <i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="movies-grid" id="topRatedMovies">
-                <!-- Loading Skeleton -->
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
-                <div class="skeleton-card"></div>
-            </div>
-        </section>
-
-        <!-- New: Popular Genres Section -->
+        <!-- Popular Genres -->
         <section class="genres-section">
             <div class="section-header">
-                <h3><i class="fas fa-tags"></i> Popular Genres</h3>
+                <h2><i class="fas fa-tags"></i> Popular Genres</h2>
             </div>
             <div class="genres-grid">
-                <a href="movies.html?genre=28" class="genre-card action">
+                <a href="movies.html?genre=action" class="genre-card action">
                     <i class="fas fa-fist-raised"></i>
                     <span>Action</span>
                 </a>
-                <a href="movies.html?genre=35" class="genre-card comedy">
+                <a href="movies.html?genre=comedy" class="genre-card comedy">
                     <i class="fas fa-laugh"></i>
                     <span>Comedy</span>
                 </a>
-                <a href="movies.html?genre=18" class="genre-card drama">
+                <a href="movies.html?genre=drama" class="genre-card drama">
                     <i class="fas fa-theater-masks"></i>
                     <span>Drama</span>
                 </a>
-                <a href="movies.html?genre=27" class="genre-card horror">
+                <a href="movies.html?genre=horror" class="genre-card horror">
                     <i class="fas fa-ghost"></i>
                     <span>Horror</span>
                 </a>
-                <a href="movies.html?genre=10749" class="genre-card romance">
+                <a href="movies.html?genre=romance" class="genre-card romance">
                     <i class="fas fa-heart"></i>
                     <span>Romance</span>
                 </a>
-                <a href="movies.html?genre=878" class="genre-card scifi">
+                <a href="movies.html?genre=sci-fi" class="genre-card scifi">
                     <i class="fas fa-rocket"></i>
                     <span>Sci-Fi</span>
                 </a>
-            </div>
-        </section>
-
-        <!-- New: Newsletter Section -->
-        <section class="newsletter-section">
-            <div class="newsletter-container">
-                <div class="newsletter-content">
-                    <h3><i class="fas fa-envelope"></i> Stay Updated</h3>
-                    <p>Get the latest movie news, reviews, and recommendations delivered to your inbox.</p>
-                    <form class="newsletter-form" id="newsletterForm">
-                        <input type="email" placeholder="Enter your email" required>
-                        <button type="submit">Subscribe</button>
-                    </form>
-                </div>
             </div>
         </section>
     </main>
@@ -214,248 +155,28 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4><i class="fas fa-film"></i> MoviesDom</h4>
-                    <p>Your ultimate movie database with advanced features and real-time data.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
+                    <h4>MoviesDom</h4>
+                    <p>Your ultimate movie database with advanced features</p>
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
-                    <a href="movies.html"><i class="fas fa-arrow-right"></i> Browse Movies</a>
-                    <a href="movie-trailers.html"><i class="fas fa-arrow-right"></i> Latest Trailers</a>
-                    <a href="news.html"><i class="fas fa-arrow-right"></i> Movie News</a>
-                    <a href="movie-review.html"><i class="fas fa-arrow-right"></i> Reviews</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Categories</h4>
-                    <a href="movies.html?genre=28"><i class="fas fa-fist-raised"></i> Action</a>
-                    <a href="movies.html?genre=35"><i class="fas fa-laugh"></i> Comedy</a>
-                    <a href="movies.html?genre=18"><i class="fas fa-theater-masks"></i> Drama</a>
-                    <a href="movies.html?genre=878"><i class="fas fa-rocket"></i> Sci-Fi</a>
+                    <a href="movies.html">Browse Movies</a>
+                    <a href="movie-trailers.html">Latest Trailers</a>
+                    <a href="news.html">Movie News</a>
                 </div>
                 <div class="footer-section">
                     <h4>Legal</h4>
-                    <a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
-                    <a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a>
-                    <a href="#"><i class="fas fa-copyright"></i> DMCA</a>
-                    <a href="about.html"><i class="fas fa-info-circle"></i> About Us</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 MoviesDom. Educational purpose only. Data provided by TMDB.</p>
+                <p>&copy; 2024 MoviesDom. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Enhanced Login Modal -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="auth-tabs">
-                <button class="tab-btn active" data-tab="login">Login</button>
-                <button class="tab-btn" data-tab="register">Register</button>
-            </div>
-            
-            <form id="loginForm" class="auth-form active">
-                <h3>Welcome Back</h3>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Password" required>
-                <div class="form-options">
-                    <label>
-                        <input type="checkbox"> Remember me
-                    </label>
-                    <a href="#" class="forgot-password">Forgot Password?</a>
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-                <div class="social-login">
-                    <p>Or login with</p>
-                    <div class="social-buttons">
-                        <button type="button" class="btn-social google">
-                            <i class="fab fa-google"></i> Google
-                        </button>
-                        <button type="button" class="btn-social facebook">
-                            <i class="fab fa-facebook"></i> Facebook
-                        </button>
-                    </div>
-                </div>
-            </form>
-
-            <form id="registerForm" class="auth-form">
-                <h3>Create Account</h3>
-                <input type="text" placeholder="Full Name" required>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Password" required>
-                <input type="password" placeholder="Confirm Password" required>
-                <label class="terms-check">
-                    <input type="checkbox" required>
-                    I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
-                </label>
-                <button type="submit" class="btn btn-primary">Create Account</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Toast Container -->
-    <div id="toastContainer"></div>
-
-    <!-- Loading Spinner -->
-    <div class="loading-spinner" id="loadingSpinner">
-        <div class="spinner"></div>
-    </div>
-
-    <script src="js/config.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/utils.js"></script>
+    <!-- Scripts -->
     <script src="js/home.js"></script>
-    
-    <script>
-        // Additional inline scripts for enhanced functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mobile menu toggle
-            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-            const navLinks = document.querySelector('.nav-links');
-            
-            if (mobileMenuBtn) {
-                mobileMenuBtn.addEventListener('click', () => {
-                    navLinks.classList.toggle('active');
-                });
-            }
-
-            // Theme toggle functionality
-            const themeToggle = document.getElementById('themeToggle');
-            if (themeToggle) {
-                themeToggle.addEventListener('click', () => {
-                    document.body.classList.toggle('dark-theme');
-                    const icon = themeToggle.querySelector('i');
-                    icon.classList.toggle('fa-moon');
-                    icon.classList.toggle('fa-sun');
-                    
-                    // Save theme preference
-                    localStorage.setItem('moviesdom_theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
-                });
-
-                // Load saved theme
-                const savedTheme = localStorage.getItem('moviesdom_theme');
-                if (savedTheme === 'dark') {
-                    document.body.classList.add('dark-theme');
-                    themeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
-                }
-            }
-
-            // Auth tabs functionality
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const tab = btn.getAttribute('data-tab');
-                    
-                    // Update active tab button
-                    tabBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    
-                    // Show corresponding form
-                    document.querySelectorAll('.auth-form').forEach(form => {
-                        form.classList.remove('active');
-                    });
-                    document.getElementById(tab + 'Form').classList.add('active');
-                });
-            });
-
-            // Newsletter form submission
-            const newsletterForm = document.getElementById('newsletterForm');
-            if (newsletterForm) {
-                newsletterForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const email = this.querySelector('input[type="email"]').value;
-                    // Simulate subscription
-                    showCustomToast('Thanks for subscribing!', 'success');
-                    this.reset();
-                });
-            }
-
-            // Search suggestions
-            const searchInput = document.getElementById('globalSearch');
-            const suggestions = document.getElementById('searchSuggestions');
-            
-            if (searchInput && suggestions) {
-                searchInput.addEventListener('input', debounce(function(e) {
-                    const query = e.target.value.trim();
-                    if (query.length > 2) {
-                        showSearchSuggestions(query);
-                    } else {
-                        suggestions.style.display = 'none';
-                    }
-                }, 300));
-
-                // Hide suggestions when clicking outside
-                document.addEventListener('click', (e) => {
-                    if (!searchInput.contains(e.target) && !suggestions.contains(e.target)) {
-                        suggestions.style.display = 'none';
-                    }
-                });
-            }
-        });
-
-        function showSearchSuggestions(query) {
-            const suggestions = document.getElementById('searchSuggestions');
-            // Simulate API call - in real app, you'd fetch from API
-            const mockSuggestions = [
-                { type: 'movie', title: 'Avengers: Endgame', year: 2019 },
-                { type: 'movie', title: 'Avatar', year: 2009 },
-                { type: 'person', title: 'Tom Cruise' },
-                { type: 'movie', title: 'Spider-Man: No Way Home', year: 2021 }
-            ].filter(item => item.title.toLowerCase().includes(query.toLowerCase()));
-
-            if (mockSuggestions.length > 0) {
-                suggestions.innerHTML = mockSuggestions.map(item => `
-                    <div class="suggestion-item" onclick="selectSuggestion('${item.title}')">
-                        <i class="fas fa-${item.type === 'movie' ? 'film' : 'user'}"></i>
-                        <span>${item.title}${item.year ? ` (${item.year})` : ''}</span>
-                    </div>
-                `).join('');
-                suggestions.style.display = 'block';
-            } else {
-                suggestions.style.display = 'none';
-            }
-        }
-
-        function selectSuggestion(title) {
-            document.getElementById('globalSearch').value = title;
-            document.getElementById('searchSuggestions').style.display = 'none';
-            performGlobalSearch();
-        }
-
-        function showCustomToast(message, type = 'info') {
-            const toast = document.createElement('div');
-            toast.className = `toast toast-${type}`;
-            toast.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-                <span>${message}</span>
-            `;
-            document.body.appendChild(toast);
-
-            setTimeout(() => toast.classList.add('show'), 100);
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
-    </script>
 </body>
 </html>

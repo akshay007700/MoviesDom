@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoviesDom - Ultimate Movie Database</title>
+    <title>MoviesDom - Premium Movie Experience</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="logo-section">
-                <h1 class="logo"><i class="fas fa-film"></i> MoviesDom</h1>
-                <div class="mobile-menu-btn">
+                <h1 class="logo"><i class="fas fa-film"></i> <span>MoviesDom</span></h1>
+                <div class="mobile-menu-btn" id="mobileMenuBtn">
                     <i class="fas fa-bars"></i>
                 </div>
             </div>
@@ -25,7 +29,7 @@
                 <a href="movie-clips.html"><i class="fas fa-video"></i> Clips</a>
                 <a href="movie-review.html"><i class="fas fa-star"></i> Reviews</a>
                 <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
-                 <a href="about.html"><i class="fas fa-about"></i> about</a>
+                <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
                 <div class="nav-dropdown">
                     <a href="#"><i class="fas fa-user"></i> My Account <i class="fas fa-chevron-down"></i></a>
                     <div class="dropdown-content">
@@ -46,7 +50,7 @@
                 <p>Search through thousands of movies, trailers, and reviews</p>
                 <div class="search-box">
                     <input type="text" id="globalSearch" placeholder="Search movies, actors, directors...">
-                    <button onclick="performGlobalSearch()"><i class="fas fa-search"></i></button>
+                    <button onclick="performGlobalSearch()"><i class="fas fa-search"></i> Search</button>
                 </div>
                 <div class="search-filters">
                     <label><input type="checkbox" id="filterMovies" checked> Movies</label>
@@ -57,15 +61,68 @@
         </div>
     </section>
 
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="hero-slider" id="heroSlider">
+            <!-- Slides loaded by JavaScript -->
+        </div>
+        
+        <div class="container hero-content">
+            <div class="hero-info">
+                <span class="hero-tag">Trending Now</span>
+                <h1 class="hero-title" id="heroTitle">The Last Adventure</h1>
+                
+                <div class="hero-meta">
+                    <div class="hero-meta-item">
+                        <i class="fas fa-star"></i>
+                        <span class="rating">8.5</span>/10
+                    </div>
+                    <div class="hero-meta-item">
+                        <i class="fas fa-calendar"></i>
+                        <span>2024</span>
+                    </div>
+                    <div class="hero-meta-item">
+                        <i class="fas fa-clock"></i>
+                        <span>2h 18m</span>
+                    </div>
+                    <div class="hero-meta-item">
+                        <i class="fas fa-tag"></i>
+                        <span>Action, Adventure</span>
+                    </div>
+                </div>
+                
+                <p class="hero-description" id="heroDescription">
+                    In a world where reality blurs with fantasy, a group of explorers must uncover ancient secrets to prevent a catastrophic event that threatens all existence.
+                </p>
+                
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="watchTrailerBtn">
+                        <i class="fas fa-play"></i> Watch Trailer
+                    </button>
+                    <button class="btn btn-secondary" id="viewDetailsBtn">
+                        <i class="fas fa-info-circle"></i> View Details
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slider-controls">
+            <button class="slider-nav" id="prevSlide">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            
+            <div class="slider-dots" id="sliderDots">
+                <!-- Dots loaded by JavaScript -->
+            </div>
+            
+            <button class="slider-nav" id="nextSlide">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </section>
+
     <!-- Main Content -->
     <main class="container">
-        <!-- Hero Carousel -->
-        <section class="hero-carousel">
-            <div class="carousel-container" id="heroCarousel">
-                <!-- Dynamic content -->
-            </div>
-        </section>
-
         <!-- Quick Stats -->
         <section class="quick-stats">
             <div class="stat-card">
@@ -90,29 +147,102 @@
             </div>
         </section>
 
-        <!-- Featured Sections -->
+        <!-- Trending Movies -->
         <section class="featured-section">
             <div class="section-header">
-                <h3><i class="fas fa-fire"></i> Trending Now</h3>
+                <div class="section-title">
+                    <i class="fas fa-fire"></i>
+                    <h3>Trending Now</h3>
+                </div>
                 <a href="movies.html?filter=trending" class="see-all">See All <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="movies-grid" id="trendingMovies"></div>
+            <div class="movies-grid" id="trendingMoviesGrid">
+                <!-- Movies loaded by JavaScript -->
+            </div>
         </section>
 
+        <!-- Latest Trailers -->
+        <section class="trailers-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-play-circle"></i>
+                    <h3>Latest Trailers</h3>
+                </div>
+                <a href="movie-trailers.html" class="see-all">See All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="trailers-container">
+                <div class="slider-nav-container">
+                    <button class="slider-nav-btn" id="prevTrailer">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="slider-nav-btn" id="nextTrailer">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                
+                <div class="trailers-slider" id="trailersSlider">
+                    <!-- Trailers loaded by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Now Playing -->
         <section class="featured-section">
             <div class="section-header">
-                <h3><i class="fas fa-ticket-alt"></i> Now Playing</h3>
+                <div class="section-title">
+                    <i class="fas fa-ticket-alt"></i>
+                    <h3>Now Playing</h3>
+                </div>
                 <a href="movies.html?filter=now_playing" class="see-all">See All <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="movies-grid" id="nowPlayingMovies"></div>
+            <div class="movies-grid" id="nowPlayingMoviesGrid">
+                <!-- Movies loaded by JavaScript -->
+            </div>
         </section>
 
+        <!-- Popular Clips -->
+        <section class="clips-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-video"></i>
+                    <h3>Popular Clips</h3>
+                </div>
+                <a href="movie-clips.html" class="see-all">See All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="clips-container" id="clipsContainer">
+                <!-- Clips loaded by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Coming Soon -->
         <section class="featured-section">
             <div class="section-header">
-                <h3><i class="fas fa-calendar-alt"></i> Coming Soon</h3>
+                <div class="section-title">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>Coming Soon</h3>
+                </div>
                 <a href="movies.html?filter=upcoming" class="see-all">See All <i class="fas fa-arrow-right"></i></a>
             </div>
-            <div class="movies-grid" id="upcomingMovies"></div>
+            <div class="movies-grid" id="upcomingMoviesGrid">
+                <!-- Movies loaded by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Movie News -->
+        <section class="news-section">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fas fa-newspaper"></i>
+                    <h3>Movie News</h3>
+                </div>
+                <a href="news.html" class="see-all">See All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="news-container" id="newsContainer">
+                <!-- News loaded by JavaScript -->
+            </div>
         </section>
     </main>
 
@@ -122,21 +252,46 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>MoviesDom</h4>
-                    <p>Your ultimate movie database with advanced features and real-time data.</p>
+                    <p>Your ultimate movie database with advanced features and real-time data. Discover, explore, and enjoy cinema like never before.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
                 </div>
+                
                 <div class="footer-section">
                     <h4>Quick Links</h4>
-                    <a href="movies.html">Browse Movies</a>
-                    <a href="movie-trailers.html">Latest Trailers</a>
-                    <a href="news.html">Movie News</a>
+                    <div class="footer-links">
+                        <a href="movies.html">Browse Movies</a>
+                        <a href="movie-trailers.html">Latest Trailers</a>
+                        <a href="news.html">Movie News</a>
+                        <a href="movie-review.html">Reviews</a>
+                        <a href="about.html">About Us</a>
+                    </div>
                 </div>
+                
                 <div class="footer-section">
                     <h4>Legal</h4>
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">DMCA</a>
+                    <div class="footer-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Cookie Policy</a>
+                        <a href="#">DMCA</a>
+                        <a href="#">Contact Us</a>
+                    </div>
                 </div>
             </div>
+            
             <div class="footer-bottom">
                 <p>&copy; 2024 MoviesDom. Educational purpose only. Data provided by TMDB.</p>
             </div>
@@ -157,10 +312,12 @@
         </div>
     </div>
 
+    <!-- JavaScript Files -->
     <script src="js/config.js"></script>
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/utils.js"></script>
-    <script src="js/home.js"></script>
+    <!-- Home page specific JavaScript -->
+    <script src="js/home-new.js"></script>
 </body>
 </html>

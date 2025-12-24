@@ -3,126 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MoviesDom - Premium Movie Experience</title>
+    <title>MoviesDom - Editorial Cinema Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Purana CSS file include karo -->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* New design ke extra styles - tumhara jo code hai wo yahan aayega */
+        /* Mai sirf necessary changes dikha raha hoon */
+
+        /* Header adjustment */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #d32f2f, #0097a7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Infinite Poster Strip */
+        .poster-strip-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            margin-top: 70px;
+            padding: 20px 0;
+            background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(26,26,26,0.7) 50%, rgba(0,0,0,0.9) 100%);
+        }
+
+        .poster-strip {
+            display: flex;
+            width: max-content;
+            animation: scrollStrip 120s linear infinite;
+        }
+
+        @keyframes scrollStrip {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .poster-item {
+            flex: 0 0 auto;
+            width: 180px;
+            height: 270px;
+            margin: 0 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .poster-item:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        /* Search Bar */
+        .search-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 18px 24px;
+            font-size: 1.1rem;
+            background-color: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 12px;
+            color: #fff;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-box:focus {
+            border-color: #0097a7;
+        }
+
+        /* Category Chips */
+        .category-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .category-chip {
+            padding: 12px 24px;
+            background-color: #2a2a2a;
+            border-radius: 50px;
+            color: #fff;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .category-chip:hover {
+            background-color: #252525;
+            border-color: #0097a7;
+            transform: translateY(-2px);
+        }
+
+        .category-chip.active {
+            background: linear-gradient(to right, #d32f2f, #0097a7);
+            color: white;
+        }
+
+        /* Adult Content Notice */
+        .adult-notice {
+            background-color: rgba(211, 47, 47, 0.1);
+            border-left: 4px solid #d32f2f;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .poster-item {
+                width: 140px;
+                height: 210px;
+            }
+            
+            .poster-strip {
+                animation: scrollStrip 180s linear infinite;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <div class="logo-section">
-                <h1 class="logo"><i class="fas fa-film"></i> <span>MoviesDom</span></h1>
-                <div class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </div>
-            </div>
-            
-            <div class="nav-links">
-                <a href="index.html" class="active"><i class="fas fa-home"></i> Home</a>
-                <a href="movies.html"><i class="fas fa-list"></i> Movies</a>
-                <a href="movie-trailers.html"><i class="fas fa-play-circle"></i> Trailers</a>
-                <a href="movie-clips.html"><i class="fas fa-video"></i> Clips</a>
-                <a href="movie-review.html"><i class="fas fa-star"></i> Reviews</a>
-                <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
-                <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
-                <div class="nav-dropdown">
-                    <a href="#"><i class="fas fa-user"></i> My Account <i class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown-content">
-                        <a href="#" id="watchlistBtn"><i class="fas fa-bookmark"></i> Watchlist</a>
-                        <a href="#" id="favoritesBtn"><i class="fas fa-heart"></i> Favorites</a>
-                        <a href="#" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <!-- Header -->
+    <header class="header">
+        <a href="#" class="logo">
+            <i class="fas fa-film"></i>
+            <span>MoviesDom</span>
+        </a>
+        
+        <nav class="nav-links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="movies.html" class="nav-link">Movies</a>
+            <a href="movie-trailers.html" class="nav-link">Trailers</a>
+            <a href="movie-clips.html" class="nav-link">Clips</a>
+            <a href="movie-review.html" class="nav-link">Reviews</a>
+        </nav>
+        
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
 
-    <!-- Search Section -->
-    <section class="search-section">
-        <div class="container">
-            <div class="search-container">
-                <h2>Discover Amazing Movies</h2>
-                <p>Search through thousands of movies, trailers, and reviews</p>
-                <div class="search-box">
-                    <input type="text" id="globalSearch" placeholder="Search movies, actors, directors...">
-                    <button onclick="performGlobalSearch()"><i class="fas fa-search"></i> Search</button>
-                </div>
-                <div class="search-filters">
-                    <label><input type="checkbox" id="filterMovies" checked> Movies</label>
-                    <label><input type="checkbox" id="filterPeople"> People</label>
-                    <label><input type="checkbox" id="filterCompanies"> Companies</label>
-                </div>
-            </div>
+    <!-- Infinite Poster Strip -->
+    <section class="poster-strip-container">
+        <div class="poster-strip" id="posterStrip">
+            <!-- Posters loaded by TMDB API -->
         </div>
     </section>
 
-    <!-- Hero Section -->
-    <section class="hero-section" id="hero">
-        <div class="hero-slider" id="heroSlider">
-            <!-- Slides loaded by JavaScript -->
-        </div>
-        
-        <div class="container hero-content">
-            <div class="hero-info">
-                <span class="hero-tag">Trending Now</span>
-                <h1 class="hero-title" id="heroTitle">The Last Adventure</h1>
-                
-                <div class="hero-meta">
-                    <div class="hero-meta-item">
-                        <i class="fas fa-star"></i>
-                        <span class="rating">8.5</span>/10
-                    </div>
-                    <div class="hero-meta-item">
-                        <i class="fas fa-calendar"></i>
-                        <span>2024</span>
-                    </div>
-                    <div class="hero-meta-item">
-                        <i class="fas fa-clock"></i>
-                        <span>2h 18m</span>
-                    </div>
-                    <div class="hero-meta-item">
-                        <i class="fas fa-tag"></i>
-                        <span>Action, Adventure</span>
-                    </div>
-                </div>
-                
-                <p class="hero-description" id="heroDescription">
-                    In a world where reality blurs with fantasy, a group of explorers must uncover ancient secrets to prevent a catastrophic event that threatens all existence.
-                </p>
-                
-                <div class="hero-buttons">
-                    <button class="btn btn-primary" id="watchTrailerBtn">
-                        <i class="fas fa-play"></i> Watch Trailer
-                    </button>
-                    <button class="btn btn-secondary" id="viewDetailsBtn">
-                        <i class="fas fa-info-circle"></i> View Details
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="slider-controls">
-            <button class="slider-nav" id="prevSlide">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            
-            <div class="slider-dots" id="sliderDots">
-                <!-- Dots loaded by JavaScript -->
-            </div>
-            
-            <button class="slider-nav" id="nextSlide">
-                <i class="fas fa-chevron-right"></i>
-            </button>
+    <!-- Search Bar -->
+    <section class="search-container">
+        <input type="text" class="search-box" id="globalSearch" placeholder="Search for movies, actors, directors...">
+        <button onclick="performGlobalSearch()" class="search-btn" style="display: none;">Search</button>
+        <div class="search-suggestions" id="searchSuggestions">
+            <!-- Search suggestions will appear here -->
         </div>
     </section>
 
-    <!-- Main Content -->
-    <main class="container">
+    <!-- Category Chips -->
+    <section class="category-section" style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+        <h2 class="section-title">Explore Cinema</h2>
+        <div class="category-chips">
+            <a href="#" class="category-chip active" data-filter="all">All</a>
+            <a href="#" class="category-chip" data-filter="south">South Cinema</a>
+            <a href="#" class="category-chip" data-filter="bollywood">Bollywood</a>
+            <a href="#" class="category-chip" data-filter="hollywood">Hollywood</a>
+            <a href="actors.html" class="category-chip">Actors</a>
+            <a href="actresses.html" class="category-chip">Actresses</a>
+            <a href="#" class="category-chip" data-filter="adult">Adult Cinema</a>
+        </div>
+        
+        <!-- Adult content informational notice -->
+        <div class="adult-notice">
+            <i class="fas fa-info-circle"></i> Adult Cinema content is presented for informational and editorial purposes only.
+        </div>
+    </section>
+
+    <!-- Main Content (Existing Structure with TMDB API) -->
+    <main class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
         <!-- Quick Stats -->
         <section class="quick-stats">
             <div class="stat-card">
@@ -157,7 +247,7 @@
                 <a href="movies.html?filter=trending" class="see-all">See All <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="movies-grid" id="trendingMoviesGrid">
-                <!-- Movies loaded by JavaScript -->
+                <!-- Movies loaded by TMDB API -->
             </div>
         </section>
 
@@ -182,7 +272,7 @@
                 </div>
                 
                 <div class="trailers-slider" id="trailersSlider">
-                    <!-- Trailers loaded by JavaScript -->
+                    <!-- Trailers loaded by TMDB API -->
                 </div>
             </div>
         </section>
@@ -197,22 +287,7 @@
                 <a href="movies.html?filter=now_playing" class="see-all">See All <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="movies-grid" id="nowPlayingMoviesGrid">
-                <!-- Movies loaded by JavaScript -->
-            </div>
-        </section>
-
-        <!-- Popular Clips -->
-        <section class="clips-section">
-            <div class="section-header">
-                <div class="section-title">
-                    <i class="fas fa-video"></i>
-                    <h3>Popular Clips</h3>
-                </div>
-                <a href="movie-clips.html" class="see-all">See All <i class="fas fa-arrow-right"></i></a>
-            </div>
-            
-            <div class="clips-container" id="clipsContainer">
-                <!-- Clips loaded by JavaScript -->
+                <!-- Movies loaded by TMDB API -->
             </div>
         </section>
 
@@ -226,22 +301,7 @@
                 <a href="movies.html?filter=upcoming" class="see-all">See All <i class="fas fa-arrow-right"></i></a>
             </div>
             <div class="movies-grid" id="upcomingMoviesGrid">
-                <!-- Movies loaded by JavaScript -->
-            </div>
-        </section>
-
-        <!-- Movie News -->
-        <section class="news-section">
-            <div class="section-header">
-                <div class="section-title">
-                    <i class="fas fa-newspaper"></i>
-                    <h3>Movie News</h3>
-                </div>
-                <a href="news.html" class="see-all">See All <i class="fas fa-arrow-right"></i></a>
-            </div>
-            
-            <div class="news-container" id="newsContainer">
-                <!-- News loaded by JavaScript -->
+                <!-- Movies loaded by TMDB API -->
             </div>
         </section>
     </main>
@@ -252,20 +312,12 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>MoviesDom</h4>
-                    <p>Your ultimate movie database with advanced features and real-time data. Discover, explore, and enjoy cinema like never before.</p>
+                    <p>Your ultimate movie database with advanced features and real-time data.</p>
                     <div class="social-links">
-                        <a href="#" class="social-link">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="social-link">
-                            <i class="fab fa-youtube"></i>
-                        </a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
                 
@@ -298,26 +350,149 @@
         </div>
     </footer>
 
-    <!-- Login Modal -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>Login to MoviesDom</h3>
-            <form id="loginForm">
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Password" required>
-                <button type="submit">Login</button>
-            </form>
-            <p>Don't have an account? <a href="#" id="showRegister">Register</a></p>
-        </div>
-    </div>
-
     <!-- JavaScript Files -->
-   <script src="js/config.js"></script>
-<script src="js/api.js"></script>
-<script src="js/utils.js"></script>
-<script src="js/home.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/home.js"></script>
+    
+    <!-- New functionality for infinite scroll and search -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
 
-    <!-- Home page specific JavaScript -->
+        // Category chips functionality
+        document.querySelectorAll('.category-chip').forEach(chip => {
+            chip.addEventListener('click', function(e) {
+                if(this.getAttribute('href')) return; // If has href, let it navigate
+                
+                e.preventDefault();
+                document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                if(filter && homePage) {
+                    homePage.filterContent(filter);
+                }
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('globalSearch');
+        const searchSuggestions = document.getElementById('searchSuggestions');
+        
+        let searchDebounce;
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchDebounce);
+            const query = this.value.trim();
+            
+            if(query.length < 2) {
+                searchSuggestions.style.display = 'none';
+                return;
+            }
+            
+            searchDebounce = setTimeout(() => {
+                // Use existing search API
+                if(movieAPI && movieAPI.searchMovies) {
+                    movieAPI.searchMovies(query)
+                        .then(results => {
+                            displaySearchSuggestions(results);
+                        })
+                        .catch(err => console.error('Search error:', err));
+                }
+            }, 300);
+        });
+
+        function displaySearchSuggestions(results) {
+            if(!results || results.length === 0) {
+                searchSuggestions.innerHTML = '<div class="suggestion-item">No results found</div>';
+                searchSuggestions.style.display = 'block';
+                return;
+            }
+            
+            searchSuggestions.innerHTML = results.slice(0, 5).map(movie => `
+                <div class="suggestion-item" data-id="${movie.id}">
+                    <i class="fas fa-film suggestion-icon"></i>
+                    <div class="suggestion-text">
+                        <div class="suggestion-title">${movie.title}</div>
+                        <div class="suggestion-meta">${movie.release_date ? movie.release_date.substring(0, 4) : 'Movie'}</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Add click handlers
+            searchSuggestions.querySelectorAll('.suggestion-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const movieId = this.dataset.id;
+                    window.location.href = `movie-details.html?id=${movieId}`;
+                });
+            });
+            
+            searchSuggestions.style.display = 'block';
+        }
+
+        // Close suggestions when clicking outside
+        document.addEventListener('click', function(e) {
+            if(!searchInput.contains(e.target) && !searchSuggestions.contains(e.target)) {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+
+        // Load infinite poster strip from TMDB API
+        async function loadInfinitePosterStrip() {
+            try {
+                if(!movieAPI) return;
+                
+                const data = await movieAPI.getPopularMovies();
+                if(!data || !data.results) return;
+                
+                const movies = data.results.slice(0, 20);
+                const posterStrip = document.getElementById('posterStrip');
+                
+                if(!posterStrip) return;
+                
+                // Create duplicate for seamless scroll
+                const allMovies = [...movies, ...movies];
+                
+                posterStrip.innerHTML = allMovies.map(movie => `
+                    <div class="poster-item" data-id="${movie.id}">
+                        <img src="${TMDB_CONFIG.IMAGE_BASE_URL + movie.poster_path}" 
+                             alt="${movie.title}"
+                             onerror="this.src='https://images.unsplash.com/photo-1542204165-65bf26472b9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60'">
+                    </div>
+                `).join('');
+                
+                // Add click handlers
+                posterStrip.querySelectorAll('.poster-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const movieId = this.dataset.id;
+                        window.location.href = `movie-details.html?id=${movieId}`;
+                    });
+                });
+                
+            } catch (error) {
+                console.error('Error loading poster strip:', error);
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadInfinitePosterStrip();
+            
+            // Pause animation on hover
+            const posterStrip = document.getElementById('posterStrip');
+            if(posterStrip) {
+                posterStrip.addEventListener('mouseenter', function() {
+                    this.style.animationPlayState = 'paused';
+                });
+                
+                posterStrip.addEventListener('mouseleave', function() {
+                    this.style.animationPlayState = 'running';
+                });
+            }
+        });
+    </script>
 </body>
 </html>

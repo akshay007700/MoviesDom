@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie News & Updates - MoviesDom</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/news.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-section">
+                <h1 class="logo"><i class="fas fa-film"></i> MoviesDom</h1>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="movies.html"><i class="fas fa-list"></i> Movies</a>
+                <a href="movie-trailers.html"><i class="fas fa-play-circle"></i> Trailers</a>
+                <a href="movie-clips.html"><i class="fas fa-video"></i> Clips</a>
+                <a href="movie-review.html"><i class="fas fa-star"></i> Reviews</a>
+                <a href="news.html" class="active"><i class="fas fa-newspaper"></i> News</a>
+                <div class="nav-dropdown">
+                    <a href="#"><i class="fas fa-user"></i> My Account <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="#" id="watchlistBtn"><i class="fas fa-bookmark"></i> Watchlist</a>
+                        <a href="#" id="favoritesBtn"><i class="fas fa-heart"></i> Favorites</a>
+                        <a href="#" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breaking News Banner -->
+    <div class="breaking-news" id="breakingNews">
+        <div class="breaking-news-content">
+            <span class="breaking-label"><i class="fas fa-bolt"></i> BREAKING</span>
+            <div class="breaking-scroller">
+                <div class="breaking-items">
+                    <!-- Breaking news items will be loaded here -->
+                </div>
+            </div>
+            <button class="breaking-close" onclick="closeBreakingNews()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="news-header">
+        <div class="container">
+            <div class="header-content">
+                <h1><i class="fas fa-newspaper"></i> Movie News & Updates</h1>
+                <p>Stay updated with the latest movie news, casting announcements, and industry insights</p>
+                
+                <div class="header-stats">
+                    <div class="stat">
+                        <i class="fas fa-rss"></i>
+                        <span id="totalArticles">10,000+</span>
+                        <small>Articles</small>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-clock"></i>
+                        <span id="dailyUpdates">50+</span>
+                        <small>Daily Updates</small>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-network-wired"></i>
+                        <span id="newsSources">25+</span>
+                        <small>News Sources</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured News Carousel -->
+    <section class="featured-news">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-fire"></i> Featured Stories</h2>
+                <div class="carousel-nav">
+                    <button class="carousel-prev"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-next"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <div class="swiper featured-carousel">
+                <div class="swiper-wrapper" id="featuredCarousel">
+                    <!-- Featured news slides will be loaded here -->
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Categories Navigation -->
+    <section class="news-categories">
+        <div class="container">
+            <div class="categories-scroller">
+                <button class="category-btn active" data-category="all">
+                    <i class="fas fa-globe"></i> All News
+                </button>
+                <button class="category-btn" data-category="breaking">
+                    <i class="fas fa-bolt"></i> Breaking
+                </button>
+                <button class="category-btn" data-category="releases">
+                    <i class="fas fa-calendar-alt"></i> Releases
+                </button>
+                <button class="category-btn" data-category="casting">
+                    <i class="fas fa-users"></i> Casting
+                </button>
+                <button class="category-btn" data-category="reviews">
+                    <i class="fas fa-star"></i> Reviews
+                </button>
+                <button class="category-btn" data-category="box-office">
+                    <i class="fas fa-chart-line"></i> Box Office
+                </button>
+                <button class="category-btn" data-category="interviews">
+                    <i class="fas fa-microphone"></i> Interviews
+                </button>
+                <button class="category-btn" data-category="awards">
+                    <i class="fas fa-trophy"></i> Awards
+                </button>
+                <button class="category-btn" data-category="rumors">
+                    <i class="fas fa-whisper"></i> Rumors
+                </button>
+                <button class="category-btn" data-category="technology">
+                    <i class="fas fa-cogs"></i> Technology
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main News Content -->
+    <section class="news-main">
+        <div class="container">
+            <div class="news-layout">
+                <!-- News Feed -->
+                <div class="news-feed">
+                    <!-- Advanced Filters -->
+                    <div class="news-filters">
+                        <div class="filter-group">
+                            <div class="search-box">
+                                <input type="text" id="newsSearch" placeholder="Search news articles...">
+                                <button onclick="searchNews()"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <select id="timeFilter">
+                                <option value="all">All Time</option>
+                                <option value="today">Today</option>
+                                <option value="week">This Week</option>
+                                <option value="month">This Month</option>
+                            </select>
+
+                            <select id="sourceFilter">
+                                <option value="all">All Sources</option>
+                                <!-- Sources will be populated dynamically -->
+                            </select>
+
+                            <select id="sortFilter">
+                                <option value="latest">Latest First</option>
+                                <option value="popular">Most Popular</option>
+                                <option value="trending">Trending</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-actions">
+                            <button class="btn btn-secondary" onclick="resetFilters()">
+                                <i class="fas fa-redo"></i> Reset
+                            </button>
+                            <button class="btn btn-primary" onclick="applyFilters()">
+                                <i class="fas fa-filter"></i> Apply
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- News Articles Grid -->
+                    <div class="news-grid" id="newsGrid">
+                        <!-- News articles will be loaded here -->
+                    </div>
+
+                    <!-- Loading State -->
+                    <div class="loading-state" id="newsLoading">
+                        <div class="loading-spinner"></div>
+                        <p>Loading latest news...</p>
+                    </div>
+
+                    <!-- Load More -->
+                    <div class="load-more-section">
+                        <button class="btn btn-outline" id="loadMoreNews">
+                            <i class="fas fa-plus"></i> Load More Articles
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="news-sidebar">
+                    <!-- Trending Topics -->
+                    <div class="sidebar-widget trending-topics">
+                        <h3><i class="fas fa-trending-up"></i> Trending Topics</h3>
+                        <div class="topics-list">
+                            <!-- Trending topics will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- News Sources -->
+                    <div class="sidebar-widget news-sources">
+                        <h3><i class="fas fa-network-wired"></i> News Sources</h3>
+                        <div class="sources-grid">
+                            <!-- News sources will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Newsletter Signup -->
+                    <div class="sidebar-widget newsletter">
+                        <h3><i class="fas fa-envelope"></i> Stay Updated</h3>
+                        <p>Get daily movie news delivered to your inbox</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Your email address" required>
+                            <button type="submit" class="btn btn-primary">Subscribe</button>
+                        </form>
+                    </div>
+
+                    <!-- Upcoming Events -->
+                    <div class="sidebar-widget upcoming-events">
+                        <h3><i class="fas fa-calendar-star"></i> Upcoming Events</h3>
+                        <div class="events-list">
+                            <!-- Events will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video News Section -->
+    <section class="video-news">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-play-circle"></i> Video News</h2>
+                <p>Watch the latest movie news and interviews</p>
+            </div>
+
+            <div class="video-grid" id="videoNewsGrid">
+                <!-- Video news items will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- News Alerts Modal -->
+    <div id="newsAlertModal" class="modal news-alert-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="alert-header">
+                <i class="fas fa-bell"></i>
+                <h3>News Alerts</h3>
+            </div>
+            <div class="alert-content">
+                <p>Get instant notifications for breaking movie news</p>
+                <div class="alert-options">
+                    <label class="alert-option">
+                        <input type="checkbox" checked> Breaking News
+                    </label>
+                    <label class="alert-option">
+                        <input type="checkbox" checked> Major Casting News
+                    </label>
+                    <label class="alert-option">
+                        <input type="checkbox"> Box Office Updates
+                    </label>
+                    <label class="alert-option">
+                        <input type="checkbox"> Award Nominations
+                    </label>
+                </div>
+            </div>
+            <div class="alert-actions">
+                <button class="btn btn-primary">Save Preferences</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Article Detail Modal -->
+    <div id="articleModal" class="modal article-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="articleModalContent">
+                <!-- Article content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>MoviesDom</h4>
+                    <p>Your ultimate movie database with advanced features and real-time data.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="movies.html">Browse Movies</a>
+                    <a href="movie-trailers.html">Latest Trailers</a>
+                    <a href="news.html">Movie News</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">DMCA</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MoviesDom. Educational purpose only. News data aggregated from various sources.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/news.js"></script>
+</body>
+</html>

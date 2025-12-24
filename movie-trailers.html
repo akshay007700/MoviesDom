@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trailers & Photos - MoviesDom</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/trailers-photos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lightgallery-bundle.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-section">
+                <h1 class="logo"><i class="fas fa-film"></i> MoviesDom</h1>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="movies.html"><i class="fas fa-list"></i> Movies</a>
+                <a href="movie-trailers.html" class="active"><i class="fas fa-play-circle"></i> Trailers</a>
+                <a href="movie-clips.html"><i class="fas fa-video"></i> Clips</a>
+                <a href="movie-review.html"><i class="fas fa-star"></i> Reviews</a>
+                <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
+                <div class="nav-dropdown">
+                    <a href="#"><i class="fas fa-user"></i> My Account <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="#" id="watchlistBtn"><i class="fas fa-bookmark"></i> Watchlist</a>
+                        <a href="#" id="favoritesBtn"><i class="fas fa-heart"></i> Favorites</a>
+                        <a href="#" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="trailers-header">
+        <div class="container">
+            <div class="header-content">
+                <h1><i class="fas fa-play-circle"></i> Trailers & Photos</h1>
+                <p>Discover the latest movie trailers, behind-the-scenes content, and high-quality photos</p>
+                
+                <div class="header-stats">
+                    <div class="stat">
+                        <i class="fas fa-video"></i>
+                        <span id="totalVideos">1,000+</span>
+                        <small>Videos</small>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-camera"></i>
+                        <span id="totalPhotos">10,000+</span>
+                        <small>Photos</small>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-film"></i>
+                        <span id="totalMovies">500+</span>
+                        <small>Movies</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search and Filter Section -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters-container">
+                <!-- Search Bar -->
+                <div class="search-box-large">
+                    <input type="text" id="mediaSearch" placeholder="Search trailers and photos by movie title...">
+                    <button onclick="performMediaSearch()">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+
+                <!-- Filter Controls -->
+                <div class="media-filters">
+                    <div class="filter-group">
+                        <label>Media Type:</label>
+                        <select id="mediaTypeFilter">
+                            <option value="all">All Media</option>
+                            <option value="trailer">Trailers</option>
+                            <option value="teaser">Teasers</option>
+                            <option value="clip">Clips</option>
+                            <option value="featurette">Featurettes</option>
+                            <option value="behind_scenes">Behind the Scenes</option>
+                            <option value="bloopers">Bloopers</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Sort By:</label>
+                        <select id="sortFilter">
+                            <option value="popularity">Popularity</option>
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="title">Movie Title A-Z</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Time Range:</label>
+                        <select id="timeFilter">
+                            <option value="all">All Time</option>
+                            <option value="day">Last 24 Hours</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="year">This Year</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-actions">
+                        <button class="btn btn-secondary" onclick="resetMediaFilters()">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                        <button class="btn btn-primary" onclick="applyMediaFilters()">
+                            <i class="fas fa-filter"></i> Apply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Tabs -->
+    <section class="media-tabs-section">
+        <div class="container">
+            <div class="tabs-navigation">
+                <button class="tab-nav-btn active" data-tab="featured">
+                    <i class="fas fa-star"></i> Featured
+                </button>
+                <button class="tab-nav-btn" data-tab="trailers">
+                    <i class="fas fa-play-circle"></i> Trailers
+                </button>
+                <button class="tab-nav-btn" data-tab="clips">
+                    <i class="fas fa-video"></i> Clips & Scenes
+                </button>
+                <button class="tab-nav-btn" data-tab="photos">
+                    <i class="fas fa-camera"></i> Photos
+                </button>
+                <button class="tab-nav-btn" data-tab="bts">
+                    <i class="fas fa-theater-masks"></i> Behind the Scenes
+                </button>
+            </div>
+
+            <!-- Featured Tab -->
+            <div class="tab-content active" id="featured-tab">
+                <div class="section-header">
+                    <h2>Featured Content</h2>
+                    <p>Handpicked trailers and photos from popular movies</p>
+                </div>
+
+                <!-- Featured Trailers Carousel -->
+                <div class="featured-carousel">
+                    <h3>Latest Trailers</h3>
+                    <div class="carousel-container">
+                        <button class="carousel-btn prev" onclick="moveCarousel(-1, 'trailers')">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <div class="carousel-track" id="trailersCarousel">
+                            <!-- Featured trailers will be loaded here -->
+                        </div>
+                        
+                        <button class="carousel-btn next" onclick="moveCarousel(1, 'trailers')">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Featured Photos Grid -->
+                <div class="featured-photos">
+                    <h3>Featured Photos</h3>
+                    <div class="photos-grid" id="featuredPhotos">
+                        <!-- Featured photos will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trailers Tab -->
+            <div class="tab-content" id="trailers-tab">
+                <div class="section-header">
+                    <h2>Movie Trailers</h2>
+                    <p>Official trailers and teasers</p>
+                </div>
+
+                <div class="videos-grid" id="trailersGrid">
+                    <!-- Trailers will be loaded here -->
+                </div>
+
+                <div class="load-more-section">
+                    <button class="btn btn-outline" id="loadMoreTrailers">
+                        <i class="fas fa-plus"></i> Load More Trailers
+                    </button>
+                </div>
+            </div>
+
+            <!-- Clips Tab -->
+            <div class="tab-content" id="clips-tab">
+                <div class="section-header">
+                    <h2>Clips & Scenes</h2>
+                    <p>Movie clips, scenes, and excerpts</p>
+                </div>
+
+                <div class="videos-grid" id="clipsGrid">
+                    <!-- Clips will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Photos Tab -->
+            <div class="tab-content" id="photos-tab">
+                <div class="section-header">
+                    <h2>Movie Photos</h2>
+                    <p>High-quality stills, posters, and promotional images</p>
+                </div>
+
+                <div class="photos-filter-bar">
+                    <div class="photo-filters">
+                        <button class="photo-filter-btn active" data-type="all">All Photos</button>
+                        <button class="photo-filter-btn" data-type="poster">Posters</button>
+                        <button class="photo-filter-btn" data-type="backdrop">Backdrops</button>
+                        <button class="photo-filter-btn" data-type="still">Stills</button>
+                        <button class="photo-filter-btn" data-type="logo">Logos</button>
+                    </div>
+                    
+                    <div class="view-controls">
+                        <button class="view-btn active" data-view="grid">
+                            <i class="fas fa-th"></i> Grid
+                        </button>
+                        <button class="view-btn" data-view="masonry">
+                            <i class="fas fa-th-large"></i> Masonry
+                        </button>
+                    </div>
+                </div>
+
+                <div class="photos-container grid-view" id="photosContainer">
+                    <!-- Photos will be loaded here -->
+                </div>
+
+                <div class="load-more-section">
+                    <button class="btn btn-outline" id="loadMorePhotos">
+                        <i class="fas fa-plus"></i> Load More Photos
+                    </button>
+                </div>
+            </div>
+
+            <!-- Behind the Scenes Tab -->
+            <div class="tab-content" id="bts-tab">
+                <div class="section-header">
+                    <h2>Behind the Scenes</h2>
+                    <p>Featurettes, making-of, and bloopers</p>
+                </div>
+
+                <div class="bts-content">
+                    <div class="bts-videos">
+                        <h3>Featurettes & Making Of</h3>
+                        <div class="videos-grid" id="btsVideosGrid">
+                            <!-- BTS videos will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="bts-photos">
+                        <h3>Behind the Scenes Photos</h3>
+                        <div class="photos-grid" id="btsPhotosGrid">
+                            <!-- BTS photos will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Player Modal -->
+    <div id="videoModal" class="modal video-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="video-player-container">
+                <div id="videoPlayer"></div>
+                <div class="video-info">
+                    <h3 id="videoTitle"></h3>
+                    <div class="video-meta">
+                        <span id="videoMovie"></span>
+                        <span id="videoType"></span>
+                        <span id="videoDate"></span>
+                    </div>
+                    <p id="videoDescription"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Photo Viewer Modal -->
+    <div id="photoModal" class="modal photo-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="photo-viewer">
+                <img id="photoViewerImage" src="" alt="">
+                <div class="photo-info">
+                    <h3 id="photoTitle"></h3>
+                    <div class="photo-meta">
+                        <span id="photoMovie"></span>
+                        <span id="photoResolution"></span>
+                        <span id="photoAspect"></span>
+                    </div>
+                    <div class="photo-actions">
+                        <button class="btn btn-secondary" onclick="downloadPhoto()">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <button class="btn btn-secondary" onclick="sharePhoto()">
+                            <i class="fas fa-share"></i> Share
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Movie Info Panel -->
+    <div id="movieInfoPanel" class="movie-info-panel">
+        <div class="panel-content">
+            <button class="close-panel" onclick="hideMovieInfo()">&times;</button>
+            <div id="movieInfoContent">
+                <!-- Movie info will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>MoviesDom</h4>
+                    <p>Your ultimate movie database with advanced features and real-time data.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="movies.html">Browse Movies</a>
+                    <a href="movie-trailers.html">Latest Trailers</a>
+                    <a href="news.html">Movie News</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">DMCA</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MoviesDom. Educational purpose only. Data provided by TMDB.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/lightgallery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/plugins/zoom/lg-zoom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/plugins/fullscreen/lg-fullscreen.min.js"></script>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/trailers-photos.js"></script>
+</body>
+</html>

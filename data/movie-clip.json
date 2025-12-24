@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Sample Action Reel",
+    "category": "action",
+    "src": "videos/sample-action.mp4",
+    "thumbnail": "images/sample-action-thumb.jpg",
+    "rating": "4.5",
+    "duration": "00:30"
+  },
+  {
+    "title": "Funny Short Clip",
+    "category": "comedy",
+    "src": "videos/sample-funny.mp4",
+    "thumbnail": "images/sample-funny-thumb.jpg",
+    "rating": "4.7",
+    "duration": "00:20"
+  },
+  {
+    "title": "Drama Scene",
+    "category": "drama",
+    "src": "videos/sample-drama.mp4",
+    "thumbnail": "images/sample-drama-thumb.jpg",
+    "rating": "4.2",
+    "duration": "00:45"
+  }
+]

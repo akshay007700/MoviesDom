@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MoviesDom — Clips</title>
+  <link rel="stylesheet" href="css/movie-clips.css" />
+</head>
+<body>
+  <header class="mc-header">
+    <div class="mc-logo">MoviesDom</div>
+    <div class="mc-actions">
+      <input id="search-input" type="search" placeholder="Search clips..." />
+    </div>
+  </header>
+
+  <main class="mc-main">
+    <section class="mc-controls">
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="action">Action</button>
+        <button class="filter-btn" data-filter="comedy">Comedy</button>
+        <button class="filter-btn" data-filter="drama">Drama</button>
+        <button class="filter-btn" data-filter="youtube">YouTube</button>
+      </div>
+    </section>
+
+    <section class="mc-content">
+      <div class="loader" style="display:none">Loading...</div>
+      <div class="error-message" style="display:none;color:#ff9b9b"></div>
+      <div class="clip-container"></div>
+    </section>
+  </main>
+
+  <footer class="mc-footer">
+    © MoviesDom — Clips
+  </footer>
+
+  <!-- scripts -->
+  <!-- Keep script order: first JSON/local data is not required, main logic is below -->
+  <script src="js/movie-clips.js"></script>
+</body>
+</html>

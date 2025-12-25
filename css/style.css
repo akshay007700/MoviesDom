@@ -1,79 +1,22 @@
-/* Add these styles to your existing style.css file */
+/* Home Page Specific Styles */
 
-/* New Header Styles */
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    background-color: rgba(10, 10, 10, 0.95);
-    backdrop-filter: blur(10px);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    padding: 0 5%;
-    border-bottom: 1px solid #333;
-}
-
-.logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    background: linear-gradient(to right, #d32f2f, #0097a7);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.logo i {
-    font-size: 1.5rem;
-}
-
-.nav-links {
-    display: flex;
-    margin-left: 40px;
-    gap: 25px;
-}
-
-.nav-link {
-    color: #b0b0b0;
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.nav-link:hover,
-.nav-link.active {
-    color: #ffffff;
-}
-
-.mobile-menu-btn {
-    display: none;
-    background: none;
-    border: none;
-    color: #ffffff;
-    font-size: 1.5rem;
-    cursor: pointer;
-    margin-left: auto;
-}
-
-/* Infinite Poster Strip */
+/* Hero Poster Strip */
 .poster-strip-container {
     width: 100%;
     overflow: hidden;
     position: relative;
     margin-top: 70px;
     padding: 20px 0;
-    background: linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(26,26,26,0.7) 50%, rgba(0,0,0,0.9) 100%);
+    background: linear-gradient(90deg, 
+        rgba(0,0,0,0.95) 0%, 
+        rgba(20,20,20,0.9) 50%, 
+        rgba(0,0,0,0.95) 100%);
+    border-bottom: 1px solid #333;
 }
 
 .poster-strip {
     display: flex;
+    gap: 15px;
     width: max-content;
     animation: scrollStrip 120s linear infinite;
 }
@@ -89,19 +32,20 @@
 
 .poster-item {
     flex: 0 0 auto;
-    width: 180px;
-    height: 270px;
-    margin: 0 10px;
+    width: 200px;
+    height: 300px;
     border-radius: 8px;
     overflow: hidden;
     position: relative;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
     cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .poster-item:hover {
     transform: scale(1.05);
     z-index: 10;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 .poster-item img {
@@ -111,153 +55,356 @@
     display: block;
 }
 
-/* Search Suggestions */
-.search-suggestions {
-    position: absolute;
-    top: 100%;
-    left: 20px;
-    right: 20px;
-    background-color: #1a1a1a;
-    border-radius: 0 0 12px 12px;
-    border: 2px solid #333;
-    border-top: none;
-    max-height: 400px;
-    overflow-y: auto;
+/* Category Strip */
+.category-strip {
+    padding: 20px 0;
+    background: #0a0a0a;
+    border-bottom: 1px solid #222;
+}
+
+.category-scroll {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px 0;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.category-scroll::-webkit-scrollbar {
     display: none;
-    z-index: 1000;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-.search-suggestions.active {
-    display: block;
-}
-
-.suggestion-item {
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    border-bottom: 1px solid #333;
-}
-
-.suggestion-item:last-child {
-    border-bottom: none;
-}
-
-.suggestion-item:hover {
-    background-color: #252525;
-}
-
-.suggestion-icon {
-    margin-right: 15px;
-    color: #0097a7;
-    font-size: 1.2rem;
-    width: 24px;
-    text-align: center;
-}
-
-.suggestion-text {
-    flex: 1;
-}
-
-.suggestion-title {
-    font-weight: 600;
-    margin-bottom: 3px;
-}
-
-.suggestion-meta {
-    font-size: 0.85rem;
-    color: #b0b0b0;
-}
-
-/* Category Chips */
-.category-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin: 20px 0;
-}
-
-.category-chip {
+.category-pill {
+    flex: 0 0 auto;
     padding: 12px 24px;
-    background-color: #2a2a2a;
+    background: #1a1a1a;
     border-radius: 50px;
-    color: #ffffff;
+    color: #fff;
     font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 1px solid transparent;
     text-decoration: none;
-    display: inline-block;
+    transition: all 0.3s ease;
+    border: 1px solid #333;
+    white-space: nowrap;
 }
 
-.category-chip:hover {
-    background-color: #252525;
-    border-color: #0097a7;
+.category-pill:hover {
+    background: #252525;
+    border-color: #d32f2f;
     transform: translateY(-2px);
 }
 
-.category-chip.active {
-    background: linear-gradient(to right, #d32f2f, #0097a7);
-    color: white;
+.category-pill.adult {
+    background: rgba(211, 47, 47, 0.1);
+    border-color: #d32f2f;
+    color: #ff6b6b;
 }
 
-/* Adult Content Notice */
-.adult-notice {
-    background-color: rgba(211, 47, 47, 0.1);
-    border-left: 4px solid #d32f2f;
+/* Stats Strip */
+.stats-strip {
+    padding: 30px 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #151515 100%);
+    border-bottom: 1px solid #222;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
     padding: 15px;
-    margin: 20px 0;
-    border-radius: 0 8px 8px 0;
-    color: #b0b0b0;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.stat-item i {
+    font-size: 2rem;
+    color: #0097a7;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 151, 167, 0.1);
+    border-radius: 8px;
+}
+
+.stat-item h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(to right, #d32f2f, #0097a7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.stat-item p {
+    margin: 5px 0 0;
+    color: #aaa;
     font-size: 0.9rem;
 }
 
-.adult-notice i {
-    margin-right: 8px;
+/* Main Content */
+.main-content {
+    padding: 40px 20px;
+}
+
+.content-section {
+    margin-bottom: 40px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+    color: #fff;
+    margin: 0;
+}
+
+.section-title i {
     color: #d32f2f;
 }
 
-/* Responsive */
+.see-all {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #0097a7;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.see-all:hover {
+    color: #00bcd4;
+}
+
+/* Movies Row */
+.movies-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.movie-card {
+    background: #1a1a1a;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #2a2a2a;
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+    border-color: #0097a7;
+    box-shadow: 0 8px 24px rgba(0, 151, 167, 0.2);
+}
+
+.movie-poster {
+    width: 100%;
+    height: 270px;
+    position: relative;
+    overflow: hidden;
+}
+
+.movie-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover .movie-poster img {
+    transform: scale(1.05);
+}
+
+.movie-info {
+    padding: 15px;
+}
+
+.movie-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.movie-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #aaa;
+}
+
+.movie-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #ffd700;
+}
+
+/* Trailers Row */
+.trailers-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.trailer-card {
+    background: #1a1a1a;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #2a2a2a;
+}
+
+.trailer-card:hover {
+    transform: translateY(-3px);
+    border-color: #d32f2f;
+}
+
+.trailer-thumbnail {
+    width: 100%;
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+}
+
+.trailer-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(211, 47, 47, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.trailer-card:hover .play-button {
+    background: rgba(211, 47, 47, 1);
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.trailer-info {
+    padding: 15px;
+}
+
+.trailer-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.trailer-meta {
+    font-size: 0.85rem;
+    color: #aaa;
+}
+
+/* Skeleton Loaders */
+.skeleton-poster {
+    width: 100%;
+    height: 270px;
+    background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 8px;
+}
+
+.skeleton-title {
+    height: 20px;
+    background: #2a2a2a;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+.skeleton-meta {
+    height: 15px;
+    width: 60%;
+    background: #2a2a2a;
+    border-radius: 4px;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-    .header {
-        padding: 0 15px;
-    }
-    
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 70px;
-        left: 0;
-        width: 100%;
-        background-color: #0a0a0a;
-        flex-direction: column;
-        padding: 20px;
-        gap: 15px;
-        border-top: 1px solid #333;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-    }
-    
-    .nav-links.active {
-        display: flex;
-    }
-    
-    .mobile-menu-btn {
-        display: block;
-    }
-    
     .poster-item {
-        width: 140px;
-        height: 210px;
+        width: 150px;
+        height: 225px;
     }
     
-    .poster-strip {
-        animation: scrollStrip 180s linear infinite;
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
     
-    .category-chips {
-        justify-content: center;
+    .movies-row {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+    }
+    
+    .movie-poster {
+        height: 225px;
+    }
+    
+    .trailers-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .see-all {
+        align-self: flex-end;
     }
 }
 
@@ -267,9 +414,26 @@
         height: 180px;
     }
     
-    .category-chip {
-        padding: 10px 18px;
+    .category-pill {
+        padding: 10px 20px;
         font-size: 0.9rem;
+    }
+    
+    .stat-item {
+        padding: 12px;
+    }
+    
+    .stat-item h3 {
+        font-size: 1.5rem;
+    }
+    
+    .movies-row {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 12px;
+    }
+    
+    .movie-poster {
+        height: 195px;
     }
 }
 
@@ -279,14 +443,9 @@
         animation: none;
         overflow-x: auto;
     }
-}
-
-/* Adjust main container margin for new header */
-.container {
-    margin-top: 20px;
-}
-
-/* Ensure existing styles don't conflict */
-.navbar {
-    display: none; /* Hide old navbar if it exists */
+    
+    .movie-card:hover,
+    .trailer-card:hover {
+        transform: none;
+    }
 }

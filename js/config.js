@@ -9,7 +9,7 @@ const TMDB_CONFIG = {
 
 // 🔐 Your backend (Node/Express) URL
 const BACKEND_CONFIG = {
-    BASE_URL: "https://moviesdom-backend-production.up.railway.app"
+    BASE_URL: "https://moviesdom-backend.onrender.com"
 };
 
 const APP_CONFIG = {

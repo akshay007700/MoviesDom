@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/home.css">
 </head>
-<body>
+<body data-theme="dark">
     <!-- Header -->
     <header class="header">
         <a href="#" class="logo">
@@ -24,9 +24,26 @@
             <a href="movie-review.html" class="nav-link">Reviews</a>
         </nav>
         
-        <button class="mobile-menu-btn" id="mobileMenuBtn">
-            <i class="fas fa-bars"></i>
-        </button>
+        <div class="header-actions">
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search movies, actors...">
+                <button class="search-btn" id="searchBtn">
+                    <i class="fas fa-search"></i>
+                </button>
+                <div class="search-suggestions" id="searchSuggestions"></div>
+            </div>
+            
+            <!-- Theme Toggle -->
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+            
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
     </header>
 
     <!-- Hero Poster Strip -->
@@ -208,7 +225,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 MoviesDom. Educational purpose only. Data provided by TMDB.</p>
+                <p>&copy; 2024 MoviesDom. All rights reserved.</p>
             </div>
         </div>
     </footer>

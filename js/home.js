@@ -1,6 +1,6 @@
 /**
  * MoviesDom Home Page Controller
- * Enhanced with localStorage caching and performance optimizations
+ * Enhanced with localStorage caching, theme toggle, and search functionality
  */
 
 class HomePage {
@@ -16,6 +16,15 @@ class HomePage {
         this.upcomingMovies = document.getElementById('upcomingMovies');
         this.latestTrailers = document.getElementById('latestTrailers');
         
+        // Search elements
+        this.searchInput = document.getElementById('searchInput');
+        this.searchBtn = document.getElementById('searchBtn');
+        this.searchSuggestions = document.getElementById('searchSuggestions');
+        
+        // Theme elements
+        this.themeToggle = document.getElementById('themeToggle');
+        this.body = document.body;
+        
         // Stats elements
         this.statMovies = document.getElementById('statMovies');
         this.statPeople = document.getElementById('statPeople');
@@ -24,13 +33,17 @@ class HomePage {
         
         // Data containers
         this.cachedData = null;
-        this.loadingObservers = new Map();
+        this.searchDebounceTimer = null;
+        this.searchResults = [];
     }
     
     async init() {
         console.log('🎬 Initializing MoviesDom Home Page...');
         
         try {
+            // Initialize theme from localStorage
+            this.initTheme();
+            
             // Initialize event listeners
             this.initEventListeners();
             
@@ -44,6 +57,135 @@ class HomePage {
         } catch (error) {
             console.error('❌ Error initializing home page:', error);
             this.showErrorState();
+        }
+    }
+    
+    /**
+     * Initialize theme from localStorage
+     */
+    initTheme() {
+        const savedTheme = localStorage.getItem('moviesdom_theme') || 'dark';
+        this.body.setAttribute('data-theme', savedTheme);
+        this.updateThemeIcon(savedTheme);
+    }
+    
+    /**
+     * Update theme toggle icon
+     */
+    updateThemeIcon(theme) {
+        if (!this.themeToggle) return;
+        
+        const icon = this.themeToggle.querySelector('i');
+        if (theme === 'dark') {
+            icon.className = 'fas fa-moon';
+            icon.setAttribute('title', 'Switch to light mode');
+        } else {
+            icon.className = 'fas fa-sun';
+            icon.setAttribute('title', 'Switch to dark mode');
+        }
+    }
+    
+    /**
+     * Toggle between dark and light themes
+     */
+    toggleTheme() {
+        const currentTheme = this.body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        this.body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('moviesdom_theme', newTheme);
+        this.updateThemeIcon(newTheme);
+    }
+    
+    /**
+     * Handle search input
+     */
+    async handleSearchInput(query) {
+        if (!query.trim()) {
+            this.hideSearchSuggestions();
+            return;
+        }
+        
+        try {
+            // Debounce search requests
+            clearTimeout(this.searchDebounceTimer);
+            this.searchDebounceTimer = setTimeout(async () => {
+                await this.performSearch(query);
+            }, 300);
+        } catch (error) {
+            console.error('Search error:', error);
+        }
+    }
+    
+    /**
+     * Perform search with backend API
+     */
+    async performSearch(query) {
+        if (!movieAPI || !movieAPI.searchMovies) {
+            console.warn('Search API not available');
+            return;
+        }
+        
+        try {
+            const results = await movieAPI.searchMovies(query);
+            this.searchResults = results?.results?.slice(0, 5) || [];
+            this.showSearchSuggestions();
+        } catch (error) {
+            console.error('Search failed:', error);
+            this.searchResults = [];
+            this.hideSearchSuggestions();
+        }
+    }
+    
+    /**
+     * Show search suggestions dropdown
+     */
+    showSearchSuggestions() {
+        if (!this.searchSuggestions || this.searchResults.length === 0) {
+            this.hideSearchSuggestions();
+            return;
+        }
+        
+        const suggestionsHTML = this.searchResults.map(movie => `
+            <div class="search-suggestion" data-id="${movie.id}">
+                <img src="${TMDB_CONFIG.IMAGE_BASE_URL}/w92${movie.poster_path || movie.backdrop_path}" 
+                     alt="${movie.title}"
+                     onerror="this.style.display='none'">
+                <div class="suggestion-info">
+                    <div class="suggestion-title">${movie.title}</div>
+                    <div class="suggestion-year">${movie.release_date ? movie.release_date.substring(0, 4) : ''}</div>
+                </div>
+            </div>
+        `).join('');
+        
+        this.searchSuggestions.innerHTML = suggestionsHTML;
+        this.searchSuggestions.classList.add('visible');
+        
+        // Add click handlers to suggestions
+        this.searchSuggestions.querySelectorAll('.search-suggestion').forEach(item => {
+            item.addEventListener('click', () => {
+                const movieId = item.dataset.id;
+                this.navigateToMovie(movieId);
+            });
+        });
+    }
+    
+    /**
+     * Hide search suggestions
+     */
+    hideSearchSuggestions() {
+        if (this.searchSuggestions) {
+            this.searchSuggestions.classList.remove('visible');
+            this.searchSuggestions.innerHTML = '';
+        }
+    }
+    
+    /**
+     * Navigate to search results page
+     */
+    navigateToSearchResults(query) {
+        if (query.trim()) {
+            window.location.href = `movies.html?search=${encodeURIComponent(query)}`;
         }
     }
     
@@ -468,6 +610,38 @@ class HomePage {
      * Initialize all event listeners
      */
     initEventListeners() {
+        // Theme toggle
+        if (this.themeToggle) {
+            this.themeToggle.addEventListener('click', () => this.toggleTheme());
+        }
+        
+        // Search functionality
+        if (this.searchInput) {
+            this.searchInput.addEventListener('input', (e) => {
+                this.handleSearchInput(e.target.value);
+            });
+            
+            this.searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    this.navigateToSearchResults(this.searchInput.value);
+                }
+            });
+            
+            // Close suggestions when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!this.searchInput.contains(e.target) && 
+                    !this.searchSuggestions.contains(e.target)) {
+                    this.hideSearchSuggestions();
+                }
+            });
+        }
+        
+        if (this.searchBtn) {
+            this.searchBtn.addEventListener('click', () => {
+                this.navigateToSearchResults(this.searchInput.value);
+            });
+        }
+        
         // Mobile menu toggle
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navLinks = document.querySelector('.nav-links');

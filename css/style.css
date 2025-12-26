@@ -64,19 +64,25 @@ body {
 }
 
 /* Logo */
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--text-primary);
-    text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: bold;
+.logo-dom {
+  background: linear-gradient(90deg, #e50914, #00c6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.logo i {
-    color: var(--accent-red);
+
+
+/* ===== MoviesDom Logo Brand Colors ===== */
+
+.logo-movies {
+  color: var(--accent-red); /* Red */
 }
+
+.logo-dom {
+  color: #00c6ff; /* Cyan / Blue */
+}
+
+
 
 /* Search Container */
 .search-container {

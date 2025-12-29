@@ -1,44 +1,420 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MoviesDom — Clips</title>
-  <link rel="stylesheet" href="css/movie-clips.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Details - MoviesDom</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/movie-details.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="mc-header">
-    <div class="mc-logo">MoviesDom</div>
-    <div class="mc-actions">
-      <input id="search-input" type="search" placeholder="Search clips..." />
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-section">
+                <h1 class="logo"><i class="fas fa-film"></i> MoviesDom</h1>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="movies.html"><i class="fas fa-list"></i> Movies</a>
+                <a href="movie-trailers.html"><i class="fas fa-play-circle"></i> Trailers</a>
+                <a href="movie-clips.html"><i class="fas fa-video"></i> Clips</a>
+                <a href="movie-review.html"><i class="fas fa-star"></i> Reviews</a>
+                <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
+                <div class="nav-dropdown">
+                    <a href="#"><i class="fas fa-user"></i> My Account <i class="fas fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="#" id="watchlistBtn"><i class="fas fa-bookmark"></i> Watchlist</a>
+                        <a href="#" id="favoritesBtn"><i class="fas fa-heart"></i> Favorites</a>
+                        <a href="#" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Movie Hero Section -->
+    <section class="movie-hero" id="movieHero">
+        <div class="hero-background"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="container">
+            <div class="movie-hero-content">
+                <div class="movie-poster-section">
+                    <div class="poster-carousel" id="posterCarousel">
+                        <!-- Dynamic posters will be loaded here -->
+                    </div>
+                    <div class="poster-actions">
+                        <button class="btn-action" id="watchTrailerBtn">
+                            <i class="fas fa-play"></i> Trailer
+                        </button>
+                        <button class="btn-action" id="addToWatchlistBtn">
+                            <i class="fas fa-bookmark"></i> Watchlist
+                        </button>
+                        <button class="btn-action" id="shareMovieBtn">
+                            <i class="fas fa-share"></i> Share
+                        </button>
+                        <button class="btn-action" id="downloadGuideBtn">
+                            <i class="fas fa-download"></i> Guide
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="movie-info-section">
+                    <div class="movie-header">
+                        <div class="movie-title-wrapper">
+                            <h1 id="movieTitle">Loading...</h1>
+                            <div class="hindi-title" id="hindiTitle"></div>
+                        </div>
+                        <div class="movie-year-rating">
+                            <span id="movieYear" class="year-badge"></span>
+                            <span id="movieRating" class="rating-badge"></span>
+                            <span id="movieRuntime" class="runtime-badge"></span>
+                            <span class="certification-badge" id="certificationBadge"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="movie-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-tags"></i>
+                            <strong>Genre:</strong>
+                            <span id="movieGenres"></span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <strong>Release:</strong>
+                            <span id="movieReleaseDate"></span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-language"></i>
+                            <strong>Language:</strong>
+                            <span id="movieLanguage"></span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-rupee-sign"></i>
+                            <strong>Budget:</strong>
+                            <span id="movieBudget"></span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-chart-line"></i>
+                            <strong>Revenue:</strong>
+                            <span id="movieRevenue"></span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-globe-asia"></i>
+                            <strong>Hindi Dub:</strong>
+                            <span id="hindiDubInfo">Check OTT</span>
+                        </div>
+                    </div>
+                    
+                    <div class="movie-overview">
+                        <h3><i class="fas fa-info-circle"></i> Overview</h3>
+                        <p id="movieDescription">Loading description...</p>
+                    </div>
+                    
+                    <div class="movie-actions">
+                        <button class="btn btn-primary" id="playTrailerBtn">
+                            <i class="fas fa-play"></i> Watch Trailer
+                        </button>
+                        <button class="btn btn-secondary" id="quickActionsBtn">
+                            <i class="fas fa-ellipsis-h"></i> More Actions
+                        </button>
+                        <button class="btn btn-accent" id="readInsightsBtn">
+                            <i class="fas fa-lightbulb"></i> Read Insights
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Poster Gallery -->
+    <section class="poster-gallery-section" id="posterGallery">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-images"></i> Movie Posters</h2>
+            <div class="gallery-controls">
+                <button class="gallery-btn" id="prevPosterBtn"><i class="fas fa-chevron-left"></i></button>
+                <div class="gallery-track" id="galleryTrack"></div>
+                <button class="gallery-btn" id="nextPosterBtn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Movie Content Section -->
+    <section class="movie-content-section" id="enhancedContent">
+        <div class="container">
+            <!-- Content will be dynamically loaded here -->
+        </div>
+    </section>
+
+    <!-- Movie Details Tabs -->
+    <section class="movie-tabs-section">
+        <div class="container">
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="cast"><i class="fas fa-users"></i> Cast & Crew</button>
+                    <button class="tab-btn" data-tab="trailers"><i class="fas fa-video"></i> Trailers & Videos</button>
+                    <button class="tab-btn" data-tab="reviews"><i class="fas fa-star"></i> Reviews</button>
+                    <button class="tab-btn" data-tab="similar"><i class="fas fa-film"></i> Similar Movies</button>
+                    <button class="tab-btn" data-tab="details"><i class="fas fa-cogs"></i> Technical Details</button>
+                </div>
+                
+                <div class="tabs-content">
+                    <!-- Cast & Crew Tab -->
+                    <div class="tab-pane active" id="cast-tab">
+                        <div class="cast-crew-section">
+                            <h3><i class="fas fa-user-friends"></i> Cast</h3>
+                            <div class="cast-grid" id="castContainer">
+                                <!-- Cast members will be loaded here -->
+                            </div>
+                            
+                            <h3><i class="fas fa-user-tie"></i> Crew</h3>
+                            <div class="crew-grid" id="crewContainer">
+                                <!-- Crew members will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Trailers & Videos Tab -->
+                    <div class="tab-pane" id="trailers-tab">
+                        <div class="videos-section">
+                            <h3><i class="fas fa-play-circle"></i> Trailers & Videos</h3>
+                            <div class="videos-grid" id="videosContainer">
+                                <!-- Videos will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Reviews Tab -->
+                    <div class="tab-pane" id="reviews-tab">
+                        <div class="reviews-section">
+                            <div class="reviews-header">
+                                <h3><i class="fas fa-comment-alt"></i> Reviews & Ratings</h3>
+                                <div class="reviews-stats">
+                                    <div class="rating-overview">
+                                        <div class="average-rating">
+                                            <span id="averageRating">0.0</span>
+                                            <small>/10</small>
+                                        </div>
+                                        <div class="rating-stars">
+                                            <div class="stars" id="ratingStars"></div>
+                                            <span id="totalReviews">0 reviews</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="user-review-form">
+                                <h4><i class="fas fa-edit"></i> Write Your Review</h4>
+                                <form id="reviewForm">
+                                    <div class="rating-input">
+                                        <label>Your Rating:</label>
+                                        <div class="star-rating">
+                                            <span class="star" data-rating="1">★</span>
+                                            <span class="star" data-rating="2">★</span>
+                                            <span class="star" data-rating="3">★</span>
+                                            <span class="star" data-rating="4">★</span>
+                                            <span class="star" data-rating="5">★</span>
+                                            <span class="star" data-rating="6">★</span>
+                                            <span class="star" data-rating="7">★</span>
+                                            <span class="star" data-rating="8">★</span>
+                                            <span class="star" data-rating="9">★</span>
+                                            <span class="star" data-rating="10">★</span>
+                                        </div>
+                                        <span id="selectedRating" class="selected-rating">0/10</span>
+                                    </div>
+                                    <textarea id="reviewText" placeholder="Share your thoughts about this movie... What did you like? What could be better? 😊" rows="5"></textarea>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-paper-plane"></i> Submit Review
+                                    </button>
+                                </form>
+                            </div>
+                            
+                            <div class="reviews-list" id="reviewsList">
+                                <!-- Reviews will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Similar Movies Tab -->
+                    <div class="tab-pane" id="similar-tab">
+                        <div class="similar-movies-section">
+                            <h3><i class="fas fa-film"></i> Movies You Might Like</h3>
+                            <div class="movies-grid" id="similarMoviesContainer">
+                                <!-- Similar movies will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Technical Details Tab -->
+                    <div class="tab-pane" id="details-tab">
+                        <div class="technical-details-section">
+                            <h3><i class="fas fa-info-circle"></i> Technical Specifications</h3>
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <i class="fas fa-clipboard-check"></i>
+                                    <strong>Status:</strong>
+                                    <span id="detailStatus"></span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-language"></i>
+                                    <strong>Original Language:</strong>
+                                    <span id="detailOriginalLanguage"></span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-globe"></i>
+                                    <strong>Production Countries:</strong>
+                                    <span id="detailCountries"></span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-building"></i>
+                                    <strong>Production Companies:</strong>
+                                    <span id="detailCompanies"></span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-comments"></i>
+                                    <strong>Spoken Languages:</strong>
+                                    <span id="detailSpokenLanguages"></span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-home"></i>
+                                    <strong>Homepage:</strong>
+                                    <a id="detailHomepage" target="_blank"></a>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fab fa-imdb"></i>
+                                    <strong>IMDB ID:</strong>
+                                    <span id="detailImdbId"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="modal video-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="video-container">
+                <iframe id="videoPlayer" width="100%" height="500" 
+                        src="" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+        </div>
     </div>
-  </header>
 
-  <main class="mc-main">
-    <section class="mc-controls">
-      <div class="filters">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="action">Action</button>
-        <button class="filter-btn" data-filter="comedy">Comedy</button>
-        <button class="filter-btn" data-filter="drama">Drama</button>
-        <button class="filter-btn" data-filter="youtube">YouTube</button>
-      </div>
-    </section>
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal share-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3><i class="fas fa-share-alt"></i> Share This Movie</h3>
+            <div class="share-options">
+                <button class="share-btn" data-platform="whatsapp">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </button>
+                <button class="share-btn" data-platform="facebook">
+                    <i class="fab fa-facebook"></i> Facebook
+                </button>
+                <button class="share-btn" data-platform="twitter">
+                    <i class="fab fa-twitter"></i> Twitter
+                </button>
+                <button class="share-btn" data-platform="instagram">
+                    <i class="fab fa-instagram"></i> Instagram
+                </button>
+                <button class="share-btn" id="copyLinkBtn">
+                    <i class="fas fa-link"></i> Copy Link
+                </button>
+                <button class="share-btn" id="downloadImageBtn">
+                    <i class="fas fa-download"></i> Save Card
+                </button>
+            </div>
+            <div class="share-url">
+                <input type="text" id="shareUrl" readonly>
+                <button class="btn-copy" id="copyBtn">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 
-    <section class="mc-content">
-      <div class="loader" style="display:none">Loading...</div>
-      <div class="error-message" style="display:none;color:#ff9b9b"></div>
-      <div class="clip-container"></div>
-    </section>
-  </main>
+    <!-- Download Guide Modal -->
+    <div id="guideModal" class="modal guide-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3><i class="fas fa-download"></i> Download Movie Guide</h3>
+            <div class="guide-content" id="guideContent">
+                <!-- Guide content will be generated here -->
+            </div>
+            <div class="guide-actions">
+                <button class="btn btn-primary" id="printGuideBtn">
+                    <i class="fas fa-print"></i> Print Guide
+                </button>
+                <button class="btn btn-secondary" id="saveGuideBtn">
+                    <i class="fas fa-save"></i> Save as PDF
+                </button>
+            </div>
+        </div>
+    </div>
 
-  <footer class="mc-footer">
-    © MoviesDom — Clips
-  </footer>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4><i class="fas fa-film"></i> MoviesDom</h4>
+                    <p>Your ultimate movie knowledge hub with Indian audience focus. 100% legal & educational.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="movies.html"><i class="fas fa-arrow-right"></i> Browse Movies</a>
+                    <a href="movie-trailers.html"><i class="fas fa-arrow-right"></i> Latest Trailers</a>
+                    <a href="news.html"><i class="fas fa-arrow-right"></i> Movie News</a>
+                    <a href="#"><i class="fas fa-arrow-right"></i> Hindi Movies</a>
+                    <a href="#"><i class="fas fa-arrow-right"></i> OTT Guide</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+                    <a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a>
+                    <a href="#"><i class="fas fa-balance-scale"></i> DMCA</a>
+                    <a href="#"><i class="fas fa-exclamation-triangle"></i> Legal Disclaimer</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p><i class="fas fa-info-circle"></i> &copy; 2024 MoviesDom. Educational purpose only. Data provided by TMDB.</p>
+                <p class="disclaimer">No movie streaming or downloads. Only informational content about movies.</p>
+            </div>
+        </div>
+    </footer>
 
-  <!-- scripts -->
-  <!-- Keep script order: first JSON/local data is not required, main logic is below -->
-  <script src="js/movie-clips.js"></script>
+    <!-- Notification Toast -->
+    <div id="notification" class="notification-toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastMessage">Action completed successfully!</span>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/movie-details.js"></script>
 </body>
 </html>

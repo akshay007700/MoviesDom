@@ -20,6 +20,7 @@ class MoviesPage {
         this.genres = [];
         this.languages = [];
         this.years = [];
+        this.category = '';
         
         this.init();
     }
@@ -29,21 +30,19 @@ class MoviesPage {
         await this.loadLanguages();
         await this.generateYears();
         this.setupEventListeners();
-        this.loadMoviesFromURL();
+        await this.loadMoviesFromURL();
         
         // Show advanced filters if URL has parameters
         if (this.hasFiltersInURL()) {
             this.toggleAdvancedFilters();
         }
-        moviesGrid.innerHTML = "<p style='text-align:center;color:#ccc;'>Loading...</p>";
-
     }
 
     async loadGenres() {
         try {
             const response = await fetch(`${TMDB_CONFIG.BASE_URL}/genre/movie/list?api_key=${TMDB_CONFIG.API_KEY}&language=${TMDB_CONFIG.LANGUAGE}`);
             const data = await response.json();
-            this.genres = data.genres;
+            this.genres = data.genres || [];
             this.populateGenreFilter();
         } catch (error) {
             console.error('Error loading genres:', error);
@@ -54,7 +53,7 @@ class MoviesPage {
         try {
             const response = await fetch(`${TMDB_CONFIG.BASE_URL}/configuration/languages?api_key=${TMDB_CONFIG.API_KEY}`);
             const data = await response.json();
-            this.languages = data.filter(lang => lang.english_name).slice(0, 20); // Top 20 languages
+            this.languages = (data || []).filter(lang => lang.english_name).slice(0, 20); // Top 20 languages
             this.populateLanguageFilter();
         } catch (error) {
             console.error('Error loading languages:', error);
@@ -63,6 +62,7 @@ class MoviesPage {
 
     generateYears() {
         const currentYear = new Date().getFullYear();
+        this.years = [];
         for (let year = currentYear; year >= 1900; year--) {
             this.years.push(year);
         }
@@ -71,6 +71,7 @@ class MoviesPage {
 
     populateGenreFilter() {
         const select = document.getElementById('genreFilter');
+        select.innerHTML = '<option value="">All Genres</option>';
         this.genres.forEach(genre => {
             const option = document.createElement('option');
             option.value = genre.id;
@@ -81,6 +82,7 @@ class MoviesPage {
 
     populateLanguageFilter() {
         const select = document.getElementById('languageFilter');
+        select.innerHTML = '<option value="">All Languages</option>';
         this.languages.forEach(lang => {
             const option = document.createElement('option');
             option.value = lang.iso_639_1;
@@ -91,6 +93,7 @@ class MoviesPage {
 
     populateYearFilter() {
         const select = document.getElementById('yearFilter');
+        select.innerHTML = '<option value="">All Years</option>';
         this.years.forEach(year => {
             const option = document.createElement('option');
             option.value = year;
@@ -100,7 +103,12 @@ class MoviesPage {
     }
 
     setupEventListeners() {
-        // Search input
+        // Search button
+        document.querySelector('.search-box button').addEventListener('click', () => {
+            this.performMoviesSearch();
+        });
+
+        // Search input enter key
         document.getElementById('moviesSearch').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 this.performMoviesSearch();
@@ -112,7 +120,7 @@ class MoviesPage {
             this.toggleAdvancedFilters();
         });
 
-        // Quick view modal
+        // Quick view modal close
         document.querySelector('.quick-view-modal .close').addEventListener('click', () => {
             this.closeQuickView();
         });
@@ -127,9 +135,12 @@ class MoviesPage {
 
         // Filter changes
         ['genreFilter', 'yearFilter', 'ratingFilter', 'sortFilter', 'languageFilter', 'runtimeFilter'].forEach(id => {
-            document.getElementById(id).addEventListener('change', () => {
-                this.applyFilters();
-            });
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('change', () => {
+                    this.applyFilters();
+                });
+            }
         });
 
         // Keyword and company filters with debounce
@@ -139,12 +150,15 @@ class MoviesPage {
     setupDebouncedFilters() {
         let timeout;
         ['keywordFilter', 'companyFilter'].forEach(id => {
-            document.getElementById(id).addEventListener('input', (e) => {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => {
-                    this.applyFilters();
-                }, 500);
-            });
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('input', (e) => {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => {
+                        this.applyFilters();
+                    }, 500);
+                });
+            }
         });
     }
 
@@ -152,10 +166,12 @@ class MoviesPage {
         const filters = document.getElementById('advancedFilters');
         const button = document.getElementById('toggleAdvancedFilters');
         
-        filters.classList.toggle('active');
-        button.innerHTML = filters.classList.contains('active') ? 
-            '<i class="fas fa-times"></i> Hide Filters' : 
-            '<i class="fas fa-sliders-h"></i> Advanced Filters';
+        if (filters && button) {
+            filters.classList.toggle('active');
+            button.innerHTML = filters.classList.contains('active') ? 
+                '<i class="fas fa-times"></i> Hide Filters' : 
+                '<i class="fas fa-sliders-h"></i> Advanced Filters';
+        }
     }
 
     async loadMoviesFromURL() {
@@ -171,11 +187,59 @@ class MoviesPage {
         
         this.currentPage = parseInt(urlParams.get('page')) || 1;
         
+        // Get category from URL and apply language logic
+        this.category = urlParams.get('category') || '';
+        this.applyCategoryFilter();
+        
         // Update UI with current filters
         this.updateFilterUI();
         
+        // Update header based on category
+        this.updateCategoryHeader();
+        
         // Load movies
         await this.loadMovies();
+    }
+
+    applyCategoryFilter() {
+        if (!this.category) return;
+        
+        switch(this.category) {
+            case 'hollywood':
+                this.currentFilters.language = 'en';
+                break;
+            case 'bollywood':
+                this.currentFilters.language = 'hi';
+                break;
+            case 'south':
+                this.currentFilters.language = 'ta|te|ml|kn';
+                break;
+        }
+    }
+
+    updateCategoryHeader() {
+        const titleElement = document.getElementById('categoryTitle');
+        const subtitleElement = document.getElementById('categorySubtitle');
+        
+        if (!titleElement || !subtitleElement) return;
+        
+        switch(this.category) {
+            case 'hollywood':
+                titleElement.innerHTML = `<i class="fas fa-film"></i> Hollywood Movies 🎬`;
+                subtitleElement.textContent = 'Popular and trending English movies';
+                break;
+            case 'bollywood':
+                titleElement.innerHTML = `<i class="fas fa-film"></i> Bollywood Movies 🇮🇳`;
+                subtitleElement.textContent = 'Latest Hindi movies & blockbusters';
+                break;
+            case 'south':
+                titleElement.innerHTML = `<i class="fas fa-film"></i> South Indian Movies 🔥`;
+                subtitleElement.textContent = 'Tamil • Telugu • Malayalam • Kannada cinema';
+                break;
+            default:
+                titleElement.innerHTML = `<i class="fas fa-film"></i> Browse Movies 🎥`;
+                subtitleElement.textContent = 'Discover movies from all industries';
+        }
     }
 
     updateFilterUI() {
@@ -195,12 +259,17 @@ class MoviesPage {
             if (this.currentFilters.query) {
                 data = await movieAPI.searchMovies(this.currentFilters.query, this.currentPage);
             } else {
-                data = await movieAPI.getPopularMovies(this.currentPage);
+                // Handle South Indian languages special case
+                if (this.currentFilters.language === 'ta|te|ml|kn') {
+                    data = await this.loadSouthIndianMovies();
+                } else {
+                    data = await movieAPI.getPopularMovies(this.currentPage, this.currentFilters.language);
+                }
             }
 
-            this.currentMovies = data.results;
-            this.totalPages = data.total_pages > 500 ? 500 : data.total_pages; // TMDB limits to 500 pages
-            this.totalResults = data.total_results;
+            this.currentMovies = data.results || [];
+            this.totalPages = data.total_pages > 500 ? 500 : (data.total_pages || 1);
+            this.totalResults = data.total_results || 0;
 
             this.renderMovies();
             this.updateResultsInfo();
@@ -214,8 +283,52 @@ class MoviesPage {
         }
     }
 
+    async loadSouthIndianMovies() {
+        // For South Indian movies, we need to combine results from multiple languages
+        const languages = ['ta', 'te', 'ml', 'kn'];
+        const allResults = [];
+        let totalResults = 0;
+        let totalPages = 1;
+        
+        // Get first page from each language and combine
+        for (const lang of languages) {
+            try {
+                const data = await movieAPI.getPopularMovies(1, lang);
+                if (data.results && data.results.length > 0) {
+                    // Add first 5 movies from each language
+                    allResults.push(...data.results.slice(0, 5));
+                }
+                totalResults += data.total_results || 0;
+            } catch (error) {
+                console.error(`Error loading ${lang} movies:`, error);
+            }
+        }
+        
+        // Remove duplicates based on movie ID
+        const uniqueResults = [];
+        const seenIds = new Set();
+        
+        for (const movie of allResults) {
+            if (!seenIds.has(movie.id)) {
+                seenIds.add(movie.id);
+                uniqueResults.push(movie);
+            }
+        }
+        
+        // Sort by popularity
+        uniqueResults.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+        
+        return {
+            results: uniqueResults.slice(0, 20),
+            total_results: totalResults,
+            total_pages: totalPages
+        };
+    }
+
     renderMovies() {
         const container = document.getElementById('moviesContainer');
+        if (!container) return;
+        
         const isListView = container.classList.contains('list-view');
         
         if (this.currentMovies.length === 0) {
@@ -227,25 +340,44 @@ class MoviesPage {
         document.getElementById('noResults').style.display = 'none';
         
         container.innerHTML = this.currentMovies.map(movie => this.createMovieCard(movie, isListView)).join('');
+        
+        // Add click event listeners to movie cards
+        container.querySelectorAll('.movie-card, .movie-item.list-view').forEach(card => {
+            const movieId = card.getAttribute('data-movie-id');
+            if (movieId) {
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.movie-actions')) {
+                        this.quickView(parseInt(movieId));
+                    }
+                });
+            }
+        });
     }
 
     createMovieCard(movie, isListView = false) {
+        const posterPath = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'images/placeholder.jpg';
+        const title = movie.title || 'Untitled Movie';
+        const overview = movie.overview || 'No description available.';
+        const year = movie.release_date ? movie.release_date.split('-')[0] : 'TBA';
+        const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '0.0';
+        const voteCount = movie.vote_count || 0;
+
         if (isListView) {
             return `
-                <div class="movie-item list-view" onclick="moviesPage.viewMovieDetails(${movie.id})">
-                    <img src="https://image.tmdb.org/t/p/w300${movie.poster_path}" 
-                         alt="${movie.title}" 
+                <div class="movie-item list-view" data-movie-id="${movie.id}">
+                    <img src="${posterPath}" 
+                         alt="${title}" 
                          class="movie-poster"
                          onerror="this.src='images/placeholder.jpg'">
                     <div class="movie-info">
                         <div>
-                            <h4 class="movie-title">${movie.title}</h4>
-                            <p class="movie-overview">${movie.overview || 'No description available.'}</p>
+                            <h4 class="movie-title">${title}</h4>
+                            <p class="movie-overview">${overview}</p>
                         </div>
                         <div class="movie-meta">
-                            <span class="movie-year">${movie.release_date ? movie.release_date.split('-')[0] : 'TBA'}</span>
-                            <span class="movie-rating"><i class="fas fa-star"></i> ${movie.vote_average.toFixed(1)}</span>
-                            <span class="movie-votes">${movie.vote_count} votes</span>
+                            <span class="movie-year">${year}</span>
+                            <span class="movie-rating"><i class="fas fa-star"></i> ${rating}</span>
+                            <span class="movie-votes">${voteCount} votes</span>
                         </div>
                     </div>
                     <div class="movie-actions">
@@ -261,16 +393,16 @@ class MoviesPage {
         }
 
         return `
-            <div class="movie-card" onclick="moviesPage.quickView(${movie.id})">
-                <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" 
-                     alt="${movie.title}" 
+            <div class="movie-card" data-movie-id="${movie.id}">
+                <img src="${posterPath}" 
+                     alt="${title}" 
                      class="movie-poster"
                      onerror="this.src='images/placeholder.jpg'">
                 <div class="movie-info">
-                    <h4 class="movie-title">${movie.title}</h4>
+                    <h4 class="movie-title">${title}</h4>
                     <div class="movie-meta">
-                        <span class="movie-year">${movie.release_date ? movie.release_date.split('-')[0] : 'TBA'}</span>
-                        <span class="movie-rating"><i class="fas fa-star"></i> ${movie.vote_average.toFixed(1)}</span>
+                        <span class="movie-year">${year}</span>
+                        <span class="movie-rating"><i class="fas fa-star"></i> ${rating}</span>
                     </div>
                     <div class="movie-actions">
                         <button class="btn btn-primary" onclick="event.stopPropagation(); moviesPage.viewMovieDetails(${movie.id})">
@@ -286,18 +418,27 @@ class MoviesPage {
     }
 
     updateResultsInfo() {
+        const titleElement = document.getElementById('resultsTitle');
+        const countElement = document.getElementById('resultsCount');
+        
+        if (!titleElement || !countElement) return;
+        
         const start = (this.currentPage - 1) * 20 + 1;
         const end = Math.min(this.currentPage * 20, this.totalResults);
         
-        document.getElementById('resultsTitle').textContent = 
-            this.currentFilters.query ? `Search Results for "${this.currentFilters.query}"` : 'Popular Movies';
+        titleElement.textContent = this.currentFilters.query ? 
+            `Search Results for "${this.currentFilters.query}"` : 'Popular Movies';
         
-        document.getElementById('resultsCount').textContent = 
-            `Showing ${start}-${end} of ${this.totalResults.toLocaleString()} movies`;
+        countElement.textContent = `Showing ${start}-${end} of ${this.totalResults.toLocaleString()} movies`;
     }
 
     renderPagination() {
         const container = document.getElementById('pagination');
+        if (!container || this.totalPages <= 1) {
+            container.innerHTML = '';
+            return;
+        }
+        
         const maxPagesToShow = 5;
         let startPage = Math.max(1, this.currentPage - Math.floor(maxPagesToShow / 2));
         let endPage = Math.min(this.totalPages, startPage + maxPagesToShow - 1);
@@ -413,6 +554,7 @@ class MoviesPage {
         if (this.currentFilters.sort !== 'popularity.desc') params.set('sort', this.currentFilters.sort);
         if (this.currentFilters.language) params.set('language', this.currentFilters.language);
         if (this.currentPage > 1) params.set('page', this.currentPage);
+        if (this.category) params.set('category', this.category);
         
         const newURL = params.toString() ? `movies.html?${params.toString()}` : 'movies.html';
         window.history.replaceState({}, '', newURL);
@@ -429,6 +571,7 @@ class MoviesPage {
             this.showQuickView(movie);
         } catch (error) {
             console.error('Error loading movie details:', error);
+            showNotification('Failed to load movie details', 'error');
         }
     }
 
@@ -436,24 +579,35 @@ class MoviesPage {
         const modal = document.getElementById('quickViewModal');
         const content = document.getElementById('quickViewContent');
         
+        if (!modal || !content) return;
+        
+        const backdropPath = movie.backdrop_path ? `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}` : '';
+        const posterPath = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'images/placeholder.jpg';
+        const title = movie.title || 'Untitled Movie';
+        const year = movie.release_date ? movie.release_date.split('-')[0] : 'TBA';
+        const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '0.0';
+        const runtime = movie.runtime ? `${movie.runtime} min` : 'N/A';
+        const genres = movie.genres ? movie.genres.map(g => g.name).join(', ') : '';
+        const overview = movie.overview || 'No description available.';
+        
         content.innerHTML = `
             <div class="quick-view-content">
-                <div class="quick-view-header" style="background-image: url('https://image.tmdb.org/t/p/w1280${movie.backdrop_path}')">
+                <div class="quick-view-header" style="background-image: url('${backdropPath}')">
                     <div class="quick-view-overlay"></div>
-                    <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" 
-                         alt="${movie.title}" 
+                    <img src="${posterPath}" 
+                         alt="${title}" 
                          class="quick-view-poster"
                          onerror="this.src='images/placeholder.jpg'">
                 </div>
                 <div class="quick-view-body">
-                    <h2 class="quick-view-title">${movie.title}</h2>
+                    <h2 class="quick-view-title">${title}</h2>
                     <div class="quick-view-meta">
-                        <span>${movie.release_date ? movie.release_date.split('-')[0] : 'TBA'}</span>
-                        <span>⭐ ${movie.vote_average.toFixed(1)}/10</span>
-                        <span>${movie.runtime || 'N/A'} min</span>
-                        <span>${movie.genres.map(g => g.name).join(', ')}</span>
+                        <span>${year}</span>
+                        <span>⭐ ${rating}/10</span>
+                        <span>${runtime}</span>
+                        <span>${genres}</span>
                     </div>
-                    <p class="quick-view-overview">${movie.overview || 'No description available.'}</p>
+                    <p class="quick-view-overview">${overview}</p>
                     <div class="quick-view-actions">
                         <button class="btn btn-primary" onclick="moviesPage.viewMovieDetails(${movie.id})">
                             <i class="fas fa-info-circle"></i> Full Details
@@ -473,7 +627,10 @@ class MoviesPage {
     }
 
     closeQuickView() {
-        document.getElementById('quickViewModal').style.display = 'none';
+        const modal = document.getElementById('quickViewModal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
     }
 
     viewMovieDetails(movieId) {
@@ -492,7 +649,10 @@ class MoviesPage {
     }
 
     showLoading(show) {
-        document.getElementById('loadingIndicator').style.display = show ? 'block' : 'none';
+        const indicator = document.getElementById('loadingIndicator');
+        if (indicator) {
+            indicator.style.display = show ? 'block' : 'none';
+        }
     }
 
     showError(message) {
@@ -506,11 +666,12 @@ function toggleView(viewType) {
     const gridBtn = document.getElementById('gridView');
     const listBtn = document.getElementById('listView');
     
+    if (!container || !gridBtn || !listBtn) return;
+    
     container.className = 'movies-container ' + viewType + '-view';
     gridBtn.classList.toggle('active', viewType === 'grid');
     listBtn.classList.toggle('active', viewType === 'list');
-    
-    // Re-render movies with new view
+
     if (window.moviesPage) {
         window.moviesPage.renderMovies();
     }

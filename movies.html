@@ -1,251 +1,251 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en"> 
+    <head> 
+        <meta charset="UTF-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Browse Movies - MoviesDom</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/movies.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <title>Browse Movies - MoviesDom</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/movies.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo-section">
-                <h1 class="logo"><i class="fas fa-film"></i> MoviesDom</h1>
-                <div class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </div>
-            </div>
-            
-            <div class="nav-links">
-                <a href="index.html"><i class="fas fa-home"></i> Home</a>
-                <a href="movies.html" class="active"><i class="fas fa-list"></i> Movies</a>
-                <a href="movie-trailers.html"><i class="fas fa-play-circle"></i> Trailers</a>
-                <a href="movie-clips.html"><i class="fas fa-video"></i> Clips</a>
-                <a href="movie-review.html"><i class="fas fa-star"></i> Reviews</a>
-                <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
-                <div class="nav-dropdown">
-                    <a href="#"><i class="fas fa-user"></i> My Account <i class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown-content">
-                        <a href="#" id="watchlistBtn"><i class="fas fa-bookmark"></i> Watchlist</a>
-                        <a href="#" id="favoritesBtn"><i class="fas fa-heart"></i> Favorites</a>
-                        <a href="#" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Page Header -->
-    <section class="page-header">
-        <div class="container">
-            <h1><i class="fas fa-film"></i> Browse Movies</h1>
-            <p>Discover thousands of movies with advanced filters and search</p>
-        </div>
-    </section>
-
-    <!-- Advanced Filters -->
-    <section class="filters-section">
-        <div class="container">
-            <div class="filters-container">
-                <!-- Search Bar -->
-                <div class="search-filter">
-                    <div class="search-box">
-                        <input type="text" id="moviesSearch" placeholder="Search movies by title, actor, or keyword...">
-                        <button onclick="performMoviesSearch()"><i class="fas fa-search"></i> Search</button>
-                    </div>
-                </div>
-
-                <!-- Filter Controls -->
-                <div class="filter-controls">
-                    <div class="filter-group">
-                        <label>Genre:</label>
-                        <select id="genreFilter">
-                            <option value="">All Genres</option>
-                            <!-- Genres will be populated by JavaScript -->
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label>Year:</label>
-                        <select id="yearFilter">
-                            <option value="">All Years</option>
-                            <!-- Years will be populated by JavaScript -->
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label>Rating:</label>
-                        <select id="ratingFilter">
-                            <option value="">Any Rating</option>
-                            <option value="9">9+ Stars</option>
-                            <option value="8">8+ Stars</option>
-                            <option value="7">7+ Stars</option>
-                            <option value="6">6+ Stars</option>
-                            <option value="5">5+ Stars</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label>Sort By:</label>
-                        <select id="sortFilter">
-                            <option value="popularity.desc">Popularity</option>
-                            <option value="release_date.desc">Newest First</option>
-                            <option value="release_date.asc">Oldest First</option>
-                            <option value="vote_average.desc">Highest Rated</option>
-                            <option value="vote_average.asc">Lowest Rated</option>
-                            <option value="title.asc">Title A-Z</option>
-                            <option value="title.desc">Title Z-A</option>
-                        </select>
-                    </div>
-
-                    <div class="filter-actions">
-                        <button class="btn btn-secondary" onclick="resetFilters()">
-                            <i class="fas fa-redo"></i> Reset
-                        </button>
-                        <button class="btn btn-primary" onclick="applyFilters()">
-                            <i class="fas fa-filter"></i> Apply Filters
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Advanced Filters Toggle -->
-                <div class="advanced-filters-toggle">
-                    <button id="toggleAdvancedFilters" class="btn btn-outline">
-                        <i class="fas fa-sliders-h"></i> Advanced Filters
-                    </button>
-                </div>
-
-                <!-- Advanced Filters Panel -->
-                <div class="advanced-filters" id="advancedFilters">
-                    <div class="advanced-filter-group">
-                        <h4>Additional Filters</h4>
-                        <div class="filter-row">
-                            <div class="filter-item">
-                                <label>Language:</label>
-                                <select id="languageFilter">
-                                    <option value="">All Languages</option>
-                                    <!-- Languages will be populated by JavaScript -->
-                                </select>
-                            </div>
-                            <div class="filter-item">
-                                <label>Runtime:</label>
-                                <select id="runtimeFilter">
-                                    <option value="">Any Length</option>
-                                    <option value="60">Under 1 hour</option>
-                                    <option value="90">1-1.5 hours</option>
-                                    <option value="120">1.5-2 hours</option>
-                                    <option value="121">Over 2 hours</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="filter-row">
-                            <div class="filter-item">
-                                <label>Keywords:</label>
-                                <input type="text" id="keywordFilter" placeholder="Add keywords...">
-                            </div>
-                            <div class="filter-item">
-                                <label>Company:</label>
-                                <input type="text" id="companyFilter" placeholder="Production company...">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Results Section -->
-    <section class="results-section">
-        <div class="container">
-            <!-- Results Header -->
-            <div class="results-header">
-                <div class="results-info">
-                    <h3 id="resultsTitle">Popular Movies</h3>
-                    <span id="resultsCount" class="results-count">Loading...</span>
-                </div>
-                <div class="view-controls">
-                    <button id="gridView" class="view-btn active" onclick="toggleView('grid')">
-                        <i class="fas fa-th"></i> Grid
-                    </button>
-                    <button id="listView" class="view-btn" onclick="toggleView('list')">
-                        <i class="fas fa-list"></i> List
-                    </button>
-                </div>
+</head> 
+<body> <!-- Navigation --> 
+    <nav class="navbar"> 
+        <div class="nav-container"> 
+            <div class="logo-section"> 
+                <h1 class="logo"><i class="fas fa-film"></i> MoviesDom</h1> 
+                <div class="mobile-menu-btn"> 
+                    <i class="fas fa-bars"></i> 
+                </div> 
             </div>
 
-            <!-- Loading Indicator -->
-            <div id="loadingIndicator" class="loading-indicator">
-                <div class="spinner"></div>
-                <p>Loading movies...</p>
-            </div>
-
-            <!-- Movies Grid/List -->
-            <div id="moviesContainer" class="movies-container grid-view">
-                <!-- Movies will be loaded here -->
-            </div>
-
-            <!-- No Results Message -->
-            <div id="noResults" class="no-results" style="display: none;">
-                <i class="fas fa-search fa-3x"></i>
-                <h3>No movies found</h3>
-                <p>Try adjusting your filters or search terms</p>
-                <button class="btn btn-primary" onclick="resetFilters()">Reset Filters</button>
-            </div>
-
-            <!-- Pagination -->
-            <div class="pagination-container">
-                <div class="pagination" id="pagination">
-                    <!-- Pagination will be generated here -->
+        <div class="nav-links">
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="movies.html" class="active"><i class="fas fa-list"></i> Movies</a>
+            <a href="movie-trailers.html"><i class="fas fa-play-circle"></i> Trailers</a>
+            <a href="movie-clips.html"><i class="fas fa-video"></i> Clips</a>
+            <a href="movie-review.html"><i class="fas fa-star"></i> Reviews</a>
+            <a href="news.html"><i class="fas fa-newspaper"></i> News</a>
+            <div class="nav-dropdown">
+                <a href="#"><i class="fas fa-user"></i> My Account <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="#" id="watchlistBtn"><i class="fas fa-bookmark"></i> Watchlist</a>
+                    <a href="#" id="favoritesBtn"><i class="fas fa-heart"></i> Favorites</a>
+                    <a href="#" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</a>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Quick View Modal -->
-    <div id="quickViewModal" class="modal quick-view-modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div id="quickViewContent">
-                <!-- Quick view content will be loaded here -->
             </div>
         </div>
     </div>
+</nav>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>MoviesDom</h4>
-                    <p>Your ultimate movie database with advanced features and real-time data.</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <a href="movies.html">Browse Movies</a>
-                    <a href="movie-trailers.html">Latest Trailers</a>
-                    <a href="news.html">Movie News</a>
-                </div>
-                <div class="footer-section">
-                    <h4>Legal</h4>
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">DMCA</a>
+<!-- Page Header -->
+<section class="page-header hero-header">
+    <div class="hero-overlay"></div>
+    <div class="container">
+        <h1 id="categoryTitle"><i class="fas fa-film"></i> Browse Movies</h1>
+        <p id="categorySubtitle">Discover thousands of movies with advanced filters and search</p>
+    </div>
+</section>
+
+<!-- Advanced Filters -->
+<section class="filters-section">
+    <div class="container">
+        <div class="filters-container">
+            <!-- Search Bar -->
+            <div class="search-filter">
+                <div class="search-box">
+                    <input type="text" id="moviesSearch" placeholder="Search movies by title, actor, or keyword...">
+                    <button onclick="performMoviesSearch()"><i class="fas fa-search"></i> Search</button>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 MoviesDom. Educational purpose only. Data provided by TMDB.</p>
+
+            <!-- Filter Controls -->
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label>Genre:</label>
+                    <select id="genreFilter">
+                        <option value="">All Genres</option>
+                        <!-- Genres will be populated by JavaScript -->
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Year:</label>
+                    <select id="yearFilter">
+                        <option value="">All Years</option>
+                        <!-- Years will be populated by JavaScript -->
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Rating:</label>
+                    <select id="ratingFilter">
+                        <option value="">Any Rating</option>
+                        <option value="9">9+ Stars</option>
+                        <option value="8">8+ Stars</option>
+                        <option value="7">7+ Stars</option>
+                        <option value="6">6+ Stars</option>
+                        <option value="5">5+ Stars</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Sort By:</label>
+                    <select id="sortFilter">
+                        <option value="popularity.desc">Popularity</option>
+                        <option value="release_date.desc">Newest First</option>
+                        <option value="release_date.asc">Oldest First</option>
+                        <option value="vote_average.desc">Highest Rated</option>
+                        <option value="vote_average.asc">Lowest Rated</option>
+                        <option value="title.asc">Title A-Z</option>
+                        <option value="title.desc">Title Z-A</option>
+                    </select>
+                </div>
+
+                <div class="filter-actions">
+                    <button class="btn btn-secondary" onclick="resetFilters()">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                    <button class="btn btn-primary" onclick="applyFilters()">
+                        <i class="fas fa-filter"></i> Apply Filters
+                    </button>
+                </div>
+            </div>
+
+            <!-- Advanced Filters Toggle -->
+            <div class="advanced-filters-toggle">
+                <button id="toggleAdvancedFilters" class="btn btn-outline">
+                    <i class="fas fa-sliders-h"></i> Advanced Filters
+                </button>
+            </div>
+
+            <!-- Advanced Filters Panel -->
+            <div class="advanced-filters" id="advancedFilters">
+                <div class="advanced-filter-group">
+                    <h4>Additional Filters</h4>
+                    <div class="filter-row">
+                        <div class="filter-item">
+                            <label>Language:</label>
+                            <select id="languageFilter">
+                                <option value="">All Languages</option>
+                                <!-- Languages will be populated by JavaScript -->
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label>Runtime:</label>
+                            <select id="runtimeFilter">
+                                <option value="">Any Length</option>
+                                <option value="60">Under 1 hour</option>
+                                <option value="90">1-1.5 hours</option>
+                                <option value="120">1.5-2 hours</option>
+                                <option value="121">Over 2 hours</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-row">
+                        <div class="filter-item">
+                            <label>Keywords:</label>
+                            <input type="text" id="keywordFilter" placeholder="Add keywords...">
+                        </div>
+                        <div class="filter-item">
+                            <label>Company:</label>
+                            <input type="text" id="companyFilter" placeholder="Production company...">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </footer>
+    </div>
+</section>
 
-    <script src="js/config.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/movies.js"></script>
-</body>
+<!-- Results Section -->
+<section class="results-section">
+    <div class="container">
+        <!-- Results Header -->
+        <div class="results-header">
+            <div class="results-info">
+                <h3 id="resultsTitle">Popular Movies</h3>
+                <span id="resultsCount" class="results-count">Loading...</span>
+            </div>
+            <div class="view-controls">
+                <button id="gridView" class="view-btn active" onclick="toggleView('grid')">
+                    <i class="fas fa-th"></i> Grid
+                </button>
+                <button id="listView" class="view-btn" onclick="toggleView('list')">
+                    <i class="fas fa-list"></i> List
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="loading-indicator">
+            <div class="spinner"></div>
+            <p>Loading movies...</p>
+        </div>
+
+        <!-- Movies Grid/List -->
+        <div id="moviesContainer" class="movies-container grid-view">
+            <!-- Movies will be loaded here -->
+        </div>
+
+        <!-- No Results Message -->
+        <div id="noResults" class="no-results" style="display: none;">
+            <i class="fas fa-search fa-3x"></i>
+            <h3>No movies found</h3>
+            <p>Try adjusting your filters or search terms</p>
+            <button class="btn btn-primary" onclick="resetFilters()">Reset Filters</button>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-container">
+            <div class="pagination" id="pagination">
+                <!-- Pagination will be generated here -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick View Modal -->
+<div id="quickViewModal" class="modal quick-view-modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="quickViewContent">
+            <!-- Quick view content will be loaded here -->
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>MoviesDom</h4>
+                <p>Your ultimate movie database with advanced features and real-time data.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="movies.html">Browse Movies</a>
+                <a href="movie-trailers.html">Latest Trailers</a>
+                <a href="news.html">Movie News</a>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">DMCA</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 MoviesDom. Educational purpose only. Data provided by TMDB.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/movies.js"></script>
+</body> 
 </html>
